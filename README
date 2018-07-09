@@ -1,0 +1,7 @@
+Web Of Science Co-citation Clean Up
+The R script will merge similar journal articles and book citations.
+Uses csv format to match strings of text using fuzzy matching.  
+Tweaking of threshold values may be necessary for optimizing to size of data set.
+
+R script excute in R or R studio.
+csv contains sample abbreviations to aid with merging and producing full citation information. 
