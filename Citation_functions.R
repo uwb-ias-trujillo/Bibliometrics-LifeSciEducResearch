@@ -1,5 +1,4 @@
 
-
 require(lazyeval)
 
 extract_citation <- function(x, column){
