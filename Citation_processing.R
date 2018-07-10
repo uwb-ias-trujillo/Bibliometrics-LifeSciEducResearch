@@ -27,8 +27,8 @@ library(reshape2)
 # Extract citations from WOS list 
     work_data <- as.data.frame(extract_citation(raw_data, "CR"))
     #work_data$label <- as.character(work_data$label)
-    #work_data$L1<- as.factor(work_data$L1)
-    #work_data$index<-as.factor( work_data$index)
+    work_data$L1<- as.factor(work_data$L1)
+    work_data$index<-as.factor( work_data$index)
 
 # Standardize the data-------------------------------------------------------------------- 
    std_data <- standardize(work_data)
