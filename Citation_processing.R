@@ -1,10 +1,10 @@
 
-setwd("~/WOS/data")
+setwd("~/Workspace/WebOfScience-CoCitation/")
 
 
 # load -----------------------------------------------------------------------------------
 # load libraries 
-install.packages(c("stringdist", "stringr", "stringi", "dplyr", "magrittr", "broom", "lazyeval"))
+install.packages(c("stringdist", "stringr", "stringi", "dplyr", "magrittr", "broom", "lazyeval", "reshape2"))
 
 library(stringdist)
 library(stringr)
@@ -14,13 +14,14 @@ library(dplyr)
 library(magrittr)
 library(broom)
 library(lazyeval)
-library(tidyr) 
+library(tidyr)
+library(reshape2)
 
 # load functions 
   source("citation_functions.R")
   
 # load raw data from WOS as a csv format
-    raw_data <- read.csv("WOS.csv", stringsAsFactors = FALSE)
+    raw_data <- read.csv("sampleWOSdata.csv", stringsAsFactors = FALSE)
     abb <- read.csv("WOS_journalAbbrev.csv")
 
 # Extract citations from WOS list 
@@ -41,7 +42,7 @@ library(tidyr)
     std_data$authorBlock <- fuzzy_match(std_data$authors, .25, std_data$authors)
     
     # look at author clusters  
-    author_merges <- std_data4 %>% 
+    author_merges <- std_data %>% 
       group_by(authorBlock) %>% 
       summarise(count = n()) %>% 
       filter(count > 15) %>% 
@@ -62,7 +63,7 @@ library(tidyr)
     
     std_data4 <- std_data3 %>% 
       filter(authorBlock == name) %>% 
-      mutate(authorBlock = fuzzy_match(authors, .15, authors)) %>% 
+      mutate(authorBlock = fuzzy_match(authors, .15, authors)) 
      
     std_data5 <- std_data3 %>% 
       filter(authorBlock != name) %>% 
@@ -89,8 +90,8 @@ library(tidyr)
 
 # create the flat data file  
     flat_data <- clean_data %>% 
-        mutate(index = as.numeric(index)) %>% 
-        group_by(index) %>% 
+        mutate( L1 = as.numeric(L1)) %>% 
+        group_by(L1) %>% 
         arrange(mergedLabel) %>% 
         do(data.frame(citations = str_c(.$mergedLabel, collapse = "| ")))
     
@@ -118,5 +119,5 @@ library(tidyr)
 
 
 # save the data------------------------------------------------------------------------------------     
-    write.csv(clean_data, "output data/WOS_nodeList.csv", row.names = FALSE)
-    write.csv(flat_data2, "output data/WOS_clean.csv", row.names = FALSE)
+    write.csv(clean_data, "WOS_nodeList.csv", row.names = FALSE)
+    write.csv(flat_data2, "WOS_clean.csv", row.names = FALSE)

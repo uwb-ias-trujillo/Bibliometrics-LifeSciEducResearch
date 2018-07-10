@@ -2,27 +2,27 @@
 require(lazyeval)
 
 extract_citation <- function(x, column){
- 
-    citations <- str_split(x[, column], "; ")
-     
-    names(citations) <- row.names(x)
-     
-    # convert the list into a long dataframe 
-    citations2 <- do.call("rbind", lapply(citations, as.data.frame)) 
-     
-    identical(names(citations[[1]]), names(citations[[2]]) )
-     
-    # create a label 
-    names(citations2)[1] <- "label"
-     
-    # create the citing author index
-    citations2$index <- row.names(citations2)
-    citations2$index <- citations2$index %>% 
+  
+  citations <- str_split(x[, column], "; ")
+  
+  names(citations) <- row.names(x)
+  
+  citations2<-melt(citations)
+  identical(names(citations[[1]]), names(citations[[2]]) )
+  citations2<-cbind(citations2[2],citations2[1])
+  # create a label 
+  names(citations2)[2] <- "label"
+  names(citations2)[1] <- "L1"
+  
+  # create the citing author index
+  citations2$index <- row.names(citations2)
+  citations2$index <- citations2$index %>% 
     str_replace(., "[\\.][0-9]+", "")
- 
-    return(citations2)
- 
- }
+  
+  return(citations2)
+  
+}
+
 
 
 
