@@ -25,7 +25,8 @@ library(reshape2)
     abb <- read.csv("WOS_journalAbbrev.csv")
 
 # Extract citations from WOS list 
-    work_data <- extract_citation(raw_data, "CR")
+    work_data <- as.data.frame(extract_citation(raw_data, "CR"))
+    work_data[2] <- as.character(work_data[2])
 
 # Standardize the data-------------------------------------------------------------------- 
    std_data <- standardize(work_data)
@@ -121,3 +122,5 @@ library(reshape2)
 # save the data------------------------------------------------------------------------------------     
     write.csv(clean_data, "WOS_nodeList.csv", row.names = FALSE)
     write.csv(flat_data2, "WOS_clean.csv", row.names = FALSE)
+
+    
