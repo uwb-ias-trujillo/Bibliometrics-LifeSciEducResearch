@@ -1,4 +1,3 @@
-
 setwd("~/Workspace/WebOfScience-CoCitation/")
 
 
@@ -42,7 +41,7 @@ library(reshape2)
 
 # Run fuzzy match function on a .2 threshold 
 
-    std_data$authorBlock <- fuzzy_match(std_data$authors, .20, std_data$authors)
+    std_data$authorBlock <- fuzzy_match(std_data$authors, .1, std_data$authors)
     
     # look at author clusters  
     author_merges <- std_data %>% 
@@ -58,7 +57,7 @@ library(reshape2)
     
     std_data2 <- std_data %>% 
       filter(authorBlock == name) %>% 
-      mutate(authorBlock = fuzzy_match(authors, .20, authors))
+      mutate(authorBlock = fuzzy_match(authors, .08, authors))
     
     std_data3 <- std_data %>% 
       filter(authorBlock != name) %>% 
@@ -66,7 +65,7 @@ library(reshape2)
     
     std_data4 <- std_data3 %>% 
       filter(authorBlock == name) %>% 
-      mutate(authorBlock = fuzzy_match(authors, .15, authors)) 
+      mutate(authorBlock = fuzzy_match(authors, .05, authors)) 
      
     std_data5 <- std_data3 %>% 
       filter(authorBlock != name) %>% 
