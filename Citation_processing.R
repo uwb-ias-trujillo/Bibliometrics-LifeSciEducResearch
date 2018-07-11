@@ -42,7 +42,7 @@ library(reshape2)
 
 # Run fuzzy match function on a .2 threshold 
 
-    std_data$authorBlock <- fuzzy_match(std_data$authors, .25, std_data$authors)
+    std_data$authorBlock <- fuzzy_match(std_data$authors, .20, std_data$authors)
     
     # look at author clusters  
     author_merges <- std_data %>% 
@@ -80,13 +80,13 @@ library(reshape2)
     books <- std_data5 %>% 
         group_by(authorBlock) %>% 
         filter(type == "book") %>% 
-        mutate(mergedLabel = fuzzy_match(documentName, .15, cleanLabel))
+        mutate(mergedLabel = fuzzy_match(documentName, .25, cleanLabel))
     
     
     articles <- std_data5 %>% 
         group_by(authorBlock, documentYear) %>% 
         filter(type == "article") %>% 
-        mutate(mergedLabel = fuzzy_match(documentName, .25, cleanLabel))
+        mutate(mergedLabel = fuzzy_match(documentName, .15, cleanLabel))
     
         clean_data <- rbind(books, articles)
 
