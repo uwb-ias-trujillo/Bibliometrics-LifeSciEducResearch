@@ -1,4 +1,3 @@
-
 require(lazyeval)
 
 extract_citation <- function(x, column){
@@ -86,7 +85,6 @@ standardize <- function(data){
        mutate(documentName = str_replace(documentName, "p[0-9]+", "" )) %>% 
        mutate(documentName = str_replace(documentName, ",", "")) %>% 
        mutate(documentName = str_replace(documentName, "[0-9]", "")) %>% 
-       mutate(documentName = str_replace_all(documentName, abb_data)) %>% 
        mutate(documentName = str_replace_all(documentName, "[,]", "")) %>% 
        mutate(type = ifelse(is.na(volume), "book", "article")) %>% 
        mutate(cleanLabel = str_replace(label, ",$", ""))    
