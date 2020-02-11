@@ -11,6 +11,6 @@ data(scientometrics_text)
 scient_df <- isi2df(scientometrics_text)
 
 #Working with CBE-LSE data. 
-isi<-readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')
-data <- convert2df(isi,dbsource = "wos", format = "plaintext")
+data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
+  convert2df(dbsource = "wos", format = "plaintext")
 
