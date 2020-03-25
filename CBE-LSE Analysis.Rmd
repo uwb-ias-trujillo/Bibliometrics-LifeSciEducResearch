@@ -7,6 +7,11 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+##### Install packages ###
+install.packages(c("tidyverse","devtools","rlang")) # to install the bibliometrix most recent version from GITHUB we use the devtools
+devtools::install_github("massimoaria/bibliometrix") # next we pull the code from github to install the package.
+library('tidyverse') # load tidyverse package
+library('bibliometrix')
 ```
 
 ## R Markdown
@@ -15,8 +20,11 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+```{r BibliographicData}
+#Working with CBE-LSE data. 
+data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
+  convert2df(dbsource = "wos", format = "plaintext")
+summary(data)
 ```
 
 ## Including Plots
