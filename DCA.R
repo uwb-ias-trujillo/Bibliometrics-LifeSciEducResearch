@@ -4,6 +4,8 @@ devtools::install_github("massimoaria/bibliometrix") # next we pull the code fro
 library('tidyverse') # load tidyverse package
 library('bibliometrix')
 
+biblioshiny()
+
 #### UPLOAD DATA ###
 #Sample provided by biblionetrix package
 scientometrics_text <- readFiles('http://www.bibliometrix.org/datasets/scientometrics.txt')
