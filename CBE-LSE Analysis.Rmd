@@ -34,7 +34,7 @@ data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
 This is the placeholder for the question about the social struction of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
 Text to introduce the script and outputs
 ```{r co-authorship,echo=FALSE}
-#INSERT FUNCTION FOR CREATING COAUTHORSHIP NETWORK using data file
+#INSERT FUNCTION FOR CREATING COAUTHORSHIP NETWORK using 'data' file
 
 ```
 Text to explain what is shown in the figures.
@@ -43,7 +43,7 @@ Text to explain what is shown in the figures.
 This is the placeholder for the question about collaborations between different universities (institutions)
 Text to introduce the script and outputs
 ```{r collaborative, echo=FALSE}
-#INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK
+#INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
 
 ```
 Text to explain what is shown in the figures.
@@ -52,6 +52,6 @@ Text to explain what is shown in the figures.
 This is the placeholder for the question about documents frequently cited together
 Text to introduce the script and outputs. 
 ```{r DCA, echo=FALSE}
-#INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK
+#INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
 ```
 Text to explain what is shown in the figures.
