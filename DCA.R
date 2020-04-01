@@ -1,3 +1,4 @@
+#This script launches the biblioshiny script (previously named DCA.R)
 ##### Install packages ###
 install.packages(c("tidyverse","devtools","rlang")) # to install the bibliometrix most recent version from GITHUB we use the devtools
 devtools::install_github("massimoaria/bibliometrix") # next we pull the code from github to install the package.
@@ -5,14 +6,3 @@ library('tidyverse') # load tidyverse package
 library('bibliometrix')
 
 biblioshiny()
-
-#### UPLOAD DATA ###
-#Sample provided by biblionetrix package
-scientometrics_text <- readFiles('http://www.bibliometrix.org/datasets/scientometrics.txt')
-data(scientometrics_text)
-scient_df <- isi2df(scientometrics_text)
-
-#Working with CBE-LSE data. 
-data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
-  convert2df(dbsource = "wos", format = "plaintext")
-
