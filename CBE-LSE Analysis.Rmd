@@ -28,6 +28,7 @@ data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
 ## Research Questions
 
 ### What social structures are organizing co-authorship. Social Network Analysis (SNA) of co-authorship.
+Rachel Kudlacz 
 This is the placeholder for the question about the social struction of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
 Text to introduce the script and outputs
 ```{r co-authorship,echo=FALSE}
