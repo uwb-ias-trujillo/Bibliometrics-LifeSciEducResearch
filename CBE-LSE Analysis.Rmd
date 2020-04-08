@@ -45,6 +45,7 @@ Text to introduce the script and outputs
 Text to explain what is shown in the figures.
 
 ### What is the intellectual structures? Document co-citation network
+Darcie
 This is the placeholder for the question about documents frequently cited together
 Text to introduce the script and outputs. 
 ```{r DCA, echo=FALSE}
