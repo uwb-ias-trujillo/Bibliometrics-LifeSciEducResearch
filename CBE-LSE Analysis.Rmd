@@ -38,7 +38,7 @@ Text to introduce the script and outputs
 Text to explain what is shown in the figures.
 
 ### What are the collaborative connections between institutions?
-Germaine 
+Germaine Ng
 This is the placeholder for the question about collaborations between different universities (institutions)
 Text to introduce the script and outputs
 ```{r collaborative, echo=FALSE}
