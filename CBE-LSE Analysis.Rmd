@@ -7,8 +7,16 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+<<<<<<< HEAD
+##### Install packages ###
+install.packages(c("tidyverse","devtools","rlang")) # to install the bibliometrix most recent version from GITHUB we use the devtools
+devtools::install_github("massimoaria/bibliometrix") # next we pull the code from github to install the package.
+library('tidyverse') # load tidyverse package
+library('bibliometrix')
+=======
 library(bibliometrix)
 library(tidyverse)
+>>>>>>> a404bfe6672f7c1dc1f368450e18c5f4ec8c5f97
 ```
 
 ##Introduction
@@ -17,6 +25,7 @@ This is the placeholder for the introduction. This is an R Markdown document. Ma
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r BibliographicData}
+<<<<<<< HEAD
 ##### Install packages ###
 install.packages(c("tidyverse","devtools","rlang")) # to install the bibliometrix most recent version from GITHUB we use the devtools
 devtools::install_github("massimoaria/bibliometrix") # next we pull the code from github to install the package.
@@ -33,6 +42,11 @@ scient_df <- isi2df(scientometrics_text)
 data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
   convert2df(dbsource = "wos", format = "plaintext")
 biblioshiny()
+=======
+#Working with CBE-LSE data. 
+data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
+  convert2df(dbsource = "wos", format = "plaintext")
+>>>>>>> e392f8e6d8f0e5620c1f067afa588f59da0b2870
 summary(data)
 ```
 ## Dataset
