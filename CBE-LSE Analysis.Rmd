@@ -1,23 +1,26 @@
 ---
-title: "CBE-LSE Analysis"
-author: "Caleb Trujillo"
-date: "3/6/2020"
+title: "CBE-LSE Bibliometric Analysis"
+author: "Caleb Trujillo, Darcie Nelson, Rachel Kudlacz, Germaine Ng"
+date: "4/1/2020"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+<<<<<<< HEAD
 ##### Install packages ###
 install.packages(c("tidyverse","devtools","rlang")) # to install the bibliometrix most recent version from GITHUB we use the devtools
 devtools::install_github("massimoaria/bibliometrix") # next we pull the code from github to install the package.
 library('tidyverse') # load tidyverse package
 library('bibliometrix')
+=======
+library(bibliometrix)
+library(tidyverse)
+>>>>>>> a404bfe6672f7c1dc1f368450e18c5f4ec8c5f97
 ```
 
-## What social structures are organizing co-authorship. Social Network Analysis (SNA) of co-authorship
-
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+##Introduction
+This is the placeholder for the introduction. This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
@@ -27,16 +30,39 @@ data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
   convert2df(dbsource = "wos", format = "plaintext")
 summary(data)
 ```
+## Dataset
 
-## How do different authors write about different topics? (intreraction question)
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
+### Summary of initial data set
+This is a placeholder for the inital data set
+```{r dataset}
 data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
   convert2df(dbsource = "wos", format = "plaintext")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Research Questions
 
-## What are the collaborative networks between institutions?
+### What social structures are organizing co-authorship. Social Network Analysis (SNA) of co-authorship.
+This is the placeholder for the question about the social struction of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
+Text to introduce the script and outputs
+```{r co-authorship,echo=FALSE}
+#INSERT FUNCTION FOR CREATING COAUTHORSHIP NETWORK using 'data' file
+
+```
+Text to explain what is shown in the figures.
+
+### What are the collaborative connections between institutions?
+This is the placeholder for the question about collaborations between different universities (institutions)
+Text to introduce the script and outputs
+```{r collaborative, echo=FALSE}
+#INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
+
+```
+Text to explain what is shown in the figures.
+
+### What is the intellectual structures? Document co-citation network
+This is the placeholder for the question about documents frequently cited together
+Text to introduce the script and outputs. 
+```{r DCA, echo=FALSE}
+#INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
+```
+Text to explain what is shown in the figures.
