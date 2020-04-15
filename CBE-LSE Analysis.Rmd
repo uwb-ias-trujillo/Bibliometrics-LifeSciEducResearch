@@ -38,12 +38,17 @@ Text to introduce the script and outputs
 Text to explain what is shown in the figures.
 
 ### What are the collaborative connections between institutions?
-Germaine Ng
+Germaine Ng 
 This is the placeholder for the question about collaborations between different universities (institutions)
 Text to introduce the script and outputs
 ```{r collaborative, echo=FALSE}
 #INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
+UNdata <- metaTagExtraction(data, Field = “AU_UN”, sep = “;” )
+NetMatrix <- biblioNetwork(UNdata, analysis = "colloboration", network = "universities", sep = "; ")
 
+# Plot the network
+
+net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 2)
 ```
 Text to explain what is shown in the figures.
 
@@ -59,6 +64,6 @@ NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references
 
 # Plot the network
 
-net=networkPlot(NetMatrix, n = 200, Title = "Co-Citation Network", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 2)
+net=networkPlot(NetMatrix, n = 200, Title = "Co-Citation Network", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 ```
 Text to explain what is shown in the figures.
