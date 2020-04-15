@@ -21,8 +21,8 @@ When you click the **Knit** button a document will be generated that includes bo
 This is a placeholder for the inital data set
 Whole group
 ```{r dataset}
-txt <- readLines('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')
-data <- convert2df(txt, dbsource = "wos", format = "plaintext")
+txt <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')
+data <- convert2df(file = txt, dbsource = "wos", format = "plaintext")
 ```
 
 ## Research Questions
@@ -43,12 +43,12 @@ This is the placeholder for the question about collaborations between different 
 Text to introduce the script and outputs
 ```{r collaborative, echo=FALSE}
 #INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
-UNdata <- metaTagExtraction(data, Field = “AU_UN”, sep = “;” )
-NetMatrix <- biblioNetwork(UNdata, analysis = "colloboration", network = "universities", sep = "; ")
+#UNdata <- metaTagExtraction(data, Field = “AU_UN”, sep = “;” )
+#NetMatrix <- biblioNetwork(UNdata, analysis = "colloboration", network = "universities", sep = "; ")
 
 # Plot the network
 
-net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 2)
+#net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 2)
 ```
 Text to explain what is shown in the figures.
 
