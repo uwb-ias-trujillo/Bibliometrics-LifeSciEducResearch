@@ -21,7 +21,7 @@ When you click the **Knit** button a document will be generated that includes bo
 This is a placeholder for the inital data set
 Whole group
 ```{r dataset}
-txt <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')
+txt <- readLines('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')
 data <- convert2df(txt, dbsource = "wos", format = "plaintext")
 ```
 
