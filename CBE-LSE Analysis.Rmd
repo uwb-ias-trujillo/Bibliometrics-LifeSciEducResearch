@@ -32,9 +32,14 @@ Rachel Kudlacz
 This is the placeholder for the question about the social struction of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
 Text to introduce the script and outputs
 ```{r co-authorship,echo=FALSE}
-#INSERT FUNCTION FOR CREATING COAUTHORSHIP NETWORK using 'data' file
-# Create a Social Network Analysis (SNA) Network 
+#INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
+# Create a Social Network Analysis(SNA) Network from Co-Citation Network
+NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = "; ")
+
+# Plot the network - look into SNA application
+net = networkPlot(NetMatrix, n = 200, Title = "Social Network Analysis", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 3, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 ```
+
 Text to explain what is shown in the figures.
 
 ### What are the collaborative connections between institutions?
