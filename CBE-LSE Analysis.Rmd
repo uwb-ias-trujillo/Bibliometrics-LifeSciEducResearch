@@ -21,8 +21,8 @@ When you click the **Knit** button a document will be generated that includes bo
 This is a placeholder for the inital data set
 Whole group
 ```{r dataset}
-data <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')%>%
-  convert2df(dbsource = "wos", format = "plaintext")
+txt <- readFiles('rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt')
+data <- convert2df(file = txt, dbsource = "wos", format = "plaintext")
 ```
 
 ## Research Questions
@@ -38,12 +38,17 @@ Text to introduce the script and outputs
 Text to explain what is shown in the figures.
 
 ### What are the collaborative connections between institutions?
-Germaine Ng
+Germaine Ng 
 This is the placeholder for the question about collaborations between different universities (institutions)
 Text to introduce the script and outputs
 ```{r collaborative, echo=FALSE}
 #INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
+UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = "; " )
+NetMatrix <- biblioNetwork(UNdata, analysis = "colloboration", network = "universities", sep = "; ")
 
+# Plot the network
+
+net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 2)
 ```
 Text to explain what is shown in the figures.
 
@@ -51,14 +56,12 @@ Text to explain what is shown in the figures.
 Darcie Nelson
 This is the placeholder for the question about documents frequently cited together
 Text to introduce the script and outputs. 
-```{r DCA, echo=FALSE}
+```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
 #INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
 # Create a co-citation network
-
 NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = "; ")
 
 # Plot the network
-
-net=networkPlot(NetMatrix, n = 200, Title = "Co-Citation Network", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 2)
+net = networkPlot(NetMatrix, n = 200, Title = "Co-Citation Network", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 3, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 ```
 Text to explain what is shown in the figures.
