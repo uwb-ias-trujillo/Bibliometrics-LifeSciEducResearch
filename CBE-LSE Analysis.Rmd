@@ -33,7 +33,7 @@ This is the placeholder for the question about the social struction of co-author
 Text to introduce the script and outputs
 ```{r co-authorship,echo=FALSE}
 #INSERT FUNCTION FOR CREATING COAUTHORSHIP NETWORK using 'data' file
-
+# Create a Social Network Analysis (SNA) Network 
 ```
 Text to explain what is shown in the figures.
 
