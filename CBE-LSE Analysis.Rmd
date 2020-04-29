@@ -43,24 +43,31 @@ net = networkPlot(NetMatrix, n = 200, Title = "Social Network Analysis", type = 
 Text to explain what is shown in the figures.
 
 ### What are the collaborative connections between institutions?
+
 Germaine Ng 
+
 This is the placeholder for the question about collaborations between different universities (institutions)
 Text to introduce the script and outputs
+
 ```{r collaborative, echo=FALSE}
 #INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
-UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = "; " )
-NetMatrix <- biblioNetwork(UNdata, analysis = "colloboration", network = "universities", sep = "; ")
+UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";" )
+
+NetMatrix <- biblioNetwork(UNdata, analysis = "collaboration", network = "universities", sep = ";")
 
 # Plot the network
 
-net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 2)
+net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 3)
+
 ```
 Text to explain what is shown in the figures.
 
 ### What is the intellectual structures? Document co-citation network
+
 Darcie Nelson
 This is the placeholder for the question about documents frequently cited together
 Text to introduce the script and outputs. 
+
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
 #INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
 # Create a co-citation network
