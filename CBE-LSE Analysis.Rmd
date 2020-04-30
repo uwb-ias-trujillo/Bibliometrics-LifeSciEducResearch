@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(bibliometrix)
 library(tidyverse)
+library(networkD3)
 ```
 
 ##Introduction
@@ -51,14 +52,18 @@ Text to introduce the script and outputs
 
 ```{r collaborative, echo=FALSE}
 #INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
-UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";" )
+UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";")
 
 NetMatrix <- biblioNetwork(UNdata, analysis = "collaboration", network = "universities", sep = ";")
 
 # Plot the network
+net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 3, label.n = 30)
 
-net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 3)
-
+#Create an interactive graphic
+g<-igraph_to_networkD3(net$graph)
+forceNetwork(Links = g$links, Nodes = g$nodes, Source = 'source',
+             Target = 'target', NodeID = 'name', 
+             Group = 1, zoom = TRUE, bounded = FALSE)
 ```
 Text to explain what is shown in the figures.
 
