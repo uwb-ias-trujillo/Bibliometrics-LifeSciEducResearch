@@ -2,22 +2,24 @@
 title: "CBE-LSE Bibliometric Analysis"
 author: "Caleb Trujillo, Darcie Nelson, Rachel Kudlacz, Germaine Ng"
 date: "4/1/2020"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-install.packages("devtools")
-devtools::install_github("massimoaria/bibliometrix")
+#install.packages("devtools")
+#devtools::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
 ```
 
 ##Introduction
-This is the placeholder for the introduction. This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+There has tremendous growth in the area undergraduate biology research over the last two decades. This study attempts to summarize and analyze the progress of this growth. 
+
 
 
 ### Summary of initial data set
@@ -40,7 +42,7 @@ Text to introduce the script and outputs
 NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = "; ")
 
 # Plot the network - look into SNA application
-net = networkPlot(NetMatrix, n = 200, Title = "Social Network Analysis", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 3, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+#net = networkPlot(NetMatrix, n = 200, Title = "Social Network Analysis", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 3, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 ```
 
 Text to explain what is shown in the figures.
@@ -64,7 +66,7 @@ net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "
 #Create an interactive graphic
 g<-igraph_to_networkD3(net$graph)
 forceNetwork(Links = g$links, Nodes = g$nodes, Source = 'source',
-             Target = 'target', NodeID = 'name', 
+             Target = 'target', NodeID = 'name', fontSize = 10, 
              Group = 1, zoom = TRUE, bounded = FALSE)
 ```
 Text to explain what is shown in the figures.
@@ -81,7 +83,7 @@ Text to introduce the script and outputs.
 NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = "; ")
 
 # Plot the network
-net = networkPlot(NetMatrix, n = 200, Title = "Co-Citation Network", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 3, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+#net = networkPlot(NetMatrix, n = 200, Title = "Co-Citation Network", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 3, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE, halo = TRUE)
 ```
 Text to explain what is shown in the figures.
 
