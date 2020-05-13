@@ -59,7 +59,7 @@ UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";")
 NetMatrix <- biblioNetwork(UNdata, analysis = "collaboration", network = "universities", sep = ";")
 
 # Plot the network
-net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 3, label.n = 30)
+net=networkPlot(NetMatrix, n = 200, Title = "University Collaboration", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize=0.7,edgesize = 5, edges.min = 3, label.n = 30)
 
 #Create an interactive graphic
 g<-igraph_to_networkD3(net$graph)
