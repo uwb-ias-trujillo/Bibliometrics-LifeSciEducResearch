@@ -26,7 +26,7 @@ Whole group
 ```{r dataset}
 txt <- "rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt"
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
-biblioAnalysis(data, sep = ";")
+#biblioAnalysis(data, sep = ";")
 ```
 
 ## Research Questions
@@ -85,8 +85,8 @@ NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references
 net = networkPlot(NetMatrix, n = 200, Title = "Co-Citation Network", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 
 plot(net$graph, vertex.label.family = "Helvetica")
-#net$graph
-#plot(net)
+names(net$nodeDegree["american association 2011-1"])<- "AAAS 2011"
+net$nodeDegree
 #g<-igraph_to_networkD3(net$graph)
 #forceNetwork(Links = g$links, Nodes = g$nodes, Source = 'source',
              #Target = 'target', NodeID = 'name', fontSize = 10, 
