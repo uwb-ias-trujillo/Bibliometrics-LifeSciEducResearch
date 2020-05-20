@@ -10,10 +10,12 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 require("devtools")
+require("rgexf")
 devtools::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
+library("rgexf")
 ```
 
 ##Introduction
@@ -60,13 +62,16 @@ UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";")
 NetMatrix <- biblioNetwork(UNdata, analysis = "collaboration", network = "universities", sep = ";")
 
 # Plot the network
-net=networkPlot(NetMatrix, n = 200, Title = "University Colloboration", type = "fruchterman", size=T, remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7,edgesize = 5, edges.min = 2, label.n = 30)
+net=networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Top 20 University Collaborations", type = "auto", size.cex =TRUE, remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7,edgesize = 5, edges.min = 4)
+
+head(net$nodeDegree) # Top six universities by degree of publications with other universities
 
 #Create an interactive graphic
-g<-igraph_to_networkD3(net$graph)
+g<-igraph_to_networkD3(net$graph,net$cluster_res)
 forceNetwork(Links = g$links, Nodes = g$nodes, Source = 'source',
              Target = 'target', NodeID = 'name', fontSize = 10, 
-             Group = 1, zoom = TRUE, bounded = FALSE)
+             Group = 'vertex', bounded = TRUE, opacityNoHover	= 1
+)
 ```
 Text to explain what is shown in the figures.
 
