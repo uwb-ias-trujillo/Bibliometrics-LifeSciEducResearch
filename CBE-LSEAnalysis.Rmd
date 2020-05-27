@@ -11,11 +11,12 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 require("devtools")
 require("rgexf")
-devtools::install_github("massimoaria/bibliometrix")
+require("bibliometrix")
+#devtools::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
-library("rgexf")
+library(rgexf)
 ```
 
 ##Introduction
@@ -30,7 +31,7 @@ txt <- "rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt"
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
-results
+summary(results)
 ```
 
 ## Research Questions
@@ -77,6 +78,10 @@ forceNetwork(Links = g$links, Nodes = g$nodes, Source = 'source',
 )
 Uni_NetStat <- networkStat(NetMatrix)
 Summary(Uni_NetStat) #Centrality shows how importance the nodes are
+
+igraph.to.gexf(igraph.obj, ...)
+
+
 ```
 Text to explain what is shown in the figures.
 
