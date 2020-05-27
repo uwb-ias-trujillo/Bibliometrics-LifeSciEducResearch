@@ -92,7 +92,7 @@ Text to introduce the script and outputs.
 NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
 
 # Plot the network
-net = networkPlot(NetMatrix, n = 200, Title = "Co-Citation Network", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+net = networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 
 plot(net$graph, vertex.label.family = "Helvetica")
 names(net$nodeDegree["american association 2011-1"])<- "AAAS 2011"
