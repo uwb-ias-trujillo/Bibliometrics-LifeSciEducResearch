@@ -28,7 +28,9 @@ Whole group
 ```{r dataset}
 txt <- "rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt"
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
-#biblioAnalysis(data, sep = ";")
+results <- biblioAnalysis(data, sep = ";")
+
+results
 ```
 
 ## Research Questions
