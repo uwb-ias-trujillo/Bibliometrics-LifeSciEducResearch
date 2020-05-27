@@ -11,11 +11,12 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 require("devtools")
 require("rgexf")
+#require("bibliometrix")
 devtools::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
-library("rgexf")
+library(rgexf)
 ```
 
 ##Introduction
