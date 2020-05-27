@@ -72,6 +72,8 @@ forceNetwork(Links = g$links, Nodes = g$nodes, Source = 'source',
              Target = 'target', NodeID = 'name', fontSize = 10, 
              Group = 'vertex', bounded = TRUE, opacityNoHover	= 1
 )
+Uni_NetStat <- networkStat(NetMatrix)
+Summary(Uni_NetStat) #Centrality shows how importance the nodes are
 ```
 Text to explain what is shown in the figures.
 
