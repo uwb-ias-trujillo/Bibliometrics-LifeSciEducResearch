@@ -30,7 +30,13 @@ Whole group
 txt <- c("rawdata/VQD/20200315_QDV_WoS_Record1to500_QualResearch_KW.txt",
          "rawdata/VQD/20200315_QDV_WoS_Record501to1000_QualResearch_KW.txt",
          "rawdata/VQD/20200315_QDV_WoS_Record1001to1500_QualResearch_KW.txt",
-         "rawdata/VQD/20200315_QDV_WoS_Record1501to2000_QualResearch_KW.txt"
+         "rawdata/VQD/20200315_QDV_WoS_Record1501to2000_QualResearch_KW.txt",
+         "rawdata/VQD/20200316_QDV_WoS_Record1to500_DataVis_HN.txt",
+         "rawdata/VQD/20200316_QDV_WoS_Record501to1000_DataVis_HN.txt",
+         "rawdata/VQD/20200316_QDV_WoS_Record1001to1500_DataVis_HN.txt",
+         "rawdata/VQD/20200316_QDV_WoS_Record1501to2000_DataVis_HN.txt",
+         "rawdata/VQD/20200312VQD_Applied_1-500.txt",
+         "rawdata/VQD/20200312VQD_Applied_501-1000.txt"
          )
          
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
@@ -47,13 +53,13 @@ Document Cocitation Analysis
 NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
 
 # Plot the network
-net <- networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Co-Citation Network Qualitative Research with at least 8 co-citations", type = "auto", size.cex = TRUE, remove.multiple=TRUE, labelsize = 10, edgesize = 5, edges.min = 8, label.n = 30, cluster = "louvain", #halo = TRUE, weighted = TRUE, 
+net <- networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Co-Citation Network Qualitative Research with at least 8 co-citations", type = "auto", size.cex = TRUE, remove.multiple=TRUE, labelsize = 10, edgesize = 5, edges.min = 6, label.n = 30, cluster = "louvain", #halo = TRUE, weighted = TRUE, 
                   remove.isolates = TRUE, label.cex = TRUE)
 
 #plot(net$graph, vertex.label.family = "Helvetica")
 #names(net$nodeDegree["american association 2011-1"])<- "AAAS 2011"
-net$nodeDegree
-gnet<-igraph.to.gexf(net[["graph"]])
+nodesdegree<- net$nodeDegree
+#gnet<-igraph.to.gexf(net[["graph"]])
 #g<-igraph_to_networkD3(net$graph)
 #forceNetwork(Links = g$links, Nodes = g$nodes, Source = 'source',
              #Target = 'target', NodeID = 'name', fontSize = 10, 
