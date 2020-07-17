@@ -27,13 +27,21 @@ There has tremendous growth in the area undergraduate biology research over the 
 This is a placeholder for the inital data set
 Whole group
 ```{r dataset}
-txt <- "rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt"
+txt <- c("rawdata/CBE_LSE_2010-2019/20200717_CBE2010-2019-WOS-1-500.txt",
+         "rawdata/CBE_LSE_2010-2019/20200717_CBE2010-2019-WOS-501-708.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 ```
+
+
 ```{r biblio}
+options(width=100)
 S <- summary(object = results, k = 10, pause = FALSE)
 S
+S$MainInformationDF
+
+write.csv(file = "ArticlesYears.csv",S$AnnualProduction)
+
 ```
 
 ## Research Questions
