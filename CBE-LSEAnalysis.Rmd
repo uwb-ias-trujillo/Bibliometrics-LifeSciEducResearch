@@ -40,6 +40,7 @@ S <- summary(object = results, k = 10, pause = FALSE)
 S
 S$MainInformationDF
 
+write.csv(file = "Maininformation.csv",S$MainInformationDF)
 write.csv(file = "ArticlesYears.csv",S$AnnualProduction)
 
 ```
