@@ -30,8 +30,10 @@ Whole group
 txt <- "rawdata/CBE_LSE_2008-2019/CBE_LSErecords1-733.txt"
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
-
-summary(results)
+```
+```{r biblio}
+S <- summary(object = results, k = 10, pause = FALSE)
+S
 ```
 
 ## Research Questions
