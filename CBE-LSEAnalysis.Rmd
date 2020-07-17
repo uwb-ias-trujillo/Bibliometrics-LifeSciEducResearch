@@ -12,11 +12,13 @@ knitr::opts_chunk$set(echo = TRUE)
 require("devtools")
 require("rgexf")
 require("bibliometrix")
+require("igraph")
 #devtools::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
 library(rgexf)
+library(igraph)
 ```
 
 ##Introduction
@@ -41,9 +43,26 @@ S
 S$MainInformationDF
 
 write.csv(file = "Maininformation.csv",S$MainInformationDF)
+
 write.csv(file = "ArticlesYears.csv",S$AnnualProduction)
 
+write.csv(file = "MostCitedPapers.csv",S$MostCitedPapers)
+
+write.csv(file = "MostProdAuthors.csv", S$MostProdAuthors)
 ```
+
+
+##Authoring
+
+```{r author productivity}
+authors=gsub(","," ",names(results$Authors)[1:10])
+
+indices <- Hindex(data, field = "author", elements=authors, sep = ";", years = 50)
+
+indices$H
+
+```
+
 
 ## Research Questions
 
@@ -54,10 +73,15 @@ Text to introduce the script and outputs
 ```{r co-authorship,echo=FALSE}
 #INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
 # Create a Social Network Analysis(SNA) Network from Co-Citation Network
-NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
+CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";")
 
 # Plot the network - look into SNA application
-net = networkPlot(NetMatrix, n = 200, Title = "Social Network Analysis", type = "fruchterman", size=T, remove.multiple=FALSE, labelsize = 3, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+CoANet <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "auto", size=0.1, remove.multiple=FALSE, labelsize = 1, edgesize = 1, edges.min = 2, label.n = 10, cluster = "louvain", remove.isolates = TRUE)
+
+plot(CoANet$graph, vertex.label.family = "Helvetica")
+
+write_graph(CoANet$graph,"CBE_LSE_Co-authorship.graphml", c("graphml"))
+
 ```
 
 Text to explain what is shown in the figures.
