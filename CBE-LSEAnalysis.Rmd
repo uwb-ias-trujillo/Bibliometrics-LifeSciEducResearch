@@ -17,6 +17,7 @@ library(bibliometrix)
 library(tidyverse)
 library(networkD3)
 library(rgexf)
+library(network)
 ```
 
 ##Introduction
@@ -53,7 +54,7 @@ Document Cocitation Analysis
 NetMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
 
 # Plot the network
-net <- networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Co-Citation Network Qualitative Research with at least 8 co-citations", type = "auto", size = 0.1, size.cex = TRUE, remove.multiple=TRUE, labelsize = 1, edgesize = 1, edges.min = 1, label.n = 10, cluster = "louvain", #halo = TRUE, weighted = TRUE,
+net <- networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Co-Citation Network Qualitative Research with at least 8 co-citations", type = "auto", size = 0.1, size.cex = TRUE, remove.multiple=TRUE, labelsize = 1, edgesize = 1, edges.min = 3, label.n = 10, cluster = "louvain", #halo = TRUE, weighted = TRUE,
                   remove.isolates = TRUE, label.cex = TRUE)
 
 
