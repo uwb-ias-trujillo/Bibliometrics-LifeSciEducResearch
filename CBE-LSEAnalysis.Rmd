@@ -17,7 +17,7 @@ library(bibliometrix)
 library(tidyverse)
 library(networkD3)
 library(rgexf)
-library(network)
+library(igraph)
 ```
 
 ##Introduction
