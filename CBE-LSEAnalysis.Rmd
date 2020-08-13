@@ -82,7 +82,7 @@ plot(CoANet$graph, vertex.label.family = "Helvetica")
 
 write_graph(CoANet$graph,"CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
 
-CoANet2 <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "auto", size=0.1, remove.multiple=FALSE, labelsize = 1, edgesize = 1, edges.min = 1, label.n = 10, cluster = "louvain", remove.isolates = TRUE)
+CoANet2 <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "auto", size=0.1, remove.multiple=FALSE, labelsize = 1, edgesize = 1, edges.min = 3, label.n = 10, cluster = "louvain", remove.isolates = TRUE)
 
 plot(CoANet2$graph, vertex.label.family = "Helvetica")
 
@@ -108,15 +108,16 @@ NetMatrix <- biblioNetwork(UNdata, analysis = "collaboration", network = "univer
 
 net=networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Top 20 University Collaborations", type = "auto", size.cex =TRUE, remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7,edgesize = 5, edges.min = 4)
 
-head(net$nodeDegree) # Top six universities by degree of publications with other universities
+plot(net$graph, vertex.label.family = "Helvetica")
 
-#Create an interactive graphic
-g<-igraph_to_networkD3(net$graph,net$cluster_res)
-forceNetwork(Links = g$links, Nodes = g$nodes, Source = 'source',
-             Target = 'target', NodeID = 'name', fontSize = 10, 
-             Group = 'vertex', bounded = TRUE, opacityNoHover	= 1
-)
-Uni_NetStat <- networkStat(NetMatrix)
+head(net$nodeDegree) # Top six universities by degree of publications with other universities
+write_graph(net$graph,"CBE_LSE_Coauthorshipedge4.graphml", c("graphml"))
+
+
+net2=networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Top  University Collaborations", type = "auto", size.cex =TRUE, remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7,edgesize = 5, edges.min = 1)
+
+plot(net2$graph, vertex.label.family = "Helvetica")
+write_graph(net$graph,"CBE_LSE_Coauthorshipedge1.graphml", c("graphml"))
 ```
 Text to explain what is shown in the figures.
 
