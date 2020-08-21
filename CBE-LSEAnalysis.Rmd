@@ -40,6 +40,8 @@ results <- biblioAnalysis(data, sep = ";")
 options(width=100)
 S <- summary(object = results, k = 10, pause = FALSE)
 S
+plot(x=results, k=10, pause=F)
+
 S$MainInformationDF
 
 write.csv(file = "Maininformation.csv",S$MainInformationDF)
@@ -82,11 +84,11 @@ plot(CoANet$graph, vertex.label.family = "Helvetica")
 
 write_graph(CoANet$graph,"CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
 
-CoANet2 <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "auto", size=0.1, remove.multiple=FALSE, labelsize = 1, edgesize = 1, edges.min = 3, label.n = 10, cluster = "louvain", remove.isolates = TRUE)
+#CoANet2 <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "auto", size=0.1, remove.multiple=FALSE, labelsize = 1, edgesize = 1, edges.min = 3, label.n = 10, cluster = "louvain", remove.isolates = TRUE)
 
-plot(CoANet2$graph, vertex.label.family = "Helvetica")
+#plot(CoANet2$graph, vertex.label.family = "Helvetica")
 
-write_graph(CoANet2$graph,"CBE_LSE_Co-authorshipedge3.graphml", c("graphml"))
+#write_graph(CoANet2$graph,"CBE_LSE_Co-authorshipedge3.graphml", c("graphml"))
 ```
 
 Text to explain what is shown in the figures.
@@ -98,26 +100,31 @@ Germaine Ng
 This is the placeholder for the question about collaborations between different universities (institutions)
 Text to introduce the script and outputs
 
+```{r institution productivity}
+Affiliation=results$Affiliations[1:20]
+Affiliation
+```
+
 ```{r collaborative, echo=FALSE}
 #INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
-UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";")
+#UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";")
 
-NetMatrix <- biblioNetwork(UNdata, analysis = "collaboration", network = "universities", sep = ";")
+UniNetMatrix <- biblioNetwork(data, analysis = "collaboration", network = "universities", sep = ";")
 
 # Plot the network
 
-net=networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Top 20 University Collaborations", type = "auto", size.cex =TRUE, remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7,edgesize = 5, edges.min = 4)
+Uninet=networkPlot(UniNetMatrix, n = dim(UniNetMatrix)[1], Title = "Top 20 University Collaborations", type = "auto", size.cex =TRUE, remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7,edgesize = 5, edges.min = 3)
 
-plot(net$graph, vertex.label.family = "Helvetica")
+plot(Uninet$graph, vertex.label.family = "Helvetica")
 
-head(net$nodeDegree) # Top six universities by degree of publications with other universities
-write_graph(net$graph,"CBE_LSE_Coauthorshipedge4.graphml", c("graphml"))
+head(Uninet$nodeDegree) # Top six universities by degree of publications with other universities
+write_graph(Uninet$graph,"CBE_LSE_Universityedge3.graphml", c("graphml"))
 
 
-net2=networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Top  University Collaborations", type = "auto", size.cex =TRUE, remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7,edgesize = 5, edges.min = 1)
+Uninet2=networkPlot(UniNetMatrix, n = dim(UniNetMatrix)[1], Title = "Top  University Collaborations", type = "auto", size.cex =TRUE, remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7,edgesize = 5, edges.min = 1)
 
-plot(net2$graph, vertex.label.family = "Helvetica")
-write_graph(net$graph,"CBE_LSE_Coauthorshipedge1.graphml", c("graphml"))
+plot(Uninet2$graph, vertex.label.family = "Helvetica")
+write_graph(Uninet2$graph,"CBE_LSE_Universityedge1.graphml", c("graphml"))
 ```
 Text to explain what is shown in the figures.
 

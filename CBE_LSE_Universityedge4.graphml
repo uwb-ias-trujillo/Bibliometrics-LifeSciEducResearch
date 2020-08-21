@@ -1,0 +1,3679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<!-- Created by igraph -->
+  <key id="g_alpha" for="graph" attr.name="alpha" attr.type="double"/>
+  <key id="g_ylim" for="graph" attr.name="ylim" attr.type="double"/>
+  <key id="g_xlim" for="graph" attr.name="xlim" attr.type="double"/>
+  <key id="g_rescale" for="graph" attr.name="rescale" attr.type="boolean"/>
+  <key id="g_asp" for="graph" attr.name="asp" attr.type="double"/>
+  <key id="g_layout" for="graph" attr.name="layout" attr.type="double"/>
+  <key id="g_main" for="graph" attr.name="main" attr.type="string"/>
+  <key id="v_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="v_deg" for="node" attr.name="deg" attr.type="double"/>
+  <key id="v_size" for="node" attr.name="size" attr.type="double"/>
+  <key id="v_label.cex" for="node" attr.name="label.cex" attr.type="double"/>
+  <key id="v_color" for="node" attr.name="color" attr.type="string"/>
+  <key id="v_community" for="node" attr.name="community" attr.type="double"/>
+  <key id="v_label.dist" for="node" attr.name="label.dist" attr.type="double"/>
+  <key id="v_frame.color" for="node" attr.name="frame.color" attr.type="string"/>
+  <key id="v_label.color" for="node" attr.name="label.color" attr.type="string"/>
+  <key id="v_label.font" for="node" attr.name="label.font" attr.type="double"/>
+  <key id="v_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="e_num" for="edge" attr.name="num" attr.type="double"/>
+  <key id="e_width" for="edge" attr.name="width" attr.type="double"/>
+  <key id="e_color" for="edge" attr.name="color" attr.type="string"/>
+  <key id="e_lty" for="edge" attr.name="lty" attr.type="double"/>
+  <key id="e_curved" for="edge" attr.name="curved" attr.type="boolean"/>
+  <graph id="G" edgedefault="undirected">
+    <data key="g_alpha">0.5</data>
+    <data key="g_ylim">-1</data>
+    <data key="g_xlim">-1</data>
+    <data key="g_rescale">true</data>
+    <data key="g_asp">0</data>
+    <data key="g_layout">0.708871213959428</data>
+    <data key="g_main">Top 20 University Collaborations</data>
+    <node id="n0">
+      <data key="v_name">univ illinois</data>
+      <data key="v_deg">245</data>
+      <data key="v_size">3</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#984EA380</data>
+      <data key="v_community">4</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ illinois</data>
+    </node>
+    <node id="n1">
+      <data key="v_name">univ exeter</data>
+      <data key="v_deg">115</data>
+      <data key="v_size">1.40816326530612</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ exeter</data>
+    </node>
+    <node id="n2">
+      <data key="v_name">univ n carolina</data>
+      <data key="v_deg">208</data>
+      <data key="v_size">2.5469387755102</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ n carolina</data>
+    </node>
+    <node id="n3">
+      <data key="v_name">mcmaster univ</data>
+      <data key="v_deg">114</data>
+      <data key="v_size">1.39591836734694</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">mcmaster univ</data>
+    </node>
+    <node id="n4">
+      <data key="v_name">univ stirling</data>
+      <data key="v_deg">97</data>
+      <data key="v_size">1.18775510204082</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ stirling</data>
+    </node>
+    <node id="n5">
+      <data key="v_name">edinburgh napier univ</data>
+      <data key="v_deg">77</data>
+      <data key="v_size">0.942857142857143</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">edinburgh napier univ</data>
+    </node>
+    <node id="n6">
+      <data key="v_name">univ edinburgh</data>
+      <data key="v_deg">134</data>
+      <data key="v_size">1.64081632653061</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ edinburgh</data>
+    </node>
+    <node id="n7">
+      <data key="v_name">cardiff univ</data>
+      <data key="v_deg">129</data>
+      <data key="v_size">1.57959183673469</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">cardiff univ</data>
+    </node>
+    <node id="n8">
+      <data key="v_name">bangor univ</data>
+      <data key="v_deg">99</data>
+      <data key="v_size">1.21224489795918</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">bangor univ</data>
+    </node>
+    <node id="n9">
+      <data key="v_name">univ sheffield</data>
+      <data key="v_deg">152</data>
+      <data key="v_size">1.86122448979592</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ sheffield</data>
+    </node>
+    <node id="n10">
+      <data key="v_name">univ york</data>
+      <data key="v_deg">105</data>
+      <data key="v_size">1.28571428571429</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ york</data>
+    </node>
+    <node id="n11">
+      <data key="v_name">univ leuven</data>
+      <data key="v_deg">78</data>
+      <data key="v_size">0.955102040816326</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ leuven</data>
+    </node>
+    <node id="n12">
+      <data key="v_name">south african med res council</data>
+      <data key="v_deg">71</data>
+      <data key="v_size">0.869387755102041</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">south african med res council</data>
+    </node>
+    <node id="n13">
+      <data key="v_name">univ southampton</data>
+      <data key="v_deg">108</data>
+      <data key="v_size">1.32244897959184</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ southampton</data>
+    </node>
+    <node id="n14">
+      <data key="v_name">univ nottingham</data>
+      <data key="v_deg">100</data>
+      <data key="v_size">1.22448979591837</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ nottingham</data>
+    </node>
+    <node id="n15">
+      <data key="v_name">hong kong polytech univ</data>
+      <data key="v_deg">102</data>
+      <data key="v_size">1.24897959183673</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#4DAF4A80</data>
+      <data key="v_community">3</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">hong kong polytech univ</data>
+    </node>
+    <node id="n16">
+      <data key="v_name">univ jaen</data>
+      <data key="v_deg">24</data>
+      <data key="v_size">0.293877551020408</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#377EB880</data>
+      <data key="v_community">2</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ jaen</data>
+    </node>
+    <node id="n17">
+      <data key="v_name">georgia inst technol</data>
+      <data key="v_deg">53</data>
+      <data key="v_size">0.648979591836735</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#A6562880</data>
+      <data key="v_community">6</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">georgia inst technol</data>
+    </node>
+    <node id="n18">
+      <data key="v_name">natl univ singapore</data>
+      <data key="v_deg">84</data>
+      <data key="v_size">1.02857142857143</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#FF7F0080</data>
+      <data key="v_community">5</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">natl univ singapore</data>
+    </node>
+    <node id="n19">
+      <data key="v_name">univ granada</data>
+      <data key="v_deg">46</data>
+      <data key="v_size">0.563265306122449</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#377EB880</data>
+      <data key="v_community">2</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ granada</data>
+    </node>
+    <node id="n20">
+      <data key="v_name">michigan state univ</data>
+      <data key="v_deg">96</data>
+      <data key="v_size">1.17551020408163</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#66C2A580</data>
+      <data key="v_community">9</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">michigan state univ</data>
+    </node>
+    <node id="n21">
+      <data key="v_name">leiden univ</data>
+      <data key="v_deg">31</data>
+      <data key="v_size">0.379591836734694</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#99999980</data>
+      <data key="v_community">8</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">leiden univ</data>
+    </node>
+    <node id="n22">
+      <data key="v_name">nanjing univ sci and technol</data>
+      <data key="v_deg">68</data>
+      <data key="v_size">0.83265306122449</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#4DAF4A80</data>
+      <data key="v_community">3</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">nanjing univ sci and technol</data>
+    </node>
+    <node id="n23">
+      <data key="v_name">zhejiang univ</data>
+      <data key="v_deg">55</data>
+      <data key="v_size">0.673469387755102</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#984EA380</data>
+      <data key="v_community">4</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">zhejiang univ</data>
+    </node>
+    <node id="n24">
+      <data key="v_name">shenzhen univ</data>
+      <data key="v_deg">33</data>
+      <data key="v_size">0.404081632653061</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#4DAF4A80</data>
+      <data key="v_community">3</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">shenzhen univ</data>
+    </node>
+    <node id="n25">
+      <data key="v_name">shenzhen grad sch</data>
+      <data key="v_deg">40</data>
+      <data key="v_size">0.489795918367347</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#4DAF4A80</data>
+      <data key="v_community">3</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">shenzhen grad sch</data>
+    </node>
+    <node id="n26">
+      <data key="v_name">tsinghua univ</data>
+      <data key="v_deg">98</data>
+      <data key="v_size">1.2</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#984EA380</data>
+      <data key="v_community">4</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">tsinghua univ</data>
+    </node>
+    <node id="n27">
+      <data key="v_name">nanyang technol univ</data>
+      <data key="v_deg">110</data>
+      <data key="v_size">1.3469387755102</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#FF7F0080</data>
+      <data key="v_community">5</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">nanyang technol univ</data>
+    </node>
+    <node id="n28">
+      <data key="v_name">sch interact comp</data>
+      <data key="v_deg">48</data>
+      <data key="v_size">0.587755102040816</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#A6562880</data>
+      <data key="v_community">6</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">sch interact comp</data>
+    </node>
+    <node id="n29">
+      <data key="v_name">nanjing univ aeronaut and astronaut</data>
+      <data key="v_deg">47</data>
+      <data key="v_size">0.575510204081633</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#F781BF80</data>
+      <data key="v_community">7</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">nanjing univ aeronaut and astronaut</data>
+    </node>
+    <node id="n30">
+      <data key="v_name">liaocheng univ</data>
+      <data key="v_deg">12</data>
+      <data key="v_size">0.146938775510204</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#F781BF80</data>
+      <data key="v_community">7</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">liaocheng univ</data>
+    </node>
+    <node id="n31">
+      <data key="v_name">univ amsterdam</data>
+      <data key="v_deg">60</data>
+      <data key="v_size">0.73469387755102</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#99999980</data>
+      <data key="v_community">8</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">univ amsterdam</data>
+    </node>
+    <node id="n32">
+      <data key="v_name">almaden res ctr</data>
+      <data key="v_deg">37</data>
+      <data key="v_size">0.453061224489796</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#66C2A580</data>
+      <data key="v_community">9</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">almaden res ctr</data>
+    </node>
+    <node id="n33">
+      <data key="v_name">media lab</data>
+      <data key="v_deg">38</data>
+      <data key="v_size">0.46530612244898</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#FC8D6280</data>
+      <data key="v_community">10</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">media lab</data>
+    </node>
+    <node id="n34">
+      <data key="v_name">twin city off ctr</data>
+      <data key="v_deg">17</data>
+      <data key="v_size">0.208163265306122</data>
+      <data key="v_label.cex">0.7</data>
+      <data key="v_color">#FC8D6280</data>
+      <data key="v_community">10</data>
+      <data key="v_label.dist">0.7</data>
+      <data key="v_frame.color">#00000080</data>
+      <data key="v_label.color">#00000099</data>
+      <data key="v_label.font">2</data>
+      <data key="v_label">twin city off ctr</data>
+    </node>
+    <edge source="n0" target="n23">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n23">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n23">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n23">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n23">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n23">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n26">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n26">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n26">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n26">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#984EA340</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n2">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n2">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n2">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n2">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n3">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n3">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n3">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n3">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n1" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n3">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n3">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n3">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n3">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n2" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n4">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n5">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n7">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n8">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n3" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n5">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n5">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n5">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n5">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n5">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n6">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n6">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n6">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n6">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n6">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n7">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n7">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n7">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n7">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n7">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n7">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n4" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n6">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n5" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n7">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n8">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n6" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n8">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n9">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n9">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n9">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n9">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n9">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n9">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n7" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n9">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n8" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n10">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n9" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n11">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n10" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n12">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n11" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n12" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n12" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n12" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n12" target="n13">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n12" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n12" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n12" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n12" target="n14">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n13" target="n14">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n13" target="n14">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n13" target="n14">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n13" target="n14">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n13" target="n14">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n22">
+      <data key="e_num">9</data>
+      <data key="e_width">5</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n24">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n24">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n24">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n24">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n25">
+      <data key="e_num">7</data>
+      <data key="e_width">3.88888888888889</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n25">
+      <data key="e_num">7</data>
+      <data key="e_width">3.88888888888889</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n25">
+      <data key="e_num">7</data>
+      <data key="e_width">3.88888888888889</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n25">
+      <data key="e_num">7</data>
+      <data key="e_width">3.88888888888889</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n25">
+      <data key="e_num">7</data>
+      <data key="e_width">3.88888888888889</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n25">
+      <data key="e_num">7</data>
+      <data key="e_width">3.88888888888889</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n15" target="n25">
+      <data key="e_num">7</data>
+      <data key="e_width">3.88888888888889</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n16" target="n19">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#377EB840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n16" target="n19">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#377EB840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n16" target="n19">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#377EB840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n16" target="n19">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#377EB840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n16" target="n19">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#377EB840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n16" target="n19">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#377EB840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n17" target="n28">
+      <data key="e_num">8</data>
+      <data key="e_width">4.44444444444444</data>
+      <data key="e_color">#A6562840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n17" target="n28">
+      <data key="e_num">8</data>
+      <data key="e_width">4.44444444444444</data>
+      <data key="e_color">#A6562840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n17" target="n28">
+      <data key="e_num">8</data>
+      <data key="e_width">4.44444444444444</data>
+      <data key="e_color">#A6562840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n17" target="n28">
+      <data key="e_num">8</data>
+      <data key="e_width">4.44444444444444</data>
+      <data key="e_color">#A6562840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n17" target="n28">
+      <data key="e_num">8</data>
+      <data key="e_width">4.44444444444444</data>
+      <data key="e_color">#A6562840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n17" target="n28">
+      <data key="e_num">8</data>
+      <data key="e_width">4.44444444444444</data>
+      <data key="e_color">#A6562840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n17" target="n28">
+      <data key="e_num">8</data>
+      <data key="e_width">4.44444444444444</data>
+      <data key="e_color">#A6562840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n17" target="n28">
+      <data key="e_num">8</data>
+      <data key="e_width">4.44444444444444</data>
+      <data key="e_color">#A6562840</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n18" target="n27">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#FF7F0040</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n18" target="n27">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#FF7F0040</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n18" target="n27">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#FF7F0040</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n18" target="n27">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#FF7F0040</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n20" target="n32">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#66C2A540</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n20" target="n32">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#66C2A540</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n20" target="n32">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#66C2A540</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n20" target="n32">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#66C2A540</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n21" target="n31">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#99999940</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n21" target="n31">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#99999940</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n21" target="n31">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#99999940</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n21" target="n31">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#99999940</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n22" target="n25">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n22" target="n25">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n22" target="n25">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n22" target="n25">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n22" target="n25">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n22" target="n25">
+      <data key="e_num">6</data>
+      <data key="e_width">3.33333333333333</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n24" target="n25">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n24" target="n25">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n24" target="n25">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n24" target="n25">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n24" target="n25">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#4DAF4A40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n29" target="n30">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#F781BF40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n29" target="n30">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#F781BF40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n29" target="n30">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#F781BF40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n29" target="n30">
+      <data key="e_num">4</data>
+      <data key="e_width">2.22222222222222</data>
+      <data key="e_color">#F781BF40</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n33" target="n34">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#FC8D6240</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n33" target="n34">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#FC8D6240</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n33" target="n34">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#FC8D6240</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n33" target="n34">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#FC8D6240</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n33" target="n34">
+      <data key="e_num">5</data>
+      <data key="e_width">2.77777777777778</data>
+      <data key="e_color">#FC8D6240</data>
+      <data key="e_lty">1</data>
+      <data key="e_curved">false</data>
+    </edge>
+  </graph>
+</graphml>
