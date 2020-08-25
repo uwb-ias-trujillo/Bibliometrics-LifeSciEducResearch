@@ -137,13 +137,11 @@ ggplot((Aff_Freq)) +
   theme_bw()
        
 ```
-Text to explain what is shown in the figures.
 
 ### What is the intellectual structures? Document co-citation network and topic analysis
 
 Darcie Nelson
-This is the placeholder for the question about documents frequently cited together
-Text to introduce the script and outputs. 
+
 
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
 #INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
@@ -159,7 +157,7 @@ DCA$nodeDegree
 
 write_graph(DCA$graph,"CBE_LSE_DCAedge4.graphml", c("graphml"))
 
-DCA2 = networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 2, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+DCA2 = networkPxlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 2, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 
 plot(DCA2$graph, vertex.label.family = "Helvetica")
 names(DCA2$nodeDegree["american association 2011-1"])<- "AAAS 2011"
