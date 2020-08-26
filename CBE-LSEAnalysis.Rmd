@@ -176,46 +176,10 @@ library(reshape2)
 
 # Run fuzzy match function on a .2 threshold
 
-    #std_data$authorBlock <- fuzzy_match(std_data$authors, .1, std_data$authors)
-   
-    input_data <- as.character(std_data$authors)
-   threshold <- 0.1
-    label <- std_data$authors
+    std_data$authorBlock <- fuzzy_match(std_data$authors, .1, std_data$authors)
 
-    # replace NA with a character "NA"
-    index <- which(is.na(label))
-    label[index] <- "NA"
-
-    index2 <- which(is.na(input_data))
-    input_data[index2] <- "NA"
-
-    if(length(input_data) >= 2){
-
-    # compute the similarity match
-    jw_dist <- stringdistmatrix(input_data, method = "jw")
-
-    ## use single linkage method as it suits the problem
-    hc <- hclust(as.dist(jw_dist), method = 'single')
-
-    plot(hc, labels = input_data)
-    #abline(h = threshold, col = "blue")
-
-    ## based on threshold, get clusters and make labels
-    cluster <- cutree(hc, h = threshold)
-
-    cluster_labels <- sapply(unique(cluster), function(y) label[min(which(cluster == y))])
-    (output_data <- cluster_labels[cluster])
-
-    return(output_data)
-
-    }else{
-
-    return(label)
-
-    }
-
-
-    # look at author clusters
+    
+   # look at author clusters
     author_merges <- std_data %>%
       group_by(authorBlock) %>%
       dplyr::summarise(count = n()) %>%
@@ -249,30 +213,30 @@ library(reshape2)
 
 # Run clustering algorithm----------------------------------------------------------------
     books <- std_data5 %>%
-        group_by(authorBlock) %>%
+        group_by(authorBlock, documentName, documentYear) %>%
         filter(type == "book") %>%
-        mutate(mergedLabel = fuzzy_match(documentName, .25, cleanLabel))
+        mutate(mergedLabel = fuzzy_match(cleanLabel, .05, cleanLabel))
 
 
     articles <- std_data5 %>%
-        group_by(authorBlock, documentYear) %>%
+        group_by(authorBlock, documentName, documentYear) %>%
         filter(type == "article") %>%
-        mutate(mergedLabel = fuzzy_match(documentName, .15, cleanLabel))
+        mutate(mergedLabel = fuzzy_match(cleanLabel, .01, cleanLabel))
 
         clean_data <- rbind(books, articles)
 
 
 # create the flat data file
-    flat_data <- clean_data %>%
-        mutate( L1 = as.numeric(L1)) %>%
-        group_by(L1) %>%
-        arrange(mergedLabel) %>%
-        do(data.frame(citations = str_c(.$mergedLabel, collapse = "| ")))
+    
+    flat_data<- as.data.table(clean_data)[, toString(paste0(mergedLabel,collapse = ";")), by = list(L1)]
+
+
 
 # make sure to unwrap this again to check if it was wrapped properly
-    flat_data2 <- cbind(data, flat_data[2])
-
-
+    rownames(flat_data) <- as.character(flat_data$L1)
+                                         
+    flat_data2 <- inner_join(data, flat_data, by = c("SR" = "L1"))
+    flat_data2$CR <- flat_data2$V1
 # find the similarity  of the merges------------------------------------------------------
 
     clean_data <- clean_data %>%
@@ -289,22 +253,23 @@ library(reshape2)
          xlab = "jw similarity distance",
          main = "Freq Merges by similarity distance \n with year and document type boundary")
 
-
-
-
 # save the data------------------------------------------------------------------------------------
     write.csv(clean_data, "WOS_nodeList.csv", row.names = FALSE)
     write.csv(flat_data2, "WOS_clean.csv", row.names = FALSE)
 
 CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
+CRtable
+CR2 <- citations(flat_data2, field = "article", sep = ";")
+CR2table <-cbind(CR2$Cited[1:20])
+CR2table
 
 write.csv(file = "Citations.csv",CRtable)
 
 sourcestable <-cbind(summary(factor(CR$Source))
 [1:10])
 
-write.csv(file = "Sources",sourcestable)
+write.csv(file = "Sources.csv",sourcestable)
 
     
     

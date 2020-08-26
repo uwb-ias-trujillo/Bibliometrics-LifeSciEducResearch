@@ -88,10 +88,6 @@ standardize <- function(data){
 
 }
 
-
-
-
-
 fuzzy_match <- function(input_data, threshold, label){
 
     input_data <- as.character(input_data)
@@ -106,13 +102,13 @@ fuzzy_match <- function(input_data, threshold, label){
     if(length(input_data) >= 2){
 
     # compute the similarity match
-    jw_dist <- stringdistmatrix(input_data, method = "jw")
+    jw_dist <- stringdistmatrix(input_data,input_data, method = "jw")
 
     ## use single linkage method as it suits the problem
     hc <- hclust(as.dist(jw_dist), method = 'single')
 
-    #plot(hc, labels = input_data)
-    #abline(h = threshold, col = "blue")
+    plot(hc, labels = str_sub(input_data, start = 1, end = 10), cex= .2)
+    abline(h = threshold, col = "blue")
 
     ## based on threshold, get clusters and make labels
     cluster <- cutree(hc, h = threshold)
@@ -129,6 +125,5 @@ fuzzy_match <- function(input_data, threshold, label){
     }
 
 }
-
 
 calc_jw <- function(a, b){1 - stringdist(a, b, method = "jw")}
