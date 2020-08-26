@@ -141,11 +141,181 @@ ggplot((Aff_Freq)) +
 ### What is the intellectual structures? Document co-citation network and topic analysis
 
 Darcie Nelson
+```{r citation}
+library(stringdist)
+library(stringr)
+library(stringi)
+library(plyr)
+library(dplyr)
+library(magrittr)
+library(broom)
+library(lazyeval)
+library(tidyr)
+library(reshape2)
+#citations
 
+# load functions
+  source("cleaningfunctions/citation_functions.R")
+
+
+# Extract citations from WOS list
+    work_data <- as.data.frame(extract_citation(data, "CR"))
+    #work_data$label <- as.character(work_data$label)
+    work_data$L1<- as.factor(work_data$L1)
+    work_data$index<-as.factor( work_data$index)
+
+# Standardize the data--------------------------------------------------------------------
+   std_data <- standardize(work_data)
+
+# show authors who are longer than 50 characters
+   author_temp <- std_data %>%
+        select(authors) %>%
+        filter(nchar(authors) > 50)
+
+# clean and standardize author names -----------------------------------------------------
+
+# Run fuzzy match function on a .2 threshold
+
+    #std_data$authorBlock <- fuzzy_match(std_data$authors, .1, std_data$authors)
+   
+    input_data <- as.character(std_data$authors)
+   threshold <- 0.1
+    label <- std_data$authors
+
+    # replace NA with a character "NA"
+    index <- which(is.na(label))
+    label[index] <- "NA"
+
+    index2 <- which(is.na(input_data))
+    input_data[index2] <- "NA"
+
+    if(length(input_data) >= 2){
+
+    # compute the similarity match
+    jw_dist <- stringdistmatrix(input_data, method = "jw")
+
+    ## use single linkage method as it suits the problem
+    hc <- hclust(as.dist(jw_dist), method = 'single')
+
+    plot(hc, labels = input_data)
+    #abline(h = threshold, col = "blue")
+
+    ## based on threshold, get clusters and make labels
+    cluster <- cutree(hc, h = threshold)
+
+    cluster_labels <- sapply(unique(cluster), function(y) label[min(which(cluster == y))])
+    (output_data <- cluster_labels[cluster])
+
+    return(output_data)
+
+    }else{
+
+    return(label)
+
+    }
+
+
+    # look at author clusters
+    author_merges <- std_data %>%
+      group_by(authorBlock) %>%
+      dplyr::summarise(count = n()) %>%
+      filter(count > 15) %>%
+      arrange(desc(count))
+
+
+    # Run the clustering algorithm again to recluster top merge
+    # get the top merged author
+    name <- author_merges[1, ][[1]]
+
+    std_data2 <- std_data %>%
+      filter(authorBlock == name) %>%
+      mutate(authorBlock = fuzzy_match(authors, .08, authors))
+
+    std_data3 <- std_data %>%
+      filter(authorBlock != name) %>%
+      bind_rows(std_data2)
+
+    std_data4 <- std_data3 %>%
+      filter(authorBlock == name) %>%
+      mutate(authorBlock = fuzzy_match(authors, .05, authors))
+
+    std_data5 <- std_data3 %>%
+      filter(authorBlock != name) %>%
+      bind_rows(std_data4)
+
+#Add specific criteria for problematic author names
+    std_data5$authorBlock[grep("assaraf", std_data5$authorBlock)]
+
+
+# Run clustering algorithm----------------------------------------------------------------
+    books <- std_data5 %>%
+        group_by(authorBlock) %>%
+        filter(type == "book") %>%
+        mutate(mergedLabel = fuzzy_match(documentName, .25, cleanLabel))
+
+
+    articles <- std_data5 %>%
+        group_by(authorBlock, documentYear) %>%
+        filter(type == "article") %>%
+        mutate(mergedLabel = fuzzy_match(documentName, .15, cleanLabel))
+
+        clean_data <- rbind(books, articles)
+
+
+# create the flat data file
+    flat_data <- clean_data %>%
+        mutate( L1 = as.numeric(L1)) %>%
+        group_by(L1) %>%
+        arrange(mergedLabel) %>%
+        do(data.frame(citations = str_c(.$mergedLabel, collapse = "| ")))
+
+# make sure to unwrap this again to check if it was wrapped properly
+    flat_data2 <- cbind(data, flat_data[2])
+
+
+# find the similarity  of the merges------------------------------------------------------
+
+    clean_data <- clean_data %>%
+        mutate(jwSimilarity = calc_jw(cleanLabel, mergedLabel))
+
+
+# plot------------------------------------------------------------------------------------
+
+    merged <- clean_data %>%
+        filter(jwSimilarity < 1)
+
+
+    hist(round(merged$jwSimilarity, 3),
+         xlab = "jw similarity distance",
+         main = "Freq Merges by similarity distance \n with year and document type boundary")
+
+
+
+
+# save the data------------------------------------------------------------------------------------
+    write.csv(clean_data, "WOS_nodeList.csv", row.names = FALSE)
+    write.csv(flat_data2, "WOS_clean.csv", row.names = FALSE)
+
+CR <- citations(data, field = "article", sep = ";")
+CRtable <-cbind(CR$Cited[1:20])
+
+write.csv(file = "Citations.csv",CRtable)
+
+sourcestable <-cbind(summary(factor(CR$Source))
+[1:10])
+
+write.csv(file = "Sources",sourcestable)
+
+    
+    
+```
 
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
-#INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
+
+#DOCUMENT COCITATION NETWORK using 'data' file
 # Create a co-citation network
+DCAMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
+
 DCAMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
 
 # Plot the network
@@ -153,18 +323,15 @@ DCA = networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network
 
 plot(DCA$graph, vertex.label.family = "Helvetica")
 names(DCA$nodeDegree["american association 2011-1"])<- "AAAS 2011"
-DCA$nodeDegree
+noded<-DCA$nodeDegree
 
 write_graph(DCA$graph,"CBE_LSE_DCAedge4.graphml", c("graphml"))
 
-DCA2 = networkPxlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 2, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+DCA2 = networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 2, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 
 plot(DCA2$graph, vertex.label.family = "Helvetica")
 names(DCA2$nodeDegree["american association 2011-1"])<- "AAAS 2011"
 
 write_graph(DCA2$graph,"CBE_LSE_DCAedge2.graphml", c("graphml"))
 ```
-Text to explain what is shown in the figures.
-
-
 
