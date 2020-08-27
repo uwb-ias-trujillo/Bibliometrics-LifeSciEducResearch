@@ -38,11 +38,13 @@ results <- biblioAnalysis(data, sep = ";")
 
 ```{r biblio}
 options(width=100)
-S <- summary(object = results, k = 10, pause = FALSE)
+S <- summary(object = results, pause = FALSE)
 S
 plot(x=results, k=10, pause=F)
 
 S$MainInformationDF
+
+S$MostRelKeywords
 
 write.csv(file = "Maininformation.csv",S$MainInformationDF)
 
@@ -264,7 +266,7 @@ CR2 <- citations(flat_data2, field = "article", sep = ";")
 CR2table <-cbind(CR2$Cited[1:20])
 CR2table
 
-write.csv(file = "Citations.csv",CRtable)
+write.csv(file = "Citations.csv",CR2table)
 
 sourcestable <-cbind(summary(factor(CR$Source))
 [1:10])
@@ -299,3 +301,9 @@ names(DCA2$nodeDegree["american association 2011-1"])<- "AAAS 2011"
 write_graph(DCA2$graph,"CBE_LSE_DCAedge2.graphml", c("graphml"))
 ```
 
+```{r topics and keywords}
+CS <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=10, clust= "auto" ,k.max=20, stemming=TRUE, labelsize=4, documents=10)
+
+
+
+```
