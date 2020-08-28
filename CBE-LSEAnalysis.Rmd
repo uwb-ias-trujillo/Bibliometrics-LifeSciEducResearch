@@ -44,7 +44,7 @@ plot(x=results, k=10, pause=F)
 
 S$MainInformationDF
 
-S$MostRelKeywords
+results$ID[1:20]
 
 write.csv(file = "Maininformation.csv",S$MainInformationDF)
 
@@ -154,6 +154,7 @@ library(broom)
 library(lazyeval)
 library(tidyr)
 library(reshape2)
+library(data.table)
 #citations
 
 # load functions
@@ -270,7 +271,7 @@ write.csv(file = "Citations.csv",CR2table)
 
 sourcestable <-cbind(summary(factor(CR$Source))
 [1:10])
-
+sourcestable
 write.csv(file = "Sources.csv",sourcestable)
 
     
@@ -282,7 +283,6 @@ write.csv(file = "Sources.csv",sourcestable)
 #DOCUMENT COCITATION NETWORK using 'data' file
 # Create a co-citation network
 DCAMatrix <- biblioNetwork(flat_data2, analysis = "co-citation", network = "references", sep = ";")
-
 
 # Plot the network
 DCA = networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
@@ -302,8 +302,11 @@ write_graph(DCA$graph,"CBE_LSE_DCAedge4.graphml", c("graphml"))
 ```
 
 ```{r topics and keywords}
-CS <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=10, clust= "auto" ,k.max=20, stemming=TRUE, labelsize=4, documents=10)
+CS <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=19, clust= 3 ,k.max=20, stemming=FALSE, labelsize=10, documents=10)
 
+CS <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=19, clust= 3 ,k.max=20, stemming=TRUE, labelsize=10, documents=10)
 
+#CS4 <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=6, clust= "auto" ,k.max=20, stemming=TRUE, labelsize=4, documents=10)
 
+ggsave("ConceptualStructure.png", plot = CS$graph_terms, device = "png")
 ```
