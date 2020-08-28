@@ -33,7 +33,11 @@
     <data key="g_xlim">-1</data>
     <data key="g_rescale">true</data>
     <data key="g_asp">0</data>
+<<<<<<< HEAD
     <data key="g_layout">0.244448951999661</data>
+=======
+    <data key="g_layout">-0.507333583361465</data>
+>>>>>>> 99dca4ae78c1a7bf4753986e8b8a15e288dcea75
     <data key="g_main">Top 20 University Collaborations</data>
     <node id="n0">
       <data key="v_name">univ georgia</data>
