@@ -38,11 +38,14 @@ results <- biblioAnalysis(data, sep = ";")
 
 ```{r biblio}
 options(width=100)
+
 S <- summary(object = results, k = 10, pause = FALSE)
 S
 plot(x=results, k=10, pause=F)
 
 S$MainInformationDF
+
+write.csv(file = "keywords.csv",as.data.frame(results$ID[1:20]))
 
 write.csv(file = "Maininformation.csv",S$MainInformationDF)
 
@@ -152,6 +155,8 @@ library(broom)
 library(lazyeval)
 library(tidyr)
 library(reshape2)
+library(data.table)
+
 #citations
 
 # load functions
@@ -263,11 +268,11 @@ CRtable
 CR2 <- citations(flat_data2, field = "article", sep = ";")
 CR2table <-cbind(CR2$Cited[1:20])
 CR2table
-
-write.csv(file = "Citations.csv",CRtable)
+write.csv(file = "Citations.csv",CR2table)
 
 sourcestable <-cbind(summary(factor(CR$Source))
 [1:10])
+sourcestable
 
 write.csv(file = "Sources.csv",sourcestable)
 
@@ -279,9 +284,8 @@ write.csv(file = "Sources.csv",sourcestable)
 
 #DOCUMENT COCITATION NETWORK using 'data' file
 # Create a co-citation network
-DCAMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
+DCAMatrix <- biblioNetwork(flat_data2, analysis = "co-citation", network = "references", sep = ";")
 
-DCAMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
 
 # Plot the network
 DCA = networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
@@ -291,12 +295,12 @@ names(DCA$nodeDegree["american association 2011-1"])<- "AAAS 2011"
 noded<-DCA$nodeDegree
 
 write_graph(DCA$graph,"CBE_LSE_DCAedge4.graphml", c("graphml"))
-
-DCA2 = networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 2, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
-
-plot(DCA2$graph, vertex.label.family = "Helvetica")
-names(DCA2$nodeDegree["american association 2011-1"])<- "AAAS 2011"
-
-write_graph(DCA2$graph,"CBE_LSE_DCAedge2.graphml", c("graphml"))
 ```
 
+```{r topics and keywords}
+CS <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=19, clust= 4 ,k.max=20, stemming=TRUE, labelsize=10, documents=10)
+
+#CS4 <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=6, clust= "auto" ,k.max=20, stemming=TRUE, labelsize=4, documents=10)
+
+ggsave("ConceptualStructure.png", plot = CS$graph_terms, device = "png")
+```
