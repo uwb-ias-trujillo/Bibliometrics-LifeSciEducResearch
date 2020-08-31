@@ -66,6 +66,22 @@ indices <- Hindex(data, field = "author", elements=authors, sep = ";", years = 5
 
 indices$H
 
+avgAU <- as.data.frame(cbind(results[["nAUperPaper"]],results[["Years"]])) 
+colnames(avgAU) <-c("nAu","Years")
+avgAUres<-avgAU %>%
+  mutate(Years = as.factor(Years)) %>%
+  group_by(Years) %>%
+  summarize(avg = mean(nAu), med = median(nAu))
+
+lm(nAu ~ Years, avgAU %>% mutate(Years = Years - 2010))
+
+ggplot(avgAU,aes(Years,nAu)) + 
+  geom_point() +
+  geom_smooth()
+  
+ggplot(avgAUres,aes(x = Years, y = med)) + 
+  geom_point() +
+  geom_smooth()
 ```
 
 
