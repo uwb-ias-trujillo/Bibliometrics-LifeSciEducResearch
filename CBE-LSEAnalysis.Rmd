@@ -313,6 +313,14 @@ noded<-DCA$nodeDegree
 write_graph(DCA$graph,"Gephi files/CBE_LSE_DCAedge4.graphml", c("graphml"))
 ```
 
+```{r bibliographic coupling}
+BC <- biblioNetwork(data, analysis = "coupling", network = "references", sep = ";")
+
+BCnet = networkPlot(BC, n = dim(BC)[1], Title = "Bibliographic Coupling", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 6, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+
+ggsave("bibliographiccoupling.png", plot = BCnet$graph_terms, device = "png")
+```
+
 ```{r topics and keywords}
 CS <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=19, clust= 4 ,k.max=20, stemming=TRUE, labelsize=10, documents=10)
 
