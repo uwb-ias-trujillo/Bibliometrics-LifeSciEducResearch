@@ -79,9 +79,9 @@ ggplot(avgAU,aes(Years,nAu)) +
   geom_point() +
   geom_smooth()
   
-ggplot(avgAUres,aes(x = Years, y = med)) + 
-  geom_point() +
-  geom_smooth()
+#ggplot(avgAUres,aes(x = Years, y = med)) + 
+  #geom_point() +
+  #geom_smooth()
 ```
 
 
@@ -311,6 +311,17 @@ names(DCA$nodeDegree["american association 2011-1"])<- "AAAS 2011"
 noded<-DCA$nodeDegree
 
 write_graph(DCA$graph,"Gephi files/CBE_LSE_DCAedge4.graphml", c("graphml"))
+```
+
+```{r bibliographic coupling}
+rownames(flat_data2) <- rownames(data)
+BC <- biblioNetwork(flat_data2, analysis = "coupling", network = "references", sep = ";")
+
+BCnet = networkPlot(BC, n = dim(BC)[1], Title = "Bibliographic Coupling", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 1, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+
+ggsave("bibliographiccoupling4.png", plot = BCnet$graph_terms, device = "png")
+
+write_graph(BCnet$graph,"Gephi files/CBE_LSE_BC4.graphml", c("graphml"))
 ```
 
 ```{r topics and keywords}
