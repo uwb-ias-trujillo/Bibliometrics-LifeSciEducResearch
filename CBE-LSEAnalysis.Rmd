@@ -29,8 +29,8 @@ There has tremendous growth in the area undergraduate biology research over the 
 This is a placeholder for the inital data set
 Whole group
 ```{r dataset}
-txt <- c("rawdata/CBE_LSE_2010-2019/20200717_CBE2010-2019-WOS-1-500.txt",
-         "rawdata/CBE_LSE_2010-2019/20200717_CBE2010-2019-WOS-501-708.txt")
+txt <- c("rawdata/CBE-LSE-2010-2020/WOS-CBELSE-2010-2020-1-500.txt",
+         "rawdata/CBE-LSE-2010-2020/WOS-CBELSE-2010-2020-501-853.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 ```
@@ -127,7 +127,10 @@ Aff_Freq=results[["Aff_frac"]] %>%
   arrange(desc(Frequency))%>%
   top_n(10)
 Aff_Freq
+
+summary(results$Affiliations)
 ```
+
 
 ```{r collaborative, echo=FALSE}
 #INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
