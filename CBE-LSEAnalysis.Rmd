@@ -13,6 +13,7 @@ require("devtools")
 require("rgexf")
 require("bibliometrix")
 require("igraph")
+require("bibliometrix")
 #devtools::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
 library(tidyverse)
@@ -45,15 +46,18 @@ plot(x=results, k=10, pause=F)
 
 S$MainInformationDF
 
-write.csv(file = "keywords.csv",as.data.frame(results$ID[1:20]))
+dir.create("tables")
+write.csv(file = "tables/keywords.csv",as.data.frame(results$ID[1:20]))
 
-write.csv(file = "Maininformation.csv",S$MainInformationDF)
+write.csv(file = "tables/Maininformation.csv",S$MainInformationDF)
 
-write.csv(file = "ArticlesYears.csv",S$AnnualProduction)
+write.csv(file = "tables/ArticlesYears.csv",S$AnnualProduction)
 
-write.csv(file = "MostCitedPapers.csv",S$MostCitedPapers)
+write.csv(file = "tables/MostCitedPapers.csv",S$MostCitedPapers)
 
-write.csv(file = "MostProdAuthors.csv", S$MostProdAuthors)
+write.csv(file = "tables/MostProdAuthors.csv", S$MostProdAuthors)
+
+write.csv(file = "tables/Universities.csv", results$Affiliations)
 ```
 
 
