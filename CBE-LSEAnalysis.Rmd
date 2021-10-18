@@ -1,7 +1,7 @@
 ---
 title: "CBE-LSE Bibliometric Analysis"
 author: "Caleb Trujillo, Darcie Nelson, Rachel Kudlacz, Germaine Ng"
-date: "9/8/2020"
+date: "10/18/2021"
 output:
   html_document: default
   word_document: default
@@ -14,28 +14,39 @@ require("rgexf")
 require("bibliometrix")
 require("igraph")
 require("bibliometrix")
+require("xtable")
 #devtools::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
 library(rgexf)
 library(igraph)
+library(xtable)
 ```
 
 ##Introduction
 
-There has tremendous growth in the area undergraduate biology research over the last two decades. This study attempts to summarize and analyze the progress of this growth. 
+There has tremendous growth in the area undergraduate biology research over the last two decades. This study attempts to summarize and analyze the progress of this growth for the journal of *CBE-LSE*. 
 
 ### Summary of initial data set
-This is a placeholder for the inital data set
-Whole group
+
 ```{r dataset}
 txt <- c("rawdata/CBE-LSE-2010-2020/WOS-CBELSE-2010-2020-1-500.txt",
          "rawdata/CBE-LSE-2010-2020/WOS-CBELSE-2010-2020-501-853.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
+
+theme_default <- theme(
+    plot.caption = element_text(hjust = 0, face= "italic"),
+    plot.title.position = "plot",
+    plot.caption.position =  "plot",
+    panel.background = element_rect(
+      fill = "ivory"),
+    plot.background = element_rect(
+      fill = "lightyellow"))
 ```
 
+After results are processed, these are stored as data tables for information reporting. 
 
 ```{r biblio}
 options(width=100)
@@ -59,16 +70,37 @@ write.csv(file = "tables/MostProdAuthors.csv", S$MostProdAuthors)
 
 write.csv(file = "tables/Universities.csv", results$Affiliations)
 ```
+## Research Questions
+
+### Basic overview of the field
+
+```{r overview}
+colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
+
+ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group=1)) +
+  geom_line(stat = "identity")+
+  theme_bw()+
+  theme_default +
+  labs(
+    title = "Annual productivity",
+    x = NULL,
+    y = "Articles"
+  )
+
+xtable(S$MainInformationDF)
+```
 
 
 ##Authoring
 
 ```{r author productivity}
-authors=gsub(","," ",names(results$Authors)[1:10])
+authors=gsub(","," ",names(results$Authors))
 
 indices <- Hindex(data, field = "author", elements=authors, sep = ";", years = 50)
 
 indices$H
+
+
 
 avgAU <- as.data.frame(cbind(results[["nAUperPaper"]],results[["Years"]])) 
 colnames(avgAU) <-c("nAu","Years")
@@ -88,8 +120,6 @@ ggplot(avgAU,aes(Years,nAu)) +
   #geom_smooth()
 ```
 
-
-## Research Questions
 
 ### Social Network Analysis (SNA) of co-authorship: What social structures are organizing co-authorship? 
 Rachel Kudlacz 
