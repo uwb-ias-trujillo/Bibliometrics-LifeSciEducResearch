@@ -13,7 +13,7 @@ require("devtools")
 require("rgexf")
 require("bibliometrix")
 require("igraph")
-require("bibliometrix")
+require("tidyverse")
 require("xtable")
 #devtools::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
@@ -51,7 +51,7 @@ After results are processed, these are stored as data tables for information rep
 ```{r biblio}
 options(width=100)
 
-S <- summary(object = results, k = 10, pause = FALSE)
+S <- summary(object = results, pause = FALSE)
 S
 plot(x=results, k=10, pause=F)
 
@@ -98,26 +98,22 @@ authors=gsub(","," ",names(results$Authors))
 
 indices <- Hindex(data, field = "author", elements=authors, sep = ";", years = 50)
 
+indices$H %>%
+  arrange(desc(NP))
+
+as_tibble(results$Authors)
+
+
+inner_join(as_tibble(results$Authors),indices$H)
+
 indices$H
 
-
-
-avgAU <- as.data.frame(cbind(results[["nAUperPaper"]],results[["Years"]])) 
-colnames(avgAU) <-c("nAu","Years")
-avgAUres<-avgAU %>%
-  mutate(Years = as.factor(Years)) %>%
-  group_by(Years) %>%
-  summarize(avg = mean(nAu), med = median(nAu))
-
-lm(nAu ~ Years, avgAU %>% mutate(Years = Years - 2010))
-
-ggplot(avgAU,aes(Years,nAu)) + 
-  geom_point() +
-  geom_smooth()
+#authorProdOverTime(data, k = 10, graph = TRUE)
   
-#ggplot(avgAUres,aes(x = Years, y = med)) + 
-  #geom_point() +
-  #geom_smooth()
+ggplot(indices$H,aes(size = NP, y = h_index)) + 
+  geom_jitter(aes(alpha = 0.1)) +
+  geom_text(aes(label = Element), check_overlap = TRUE) #+
+  #scale_x_log10()   #geom_smooth()
 ```
 
 
