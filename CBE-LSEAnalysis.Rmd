@@ -120,13 +120,14 @@ ggplot(indices$H,aes(size = NP, y = h_index)) +
 ### Affiliations
 ```{r affiliations, echo=FALSE}
 
+#Joining files
 msidata <- read_excel("rawdata/2020eligibilitymatrix.xlsx", 
     skip = 10)
 affiliations <- read_excel("tables/UnivIndex.xlsx")
 msiuniv <- left_join(affiliations, msidata) %>%
   filter(OPEID != "NA")
 
-
+#Tables
 msistates <- msiuniv %>%
   group_by(St) %>%
   summarize(n = n())
@@ -137,6 +138,14 @@ msieligible <- msiuniv %>%
   group_by(`Eligible/ Current Grant`) %>%
   summarize(n = n())
 view(msieligible)
+
+msiuniv$`Type & Control` <- as.factor(msiuniv$`Type & Control`)
+msitype <- msiuniv %>%
+  group_by(`Type & Control`) %>%
+  summarize(n = n())
+view(msitype)
+
+
 ```
 
 
