@@ -22,6 +22,7 @@ library(networkD3)
 library(rgexf)
 library(igraph)
 library(xtable)
+library(readxl)
 ```
 
 ##Introduction
@@ -114,6 +115,28 @@ ggplot(indices$H,aes(size = NP, y = h_index)) +
   geom_jitter(aes(alpha = 0.1)) +
   geom_text(aes(label = Element), check_overlap = TRUE) #+
   #scale_x_log10()   #geom_smooth()
+```
+
+### Affiliations
+```{r affiliations, echo=FALSE}
+
+msidata <- read_excel("rawdata/2020eligibilitymatrix.xlsx", 
+    skip = 10)
+affiliations <- read_excel("tables/UnivIndex.xlsx")
+msiuniv <- left_join(affiliations, msidata) %>%
+  filter(OPEID != "NA")
+
+
+msistates <- msiuniv %>%
+  group_by(St) %>%
+  summarize(n = n())
+view(msistates)
+
+msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`)
+msieligible <- msiuniv %>%
+  group_by(`Eligible/ Current Grant`) %>%
+  summarize(n = n())
+view(msieligible)
 ```
 
 
