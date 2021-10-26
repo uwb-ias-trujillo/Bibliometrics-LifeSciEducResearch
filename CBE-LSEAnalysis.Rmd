@@ -145,6 +145,96 @@ msitype <- msiuniv %>%
   summarize(n = n())
 view(msitype)
 
+#Eligibility tables
+msiaanapisi <- msiuniv %>%
+  group_by(AANAPISI) %>%
+  summarize(n = n())
+view(msiaanapisi)
+
+msiaanapisif <- msiuniv %>%
+  group_by(`AANAPISI F`) %>%
+  summarize(n = n())
+view(msiaanapisif)
+
+msiannh <- msiuniv %>%
+  group_by(ANNH) %>%
+  summarize(n = n())
+view(msiannh)
+
+msiannh <- msiuniv %>%
+  group_by(ANNH) %>%
+  summarize(n = n())
+view(msiannh)
+
+msiannhf <- msiuniv %>%
+  group_by(`ANNH F`) %>%
+  summarize(n = n())
+view(msiannhf)
+
+msihbcu <- msiuniv %>%
+  group_by(HBCU) %>%
+  summarize(n = n())
+view(msihbcu)
+
+msihbcumasters <- msiuniv %>%
+  group_by(`HBCU Masters`) %>%
+  summarize(n = n())
+view(msihbcumasters)
+
+msihbgi <- msiuniv %>%
+  group_by(HBGI) %>%
+  summarize(n = n())
+view(msihbgi)
+
+msihsi <- msiuniv %>%
+  group_by(HSI) %>%
+  summarize(n = n())
+view(msihsi)
+
+msihsistem <- msiuniv %>%
+  group_by(`HSI STEM`) %>%
+  summarize(n = n())
+view(msihsistem)
+
+msimseip <- msiuniv %>%
+  group_by(MSEIP) %>%
+  summarize(n = n())
+view(msimseip)
+
+msinasnti <- msiuniv %>%
+  group_by(NASNTI) %>%
+  summarize(n = n())
+view(msinasnti)
+
+msinasntif <- msiuniv %>%
+  group_by(`NASNTI F`) %>%
+  summarize(n = n())
+view(msinasntif)
+
+msipbif <- msiuniv %>%
+  group_by(`PBI F`) %>%
+  summarize(n = n())
+view(msipbif)
+
+msipbia <- msiuniv %>%
+  group_by(`PBI A`) %>%
+  summarize(n = n())
+view(msipbia)
+
+msippoha <- msiuniv %>%
+  group_by(PPOHA) %>%
+  summarize(n = n())
+view(msippoha)
+
+msisip <- msiuniv %>%
+  group_by(SIP) %>%
+  summarize(n = n())
+view(msisip)
+
+msitccu <- msiuniv %>%
+  group_by(TCCU) %>%
+  summarize(n = n())
+view(msitccu)
 
 ```
 
