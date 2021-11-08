@@ -156,7 +156,7 @@ temp <- msiuniv %>%
   mutate(eligibility = if_else(value == 0, "Undetermined", eligibility)) %>%
   group_by(name,eligibility)%>%
   summarize(n=n())%>%
-  mutate(perc = round(100*n/sum(n),1))
+  mutate(perc = round(n/sum(n),3))
 
 msisummary_n <- temp%>%
   select(!perc)%>%
@@ -166,9 +166,18 @@ msisummary_perc <- temp%>%
   select(!n)%>%
   pivot_wider(names_from = name, values_from = c(perc))
 
-temp %>% ggplot(aes(x=name,y=perc, fill = eligibility)) +
+temp %>% 
+  filter(eligibility != "Ineligible") %>%
+  ggplot(aes(x=name,y=perc, fill = eligibility)) +
   geom_col() +
-  coord_flip()
+  scale_y_continuous(labels = scales::percent) +
+  coord_flip() + 
+  labs(
+    title = "Percent of affilitations by Minority Serving Institution program eligibilty",
+    x = NULL,
+    y = NULL
+  )+
+  theme_default
 
   #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
 
