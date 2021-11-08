@@ -145,6 +145,33 @@ msitype <- msiuniv %>%
   summarize(n = n())
 view(msitype)
 
+temp <- msiuniv %>%
+  mutate_if(is.numeric,as.factor)%>%
+  mutate_if(is.character,as.factor)%>%
+  select(`Institution Name`,`AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`	, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU) %>%
+  pivot_longer(cols = !`Institution Name`) %>%
+  mutate(eligibility = if_else(value == 1 | value == 2| value == 3, "Ineligible", "NA")) %>%
+  mutate(eligibility = if_else(value == 4 | value == '4R' |value == 5 | value == '5R', "Eligible or potentially eligible", eligibility))%>%
+  mutate(eligibility = if_else(value == 6, "Current grantee", eligibility)) %>%
+  mutate(eligibility = if_else(value == 0, "Undetermined", eligibility)) %>%
+  group_by(name,eligibility)%>%
+  summarize(n=n())%>%
+  mutate(perc = round(100*n/sum(n),1))
+
+msisummary_n <- temp%>%
+  select(!perc)%>%
+  pivot_wider(names_from = name, values_from = c(n))
+
+msisummary_perc <- temp%>%
+  select(!n)%>%
+  pivot_wider(names_from = name, values_from = c(perc))
+
+temp %>% ggplot(aes(x=name,y=perc, fill = eligibility)) +
+  geom_col() +
+  coord_flip()
+
+  #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
+
 #Eligibility tables
 msiaanapisi <- msiuniv %>%
   group_by(AANAPISI) %>%
