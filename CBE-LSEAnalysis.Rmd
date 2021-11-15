@@ -42,9 +42,13 @@ theme_default <- theme(
     plot.title.position = "plot",
     plot.caption.position =  "plot",
     panel.background = element_rect(
-      fill = "ivory"),
+      fill = "#0F4C59"),
+    panel.grid = element_line(size = .25, color = "#006666"),
+    legend.background = element_rect(
+      fill = "#339999"),
     plot.background = element_rect(
-      fill = "lightyellow"))
+      fill = "#339999")
+    )
 ```
 
 After results are processed, these are stored as data tables for information reporting. 
@@ -78,16 +82,15 @@ write.csv(file = "tables/Universities.csv", results$Affiliations)
 ```{r overview}
 colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
 
-ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group=1)) +
-  geom_line(stat = "identity")+
-  theme_bw()+
+ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
+  geom_line(stat = "identity", color = "#F26E50", size = 1.5)+
+  theme_dark()+
   theme_default +
   labs(
     title = "Annual productivity",
     x = NULL,
     y = "Articles"
   )
-
 xtable(S$MainInformationDF)
 ```
 
@@ -176,7 +179,9 @@ temp %>%
     title = "Percent of affilitations by Minority Serving Institution program eligibilty",
     x = NULL,
     y = NULL
-  )+
+  ) +
+  theme_dark()+
+  scale_fill_manual(values = c("#F2A679", "#F26E50", "#F2F2F2"))+
   theme_default
 
   #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
