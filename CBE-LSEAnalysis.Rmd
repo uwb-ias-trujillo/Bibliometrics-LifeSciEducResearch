@@ -38,16 +38,20 @@ data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
 theme_default <- theme(
+    text = element_text(family = "Roboto"),
     plot.caption = element_text(hjust = 0, face= "italic"),
     plot.title.position = "plot",
     plot.caption.position =  "plot",
     panel.background = element_rect(
-      fill = "#0F4C59"),
-    panel.grid = element_line(size = .25, color = "#006666"),
+      fill = "#F2F2F2"),
+    panel.grid = element_line(size = .25, color = "#99CCCC"),
+    axis.ticks = element_line(color = "#F2F2F2"),
+    legend.key = element_rect(color = "#F2F2F2"),
     legend.background = element_rect(
-      fill = "#339999"),
+      fill = "#F2F2F2"),
+    legend.position = "top",
     plot.background = element_rect(
-      fill = "#339999")
+      fill = "#F2F2F2")
     )
 ```
 
@@ -87,9 +91,9 @@ ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group
   theme_dark()+
   theme_default +
   labs(
-    title = "Annual productivity",
+    title = "Annual productivity by articles published per year",
     x = NULL,
-    y = "Articles"
+    y = NULL
   )
 xtable(S$MainInformationDF)
 ```
@@ -170,8 +174,8 @@ msisummary_perc <- temp%>%
   pivot_wider(names_from = name, values_from = c(perc))
 
 temp %>% 
-  filter(eligibility != "Ineligible") %>%
-  ggplot(aes(x=name,y=perc, fill = eligibility)) +
+  filter(eligibility != "Ineligible" & eligibility != "Undetermined") %>%
+  ggplot(aes(x=reorder(name, perc), y=perc, fill = eligibility)) +
   geom_col() +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() + 
@@ -181,7 +185,7 @@ temp %>%
     y = NULL
   ) +
   theme_dark()+
-  scale_fill_manual(values = c("#F2A679", "#F26E50", "#F2F2F2"))+
+  scale_fill_manual(values = c("#F26E50", "#F2A679"))+
   theme_default
 
   #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
