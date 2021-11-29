@@ -16,6 +16,8 @@ require("igraph")
 require("tidyverse")
 require("xtable")
 #devtools::install_github("massimoaria/bibliometrix")
+
+devtools::install_github("wmurphyrd/fiftystater")
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
@@ -23,6 +25,9 @@ library(rgexf)
 library(igraph)
 library(xtable)
 library(readxl)
+library(scales)
+library(ggplot2)
+library("fiftystater")
 ```
 
 ##Introduction
@@ -38,7 +43,6 @@ data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
 theme_default <- theme(
-    text = element_text(family = "Roboto"),
     plot.caption = element_text(hjust = 0, face= "italic"),
     plot.title.position = "plot",
     plot.caption.position =  "plot",
@@ -95,6 +99,7 @@ ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group
     x = NULL,
     y = NULL
   )
+ggsave("AnnualProductivity.jpg", device = "jpeg")
 xtable(S$MainInformationDF)
 ```
 
@@ -137,8 +142,46 @@ msiuniv <- left_join(affiliations, msidata) %>%
 #Tables
 msistates <- msiuniv %>%
   group_by(St) %>%
-  summarize(n = n())
+  summarize(n = n()) %>%
+  filter(!(St %in% c("DC", "MH", "PR", "VI", "GU"))) %>% 
+  rename(states = St, Assault = n)
 view(msistates)
+
+msistates$states <- state.name[match(msistates$states,state.abb)]
+
+data("fifty_states")
+
+affiliationMap <- ggplot(msistates, aes(map_id = states)) + 
+  geom_map(aes(fill = Assault),  color= "black", map = fifty_states) + 
+  expand_limits(x = fifty_states$long, y = fifty_states$lat) +
+  coord_map() +
+  #geom_text(data = fifty_states %>%
+   #           group_by(id) %>%
+    #          summarise(lat = mean(c(max(lat), min(lat))),
+     #                   long = mean(c(max(long), min(long)))) %>%
+      #        mutate(St = id) %>%
+       #       left_join(msistates, by = "St"), aes(x = long, y = lat, label = n))+
+  scale_x_continuous(breaks = NULL) + scale_y_continuous(breaks = NULL) +
+  labs(x = "", y = "") + theme(legend.position = "bottom", 
+                               panel.background = element_blank())
+
+affiliationMap
+
+ggplot(data= msistates, aes(map_id = state)) + 
+  geom_map(aes(fill = Assault),  color= "black", map = fifty_states) + 
+  expand_limits(x = fifty_states$long, y = fifty_states$lat) +
+  coord_map() +
+  geom_text(data = fifty_states %>%
+              group_by(id) %>%
+              summarise(lat = mean(c(max(lat), min(lat))),
+                        long = mean(c(max(long), min(long)))) %>%
+              mutate(state = id) %>%
+              left_join(msistates, by = "state"), aes(x = long, y = lat, label = Assault ))+
+  scale_x_continuous(breaks = NULL) + scale_y_continuous(breaks = NULL) +
+  labs(x = "", y = "") + theme(legend.position = "bottom", 
+                               panel.background = element_blank())
+
+
 
 msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`)
 msieligible <- msiuniv %>%
@@ -168,10 +211,13 @@ temp <- msiuniv %>%
 msisummary_n <- temp%>%
   select(!perc)%>%
   pivot_wider(names_from = name, values_from = c(n))
+view(msisummary_n)
 
 msisummary_perc <- temp%>%
   select(!n)%>%
+  mutate(perc = label_percent()(perc)) %>% 
   pivot_wider(names_from = name, values_from = c(perc))
+view(msisummary_perc)
 
 temp %>% 
   filter(eligibility != "Ineligible" & eligibility != "Undetermined") %>%
