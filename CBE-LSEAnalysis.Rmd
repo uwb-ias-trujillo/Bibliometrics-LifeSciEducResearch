@@ -18,6 +18,8 @@ require("xtable")
 #devtools::install_github("massimoaria/bibliometrix")
 
 devtools::install_github("wmurphyrd/fiftystater")
+devtools::install_github("UrbanInstitute/urbnmapr")
+library(urbnmapr)
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
@@ -142,44 +144,51 @@ msiuniv <- left_join(affiliations, msidata) %>%
 #Tables
 msistates <- msiuniv %>%
   group_by(St) %>%
-  summarize(n = n()) %>%
+  summarize(n = n(), articles = sum(Freq) ) %>%
   filter(!(St %in% c("DC", "MH", "PR", "VI", "GU"))) %>% 
-  rename(states = St, Assault = n)
+  rename(states = St, affiliations = n) #%>%
+  #summarize(states,affiliations = affiliations/sum(affiliations))
 view(msistates)
 
-msistates$states <- state.name[match(msistates$states,state.abb)]
+msistates$state_name <- state.name[match(msistates$states,state.abb)]
 
-data("fifty_states")
+spatial_data <- left_join(msistates,
+                          get_urbn_map(map = "states", sf = TRUE),
+                          by = "state_name")
 
-affiliationMap <- ggplot(msistates, aes(map_id = states)) + 
-  geom_map(aes(fill = Assault),  color= "black", map = fifty_states) + 
-  expand_limits(x = fifty_states$long, y = fifty_states$lat) +
-  coord_map() +
-  #geom_text(data = fifty_states %>%
-   #           group_by(id) %>%
-    #          summarise(lat = mean(c(max(lat), min(lat))),
-     #                   long = mean(c(max(long), min(long)))) %>%
-      #        mutate(St = id) %>%
-       #       left_join(msistates, by = "St"), aes(x = long, y = lat, label = n))+
-  scale_x_continuous(breaks = NULL) + scale_y_continuous(breaks = NULL) +
-  labs(x = "", y = "") + theme(legend.position = "bottom", 
-                               panel.background = element_blank())
+affiliationMap <- ggplot() +
+  geom_sf(spatial_data,
+          mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
+          color = "#ffffff", size = 0.25) +
+  labs(fill = "Author affiliations",
+       title = "Number of institutions in author affilitations by state",
+    x = NULL,
+    y = NULL
+    ) +
+  #scale_fill_gradient(labels = scales::percent) +
+  coord_sf(datum = NA) +
+  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
+                aes(label = state_abbv), 
+            size = 3)
 
 affiliationMap
 
-ggplot(data= msistates, aes(map_id = state)) + 
-  geom_map(aes(fill = Assault),  color= "black", map = fifty_states) + 
-  expand_limits(x = fifty_states$long, y = fifty_states$lat) +
-  coord_map() +
-  geom_text(data = fifty_states %>%
-              group_by(id) %>%
-              summarise(lat = mean(c(max(lat), min(lat))),
-                        long = mean(c(max(long), min(long)))) %>%
-              mutate(state = id) %>%
-              left_join(msistates, by = "state"), aes(x = long, y = lat, label = Assault ))+
-  scale_x_continuous(breaks = NULL) + scale_y_continuous(breaks = NULL) +
-  labs(x = "", y = "") + theme(legend.position = "bottom", 
-                               panel.background = element_blank())
+articleMap <- ggplot() +
+  geom_sf(spatial_data,
+          mapping = aes(fill = articles, geometry = geometry), stat = "sf",
+          color = "#ffffff", size = 0.25) +
+  labs(fill = "Publications",
+       title = "Number of articles by state",
+    x = NULL,
+    y = NULL
+    ) +
+  #scale_fill_gradient(labels = scales::percent) +
+  coord_sf(datum = NA) +
+  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
+                aes(label = state_abbv), 
+            size = 3)
+
+articleMap
 
 
 
@@ -235,7 +244,9 @@ temp %>%
   theme_default
 
   #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
+```
 
+```{r eligibility tables}
 #Eligibility tables
 msiaanapisi <- msiuniv %>%
   group_by(AANAPISI) %>%
