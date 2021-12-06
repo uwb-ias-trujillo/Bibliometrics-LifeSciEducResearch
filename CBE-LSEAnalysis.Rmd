@@ -15,7 +15,7 @@ require("bibliometrix")
 require("igraph")
 require("tidyverse")
 require("xtable")
-#devtools::install_github("massimoaria/bibliometrix")
+devtools::install_github("massimoaria/bibliometrix")
 
 devtools::install_github("wmurphyrd/fiftystater")
 devtools::install_github("UrbanInstitute/urbnmapr")
@@ -228,10 +228,17 @@ msisummary_perc <- temp%>%
   pivot_wider(names_from = name, values_from = c(perc))
 view(msisummary_perc)
 
+temp %>%
+  filter(eligibility == "Current grantee") %>%
+  arrange(perc) %>% 
+  select(name) %>% 
+  mutate(name = as.factor(name)) -> x_levels
+  
 temp %>% 
   filter(eligibility != "Ineligible" & eligibility != "Undetermined") %>%
-  ggplot(aes(x=reorder(name, perc), y=perc, fill = eligibility)) +
-  geom_col() +
+  #mutate(name = factor(name, levels = x_levels)) %>% 
+  ggplot(aes(x = factor(name, levels = x_levels), y = perc, fill = eligibility)) +
+  geom_col(position = position_stack(reverse = TRUE)) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() + 
   labs(
