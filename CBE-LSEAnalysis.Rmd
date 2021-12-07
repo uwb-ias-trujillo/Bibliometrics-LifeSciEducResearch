@@ -228,32 +228,41 @@ msisummary_perc <- temp%>%
   pivot_wider(names_from = name, values_from = c(perc))
 view(msisummary_perc)
 
+```
+```{r affilation plot}
 temp %>%
   filter(eligibility == "Current grantee") %>%
-  arrange(perc) %>% 
-  select(name) %>% 
-  mutate(name = as.factor(name)) -> x_levels
-  
-temp %>% 
-  filter(eligibility != "Ineligible" & eligibility != "Undetermined") %>%
-  #mutate(name = factor(name, levels = x_levels)) %>% 
-  ggplot(aes(x = factor(name, levels = x_levels), y = perc, fill = eligibility)) +
+  arrange(perc, desc()) %>% 
+  mutate(name = reorder(as.factor(name), desc(perc)), order = (perc)) %>%
+  pull(name)-> x_levels
+
+temp$name<- factor(x = temp$name, levels = (x_levels))
+
+
+MSIAffiliationPlot <- temp %>% 
+  filter(#eligibility != "Ineligible" & 
+    eligibility != "Undetermined", !is.na(name)) %>%
+  ggplot(aes(x = name, y = perc, fill = eligibility)) +
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_y_continuous(labels = scales::percent) +
-  coord_flip() + 
-  labs(
-    title = "Percent of affilitations by Minority Serving Institution program eligibilty",
-    x = NULL,
-    y = NULL
-  ) +
+  coord_flip() +
   theme_dark()+
-  scale_fill_manual(values = c("#F26E50", "#F2A679"))+
-  theme_default
+  scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9"))+
+  theme_default + 
+  labs(
+    title = "Percent of author affiliations that are also Minority Serving Institution",
+    caption = "Percent of 479 CBE-LSE author affilations found in 2020 US Dept. of Ed. Eligibility Matrix",
+    y = NULL, 
+    x = NULL
+  )  +
+  theme(legend.title = element_blank())
 
-  #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
+MSIAffiliationPlot
+  
+#mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
 ```
 
-```{r eligibility tables}
+```{r eligibility tables, include = FALSE}
 #Eligibility tables
 msiaanapisi <- msiuniv %>%
   group_by(AANAPISI) %>%
