@@ -1,7 +1,7 @@
 ---
 title: "CBE-LSE Bibliometric Analysis"
 author: "Caleb Trujillo, Darcie Nelson, Rachel Kudlacz, Germaine Ng"
-date: "10/18/2021"
+date: "1/31/2022"
 output:
   html_document: default
   word_document: default
@@ -41,8 +41,7 @@ There has tremendous growth in the area undergraduate biology research over the 
 ### Summary of initial data set
 
 ```{r dataset}
-txt <- c("rawdata/CBE-LSE-2010-2020/WOS-CBELSE-2010-2020-1-500.txt",
-         "rawdata/CBE-LSE-2010-2020/WOS-CBELSE-2010-2020-501-853.txt")
+txt <- c("rawdata/CBE-LSE-2010-2021/CBE LSE 2010-2021 1-926.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
