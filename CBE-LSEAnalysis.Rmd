@@ -118,13 +118,13 @@ indices$H %>%
 as_tibble(results$Authors)
 
 
-inner_join(as_tibble(results$Authors),indices$H)
+AuthorData<- inner_join(as_tibble(results$Authors),indices$H, by = c("AU" = "Element"))
 
 indices$H
 
 #authorProdOverTime(data, k = 10, graph = TRUE)
   
-ggplot(indices$H,aes(size = NP, y = h_index)) + 
+ggplot(AuthorData,aes(size = NP, y = h_index)) + 
   geom_jitter(aes(alpha = 0.1)) +
   geom_text(aes(label = Element), check_overlap = TRUE) #+
   #scale_x_log10()   #geom_smooth()
