@@ -15,6 +15,7 @@ require("bibliometrix")
 require("igraph")
 require("tidyverse")
 require("xtable")
+require("sf")
 devtools::install_github("massimoaria/bibliometrix")
 
 devtools::install_github("wmurphyrd/fiftystater")
@@ -30,6 +31,7 @@ library(readxl)
 library(scales)
 library(ggplot2)
 library("fiftystater")
+library(sf)
 ```
 
 ##Introduction
@@ -118,15 +120,18 @@ indices$H %>%
 as_tibble(results$Authors)
 
 
-AuthorData<- inner_join(as_tibble(results$Authors),indices$H, by = c("AU" = "Element"))
+
+authordata <- inner_join(as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
+  filter(n>5)
 
 indices$H
 
 #authorProdOverTime(data, k = 10, graph = TRUE)
   
-ggplot(AuthorData,aes(size = NP, y = h_index)) + 
+
+ggplot(authordata, aes(size = NP, x = n, y = h_index)) + 
   geom_jitter(aes(alpha = 0.1)) +
-  geom_text(aes(label = Element), check_overlap = TRUE) #+
+  geom_text(aes(label = AU), check_overlap = TRUE) #+
   #scale_x_log10()   #geom_smooth()
 ```
 
