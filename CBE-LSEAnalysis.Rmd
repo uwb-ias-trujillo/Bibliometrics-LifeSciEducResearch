@@ -16,6 +16,7 @@ require("igraph")
 require("tidyverse")
 require("xtable")
 require("sf")
+require("ggrepel")
 devtools::install_github("massimoaria/bibliometrix")
 
 devtools::install_github("wmurphyrd/fiftystater")
@@ -111,28 +112,30 @@ xtable(S$MainInformationDF)
 
 ```{r author productivity}
 authors=gsub(","," ",names(results$Authors))
+summary(as.factor(authors))
+indices <- Hindex(data, field = "author", elements = authors, sep = ";", years = 50)
+indices <- Hindex(data, field = "author", sep = ";", years = 50)$H
 
-indices <- Hindex(data, field = "author", elements=authors, sep = ";", years = 50)
 
 indices$H %>%
-  arrange(desc(NP))
+  dplyr::arrange(desc(NP))
 
 as_tibble(results$Authors)
 
+authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
+  filter("n" > 5) # only showing authors with at least 5 publications.
 
+authorProdOverTime(data, k = 10, graph = TRUE)$graph + labs(x = NULL, y = NULL)
 
-authordata <- inner_join(as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
-  filter(n>5)
-
-indices$H
-
-#authorProdOverTime(data, k = 10, graph = TRUE)
-  
-
-ggplot(authordata, aes(size = NP, x = n, y = h_index)) + 
-  geom_jitter(aes(alpha = 0.1)) +
-  geom_text(aes(label = AU), check_overlap = TRUE) #+
-  #scale_x_log10()   #geom_smooth()
+ggplot(authordata, aes( x = NP, y = h_index)) + 
+  geom_point(alpha = 0.6) +
+  geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.0001, min.segment.length = Inf)  +
+  theme_dark()+
+  theme_default +
+  labs(y = "h—index", 
+       x = "Publications",
+       caption = "CBE — Life Science Education") +
+  ggtitle("Author productivity", subtitle = "Number of publications and h-index for authors between 2010 and 2021")  #geom_smooth()
 ```
 
 ### Affiliations
@@ -150,8 +153,8 @@ msistates <- msiuniv %>%
   group_by(St) %>%
   summarize(n = n(), articles = sum(Freq) ) %>%
   filter(!(St %in% c("DC", "MH", "PR", "VI", "GU"))) %>% 
-  rename(states = St, affiliations = n) #%>%
-  #summarize(states,affiliations = affiliations/sum(affiliations))
+  rename(states = St, affiliations = n) %>%
+  group_by(affiliations, articles)
 view(msistates)
 
 msistates$state_name <- state.name[match(msistates$states,state.abb)]
@@ -177,7 +180,7 @@ affiliationMap <- ggplot() +
 
 affiliationMap
 
-articleMap <- ggplot() +
+ articleMap <- ggplot() +
   geom_sf(spatial_data,
           mapping = aes(fill = articles, geometry = geometry), stat = "sf",
           color = "#ffffff", size = 0.25) +
