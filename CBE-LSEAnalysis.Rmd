@@ -193,7 +193,8 @@ affiliationMap <- ggplot() +
   coord_sf(datum = NA) +
   geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
                 aes(label = state_abbv), 
-            size = 3)
+            size = 3)+
+   scale_fill_viridis_c(option="D",  direction = -1)
 
 affiliationMap
 
@@ -210,10 +211,25 @@ affiliationMap
   coord_sf(datum = NA) +
   geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
                 aes(label = state_abbv), 
-            size = 3)
+            size = 3) 
 
-articleMap
+articleMap+
+   scale_fill_viridis_c(option="D",  direction = -1)
 
+articleMap+
+   scale_fill_viridis_c(option="E",  direction = -1)
+
+articleMap+
+   scale_fill_viridis_c(option="C",  direction = -1)
+
+
+library(RColorBrewer)
+articleMap+
+   theme_void() +
+    scale_fill_distiller(palette = "Spectral")
+
+articleMap+
+   scale_fill_viridis_c(option="A",  direction = -1)
 
 
 msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`)
