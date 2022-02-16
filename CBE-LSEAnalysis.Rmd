@@ -180,6 +180,7 @@ spatial_data <- left_join(msistates,
                           get_urbn_map(map = "states", sf = TRUE),
                           by = "state_name")
 
+#Affiliation Map
 affiliationMap <- ggplot() +
   geom_sf(spatial_data,
           mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
@@ -191,14 +192,18 @@ affiliationMap <- ggplot() +
     ) +
   #scale_fill_gradient(labels = scales::percent) +
   coord_sf(datum = NA) +
-  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
-                aes(label = state_abbv), 
-            size = 3)+
-   scale_fill_viridis_c(option="D",  direction = -1)
+  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE),
+               aes(label = state_abbv),
+               size = 3)
 
-affiliationMap
+affiliationMap +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"),
+        panel.background = element_blank()) +
+  scale_fill_viridis_c(option="E", direction = -1)
 
- articleMap <- ggplot() +
+
+#Article Map
+articleMap <- ggplot() +
   geom_sf(spatial_data,
           mapping = aes(fill = articles, geometry = geometry), stat = "sf",
           color = "#ffffff", size = 0.25) +
@@ -210,26 +215,13 @@ affiliationMap
   #scale_fill_gradient(labels = scales::percent) +
   coord_sf(datum = NA) +
   geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
-                aes(label = state_abbv), 
-            size = 3) 
+               aes(label = state_abbv),
+               size = 3) 
 
-articleMap+
-   scale_fill_viridis_c(option="D",  direction = -1)
-
-articleMap+
-   scale_fill_viridis_c(option="E",  direction = -1)
-
-articleMap+
-   scale_fill_viridis_c(option="C",  direction = -1)
-
-
-library(RColorBrewer)
-articleMap+
-   theme_void() +
-    scale_fill_distiller(palette = "Spectral")
-
-articleMap+
-   scale_fill_viridis_c(option="A",  direction = -1)
+articleMap +
+  theme(plot.margin = unit(c(1,1.82,1,1), "cm"),
+        panel.background = element_blank()) +
+  scale_fill_viridis_c(option="E", direction = -1)
 
 
 msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`)
@@ -269,6 +261,7 @@ msisummary_perc <- temp%>%
 view(msisummary_perc)
 
 ```
+
 ```{r affilation plot}
 temp %>%
   filter(eligibility == "Current grantee") %>%
