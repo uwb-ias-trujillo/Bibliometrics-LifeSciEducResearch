@@ -70,7 +70,7 @@ options(width=100)
 
 S <- summary(object = results, pause = FALSE)
 S
-plot(x=results, k=10, pause=F)
+#plot(x=results, k=10, pause=F)
 
 S$MainInformationDF
 
@@ -112,9 +112,14 @@ xtable(S$MainInformationDF)
 
 ```{r author productivity}
 authors=gsub(","," ",names(results$Authors))
-summary(as.factor(authors))
-indices <- Hindex(data, field = "author", elements = authors, sep = ";", years = 50)
-indices <- Hindex(data, field = "author", sep = ";", years = 50)$H
+testresults <- biblioAnalysis(scientometrics, sep = ";")
+testauthors=gsub(","," ",names(testresults$Authors))
+test <- Hindex(scientometrics, field = "author", elements = NULL, sep = ";")
+test <- Hindex(scientometrics, field = "author", elements = testauthors, sep = ";")
+test
+
+indices <- Hindex(data, field = "author", elements = authors, sep = ";", years = Inf)
+#indices <- Hindex(data, field = "author", sep = ";", years = 50)$H
 
 
 indices$H %>%
@@ -136,6 +141,18 @@ ggplot(authordata, aes( x = NP, y = h_index)) +
        x = "Publications",
        caption = "CBE — Life Science Education") +
   ggtitle("Author productivity", subtitle = "Number of publications and h-index for authors between 2010 and 2021")  #geom_smooth()
+
+
+
+data(scientometrics, package = "bibliometrixData")
+Hlist<- Hindex(scientometrics, field = "author", elements = NULL, sep = ";")$H
+Hlist$CitationList['SMALL H']
+results <- biblioAnalysis(scientometrics, sep = ";")
+view(results$Authors['SMALL H'])
+
+authors=gsub(","," ",names(results$Authors))
+Hlist2<-Hindex(scientometrics, field = "author", elements = authors, sep = ";")$H
+Hlist2$CitationList['SMALL H']
 ```
 
 ### Affiliations
