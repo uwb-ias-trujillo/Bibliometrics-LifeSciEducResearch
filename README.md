@@ -1,4 +1,4 @@
-# CBE-Life Science Education Bibliographic Analysis from the years 2010 to 2019. 
+# CBE-Life Science Education Bibliographic Analysis from the years 2010 to 2021. 
 Authored by: Darcie Nelson, Germaine Ng, Rachel Kudlacz, Caleb Trujillo
 
 The purpose of this project is to perform a bibliographic analysis using the following package: 
