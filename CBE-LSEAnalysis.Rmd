@@ -125,7 +125,11 @@ as_tibble(results$Authors)
 authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
   filter("n" > 5) # only showing authors with at least 5 publications.
 
-authorProdOverTime(data, k = 10, graph = TRUE)$graph + labs(x = NULL, y = NULL)
+authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
+  labs(title = "Top authors productivity from 2010 - 2021",x = NULL, y = NULL) +
+  theme(legend.position="top") +
+  theme_default
+  
 
 ggplot(authordata, aes( x = NP, y = h_index)) + 
   geom_point(alpha = 0.6) +
@@ -387,10 +391,10 @@ Text to introduce the script and outputs
 ```{r co-authorship,echo=FALSE}
 #INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
 # Create a Social Network Analysis(SNA) Network from Co-Citation Network
-CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";")
+CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";",short = TRUE)
 
 # Plot the network - look into SNA application
-CoANet <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "auto", size=0.1, remove.multiple=FALSE, labelsize = 1, edgesize = 1, edges.min = 1, label.n = 10, cluster = "louvain", remove.isolates = TRUE)
+CoANet <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "fruchterman", size=0.1, remove.multiple=TRUE, labelsize = 2, weighted = TRUE, curved = TRUE, edgesize = 5, edges.min = 1, halo = TRUE, label.n = 10,  cluster = "louvain", remove.isolates = TRUE, community.repulsion = 1)
 
 plot(CoANet$graph, vertex.label.family = "Helvetica")
 
@@ -456,124 +460,8 @@ ggplot((Aff_Freq)) +
 ### What is the intellectual structures? Document co-citation network and topic analysis
 
 Darcie Nelson
-```{r citation}
-library(stringdist)
-library(stringr)
-library(stringi)
-library(plyr)
-library(dplyr)
-library(magrittr)
-library(broom)
-library(lazyeval)
-library(tidyr)
-library(reshape2)
-library(data.table)
 
-#citations
-
-# load functions
-  source("cleaningfunctions/citation_functions.R")
-
-
-# Extract citations from WOS list
-    work_data <- as.data.frame(extract_citation(data, "CR"))
-    #work_data$label <- as.character(work_data$label)
-    work_data$L1<- as.factor(work_data$L1)
-    work_data$index<-as.factor( work_data$index)
-
-# Standardize the data--------------------------------------------------------------------
-   std_data <- standardize(work_data)
-
-# show authors who are longer than 50 characters
-   author_temp <- std_data %>%
-        select(authors) %>%
-        filter(nchar(authors) > 50)
-
-# clean and standardize author names -----------------------------------------------------
-
-# Run fuzzy match function on a .2 threshold
-
-    std_data$authorBlock <- fuzzy_match(std_data$authors, .1, std_data$authors)
-
-    
-   # look at author clusters
-    author_merges <- std_data %>%
-      group_by(authorBlock) %>%
-      dplyr::summarise(count = n()) %>%
-      filter(count > 15) %>%
-      arrange(desc(count))
-
-
-    # Run the clustering algorithm again to recluster top merge
-    # get the top merged author
-    name <- author_merges[1, ][[1]]
-
-    std_data2 <- std_data %>%
-      filter(authorBlock == name) %>%
-      mutate(authorBlock = fuzzy_match(authors, .08, authors))
-
-    std_data3 <- std_data %>%
-      filter(authorBlock != name) %>%
-      bind_rows(std_data2)
-
-    std_data4 <- std_data3 %>%
-      filter(authorBlock == name) %>%
-      mutate(authorBlock = fuzzy_match(authors, .05, authors))
-
-    std_data5 <- std_data3 %>%
-      filter(authorBlock != name) %>%
-      bind_rows(std_data4)
-
-#Add specific criteria for problematic author names
-    std_data5$authorBlock[grep("assaraf", std_data5$authorBlock)]
-
-
-# Run clustering algorithm----------------------------------------------------------------
-    books <- std_data5 %>%
-        group_by(authorBlock, documentName, documentYear) %>%
-        filter(type == "book") %>%
-        mutate(mergedLabel = fuzzy_match(cleanLabel, .05, cleanLabel))
-
-
-    articles <- std_data5 %>%
-        group_by(authorBlock, documentName, documentYear) %>%
-        filter(type == "article") %>%
-        mutate(mergedLabel = fuzzy_match(cleanLabel, .01, cleanLabel))
-
-        clean_data <- rbind(books, articles)
-
-
-# create the flat data file
-    
-    flat_data<- as.data.table(clean_data)[, toString(paste0(mergedLabel,collapse = ";")), by = list(L1)]
-
-
-
-# make sure to unwrap this again to check if it was wrapped properly
-    rownames(flat_data) <- as.character(flat_data$L1)
-                                         
-    flat_data2 <- inner_join(data, flat_data, by = c("SR" = "L1"))
-    flat_data2$CR <- flat_data2$V1
-# find the similarity  of the merges------------------------------------------------------
-
-    clean_data <- clean_data %>%
-        mutate(jwSimilarity = calc_jw(cleanLabel, mergedLabel))
-
-
-# plot------------------------------------------------------------------------------------
-
-    merged <- clean_data %>%
-        filter(jwSimilarity < 1)
-
-
-    hist(round(merged$jwSimilarity, 3),
-         xlab = "jw similarity distance",
-         main = "Freq Merges by similarity distance \n with year and document type boundary")
-
-# save the data------------------------------------------------------------------------------------
-    write.csv(clean_data, "WOS_nodeList.csv", row.names = FALSE)
-    write.csv(flat_data2, "WOS_clean.csv", row.names = FALSE)
-
+```{r top cited papers and sources}
 CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
 CRtable
@@ -586,10 +474,7 @@ sourcestable <-cbind(summary(factor(CR$Source))
 [1:10])
 sourcestable
 
-write.csv(file = "Sources.csv",sourcestable)
-
-    
-    
+write.csv(file = "Sources.csv", sourcestable)
 ```
 
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
