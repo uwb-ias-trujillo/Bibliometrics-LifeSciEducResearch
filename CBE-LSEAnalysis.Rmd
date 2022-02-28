@@ -46,7 +46,7 @@ txt <- c("rawdata/CBE-LSE-2010-2021/CBE LSE 2010-2021 1-926.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
-theme_default <- theme(
+ theme_default <- theme(
     plot.caption = element_text(hjust = 0, face= "italic"),
     plot.title.position = "plot",
     plot.caption.position =  "plot",
@@ -463,7 +463,7 @@ ggplot((Aff_Freq)) +
        
 ```
 
-### What is the intellectual structures? Document co-citation network and topic analysis
+### What are the intellectual structures? Document co-citation network and topic analysis
 
 Darcie Nelson
 ```{r citation}
@@ -479,11 +479,10 @@ library(tidyr)
 library(reshape2)
 library(data.table)
 
-#citations
+# citations
 
 # load functions
   source("cleaningfunctions/citation_functions.R")
-
 
 # Extract citations from WOS list
     work_data <- as.data.frame(extract_citation(data, "CR"))
@@ -491,7 +490,8 @@ library(data.table)
     work_data$L1<- as.factor(work_data$L1)
     work_data$index<-as.factor( work_data$index)
 
-# Standardize the data--------------------------------------------------------------------
+    
+# Standardize the data----------------------------------------------------------
    std_data <- standardize(work_data)
 
 # show authors who are longer than 50 characters
@@ -499,23 +499,21 @@ library(data.table)
         select(authors) %>%
         filter(nchar(authors) > 50)
 
-# clean and standardize author names -----------------------------------------------------
+   
+# clean and standardize author names -------------------------------------------
 
 # Run fuzzy match function on a .2 threshold
-
     std_data$authorBlock <- fuzzy_match(std_data$authors, .1, std_data$authors)
 
-    
-   # look at author clusters
+# look at author clusters
     author_merges <- std_data %>%
       group_by(authorBlock) %>%
       dplyr::summarise(count = n()) %>%
       filter(count > 15) %>%
       arrange(desc(count))
 
-
-    # Run the clustering algorithm again to recluster top merge
-    # get the top merged author
+# Run the clustering algorithm again to recluster top merge
+# get the top merged author
     name <- author_merges[1, ][[1]]
 
     std_data2 <- std_data %>%
@@ -538,12 +536,11 @@ library(data.table)
     std_data5$authorBlock[grep("assaraf", std_data5$authorBlock)]
 
 
-# Run clustering algorithm----------------------------------------------------------------
+# Run clustering algorithm------------------------------------------------------
     books <- std_data5 %>%
         group_by(authorBlock, documentName, documentYear) %>%
         filter(type == "book") %>%
         mutate(mergedLabel = fuzzy_match(cleanLabel, .05, cleanLabel))
-
 
     articles <- std_data5 %>%
         group_by(authorBlock, documentName, documentYear) %>%
@@ -552,44 +549,43 @@ library(data.table)
 
         clean_data <- rbind(books, articles)
 
-
 # create the flat data file
-    
     flat_data<- as.data.table(clean_data)[, toString(paste0(mergedLabel,collapse = ";")), by = list(L1)]
-
-
 
 # make sure to unwrap this again to check if it was wrapped properly
     rownames(flat_data) <- as.character(flat_data$L1)
-                                         
     flat_data2 <- inner_join(data, flat_data, by = c("SR" = "L1"))
     flat_data2$CR <- flat_data2$V1
-# find the similarity  of the merges------------------------------------------------------
 
+    
+# find the similarity  of the merges--------------------------------------------
     clean_data <- clean_data %>%
         mutate(jwSimilarity = calc_jw(cleanLabel, mergedLabel))
 
 
-# plot------------------------------------------------------------------------------------
-
+# plot--------------------------------------------------------------------------
     merged <- clean_data %>%
         filter(jwSimilarity < 1)
 
-
     hist(round(merged$jwSimilarity, 3),
-         xlab = "jw similarity distance",
-         main = "Freq Merges by similarity distance \n with year and document type boundary")
+       xlab = "jw similarity distance",
+       main = "Freq Merges by similarity distance \n with year and document type boundary")
 
-# save the data------------------------------------------------------------------------------------
+    
+# save the data ----------------------------------------------------------------
     write.csv(clean_data, "WOS_nodeList.csv", row.names = FALSE)
     write.csv(flat_data2, "WOS_clean.csv", row.names = FALSE)
+    
 
+# Publications most frequently cited by articles in CBE-LSE
 CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
 CRtable
+
 CR2 <- citations(flat_data2, field = "article", sep = ";")
 CR2table <-cbind(CR2$Cited[1:20])
 CR2table
+
 write.csv(file = "Citations.csv",CR2table)
 
 sourcestable <-cbind(summary(factor(CR$Source))
@@ -598,8 +594,6 @@ sourcestable
 
 write.csv(file = "Sources.csv",sourcestable)
 
-    
-    
 ```
 
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
