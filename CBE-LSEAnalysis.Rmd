@@ -46,7 +46,7 @@ txt <- c("rawdata/CBE-LSE-2010-2021/CBE LSE 2010-2021 1-926.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
-theme_default <- theme(
+ theme_default <- theme(
     plot.caption = element_text(hjust = 0, face= "italic"),
     plot.title.position = "plot",
     plot.caption.position =  "plot",
@@ -167,6 +167,7 @@ spatial_data <- left_join(msistates,
                           get_urbn_map(map = "states", sf = TRUE),
                           by = "state_name")
 
+#Affiliation Map
 affiliationMap <- ggplot() +
   geom_sf(spatial_data,
           mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
@@ -178,14 +179,18 @@ affiliationMap <- ggplot() +
     ) +
   #scale_fill_gradient(labels = scales::percent) +
   coord_sf(datum = NA) +
-  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
-                aes(label = state_abbv), 
-            size = 3)+
-   scale_fill_viridis_c(option="D",  direction = -1)
+  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE),
+               aes(label = state_abbv),
+               size = 3)
 
-affiliationMap
+affiliationMap +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"),
+        panel.background = element_blank()) +
+  scale_fill_viridis_c(option="E", direction = -1)
 
- articleMap <- ggplot() +
+
+#Article Map
+articleMap <- ggplot() +
   geom_sf(spatial_data,
           mapping = aes(fill = articles, geometry = geometry), stat = "sf",
           color = "#ffffff", size = 0.25) +
@@ -197,26 +202,13 @@ affiliationMap
   #scale_fill_gradient(labels = scales::percent) +
   coord_sf(datum = NA) +
   geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
-                aes(label = state_abbv), 
-            size = 3) 
+               aes(label = state_abbv),
+               size = 3) 
 
-articleMap+
-   scale_fill_viridis_c(option="D",  direction = -1)
-
-articleMap+
-   scale_fill_viridis_c(option="E",  direction = -1)
-
-articleMap+
-   scale_fill_viridis_c(option="C",  direction = -1)
-
-
-library(RColorBrewer)
-articleMap+
-   theme_void() +
-    scale_fill_distiller(palette = "Spectral")
-
-articleMap+
-   scale_fill_viridis_c(option="A",  direction = -1)
+articleMap +
+  theme(plot.margin = unit(c(1,1.82,1,1), "cm"),
+        panel.background = element_blank()) +
+  scale_fill_viridis_c(option="E", direction = -1)
 
 
 msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`)
@@ -256,6 +248,7 @@ msisummary_perc <- temp%>%
 view(msisummary_perc)
 
 ```
+
 ```{r affilation plot}
 temp %>%
   filter(eligibility == "Current grantee") %>%
@@ -457,24 +450,146 @@ ggplot((Aff_Freq)) +
        
 ```
 
-### What is the intellectual structures? Document co-citation network and topic analysis
+### What are the intellectual structures? Document co-citation network and topic analysis
 
 Darcie Nelson
+<<<<<<< HEAD
 
 ```{r top cited papers and sources}
+=======
+```{r citation}
+library(stringdist)
+library(stringr)
+library(stringi)
+library(plyr)
+library(dplyr)
+library(magrittr)
+library(broom)
+library(lazyeval)
+library(tidyr)
+library(reshape2)
+library(data.table)
+
+# citations
+
+# load functions
+  source("cleaningfunctions/citation_functions.R")
+
+# Extract citations from WOS list
+    work_data <- as.data.frame(extract_citation(data, "CR"))
+    #work_data$label <- as.character(work_data$label)
+    work_data$L1<- as.factor(work_data$L1)
+    work_data$index<-as.factor( work_data$index)
+
+    
+# Standardize the data----------------------------------------------------------
+   std_data <- standardize(work_data)
+
+# show authors who are longer than 50 characters
+   author_temp <- std_data %>%
+        select(authors) %>%
+        filter(nchar(authors) > 50)
+
+   
+# clean and standardize author names -------------------------------------------
+
+# Run fuzzy match function on a .2 threshold
+    std_data$authorBlock <- fuzzy_match(std_data$authors, .1, std_data$authors)
+
+# look at author clusters
+    author_merges <- std_data %>%
+      group_by(authorBlock) %>%
+      dplyr::summarise(count = n()) %>%
+      filter(count > 15) %>%
+      arrange(desc(count))
+
+# Run the clustering algorithm again to recluster top merge
+# get the top merged author
+    name <- author_merges[1, ][[1]]
+
+    std_data2 <- std_data %>%
+      filter(authorBlock == name) %>%
+      mutate(authorBlock = fuzzy_match(authors, .08, authors))
+
+    std_data3 <- std_data %>%
+      filter(authorBlock != name) %>%
+      bind_rows(std_data2)
+
+    std_data4 <- std_data3 %>%
+      filter(authorBlock == name) %>%
+      mutate(authorBlock = fuzzy_match(authors, .05, authors))
+
+    std_data5 <- std_data3 %>%
+      filter(authorBlock != name) %>%
+      bind_rows(std_data4)
+
+#Add specific criteria for problematic author names
+    std_data5$authorBlock[grep("assaraf", std_data5$authorBlock)]
+
+
+# Run clustering algorithm------------------------------------------------------
+    books <- std_data5 %>%
+        group_by(authorBlock, documentName, documentYear) %>%
+        filter(type == "book") %>%
+        mutate(mergedLabel = fuzzy_match(cleanLabel, .05, cleanLabel))
+
+    articles <- std_data5 %>%
+        group_by(authorBlock, documentName, documentYear) %>%
+        filter(type == "article") %>%
+        mutate(mergedLabel = fuzzy_match(cleanLabel, .01, cleanLabel))
+
+        clean_data <- rbind(books, articles)
+
+# create the flat data file
+    flat_data<- as.data.table(clean_data)[, toString(paste0(mergedLabel,collapse = ";")), by = list(L1)]
+
+# make sure to unwrap this again to check if it was wrapped properly
+    rownames(flat_data) <- as.character(flat_data$L1)
+    flat_data2 <- inner_join(data, flat_data, by = c("SR" = "L1"))
+    flat_data2$CR <- flat_data2$V1
+
+    
+# find the similarity  of the merges--------------------------------------------
+    clean_data <- clean_data %>%
+        mutate(jwSimilarity = calc_jw(cleanLabel, mergedLabel))
+
+
+# plot--------------------------------------------------------------------------
+    merged <- clean_data %>%
+        filter(jwSimilarity < 1)
+
+    hist(round(merged$jwSimilarity, 3),
+       xlab = "jw similarity distance",
+       main = "Freq Merges by similarity distance \n with year and document type boundary")
+
+    
+# save the data ----------------------------------------------------------------
+    write.csv(clean_data, "WOS_nodeList.csv", row.names = FALSE)
+    write.csv(flat_data2, "WOS_clean.csv", row.names = FALSE)
+    
+
+# Publications most frequently cited by articles in CBE-LSE
+>>>>>>> db8511d25e37ecf888de6792ee7c2327b71597ab
 CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
 CRtable
+
 CR2 <- citations(flat_data2, field = "article", sep = ";")
 CR2table <-cbind(CR2$Cited[1:20])
 CR2table
+
 write.csv(file = "Citations.csv",CR2table)
 
 sourcestable <-cbind(summary(factor(CR$Source))
 [1:10])
 sourcestable
 
+<<<<<<< HEAD
 write.csv(file = "Sources.csv", sourcestable)
+=======
+write.csv(file = "Sources.csv",sourcestable)
+
+>>>>>>> db8511d25e37ecf888de6792ee7c2327b71597ab
 ```
 
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
