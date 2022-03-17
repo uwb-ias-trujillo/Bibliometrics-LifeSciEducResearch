@@ -209,8 +209,9 @@ articleMap +
   theme(plot.margin = unit(c(1,1.82,1,1), "cm"),
         panel.background = element_blank()) +
   scale_fill_viridis_c(option="E", direction = -1)
+```
 
-
+```{r MSI, echo=FALSE}
 msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`)
 msieligible <- msiuniv %>%
   group_by(`Eligible/ Current Grant`) %>%
@@ -247,9 +248,7 @@ msisummary_perc <- temp%>%
   pivot_wider(names_from = name, values_from = c(perc))
 view(msisummary_perc)
 
-```
 
-```{r affilation plot}
 temp %>%
   filter(eligibility == "Current grantee") %>%
   arrange(perc, "desc") %>% 
@@ -282,105 +281,12 @@ MSIAffiliationPlot
 #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
 ```
 
-```{r eligibility tables, include = FALSE}
-#Eligibility tables
-msiaanapisi <- msiuniv %>%
-  group_by(AANAPISI) %>%
-  summarize(n = n())
-view(msiaanapisi)
-
-msiaanapisif <- msiuniv %>%
-  group_by(`AANAPISI F`) %>%
-  summarize(n = n())
-view(msiaanapisif)
-
-msiannh <- msiuniv %>%
-  group_by(ANNH) %>%
-  summarize(n = n())
-view(msiannh)
-
-msiannh <- msiuniv %>%
-  group_by(ANNH) %>%
-  summarize(n = n())
-view(msiannh)
-
-msiannhf <- msiuniv %>%
-  group_by(`ANNH F`) %>%
-  summarize(n = n())
-view(msiannhf)
-
-msihbcu <- msiuniv %>%
-  group_by(HBCU) %>%
-  summarize(n = n())
-view(msihbcu)
-
-msihbcumasters <- msiuniv %>%
-  group_by(`HBCU Masters`) %>%
-  summarize(n = n())
-view(msihbcumasters)
-
-msihbgi <- msiuniv %>%
-  group_by(HBGI) %>%
-  summarize(n = n())
-view(msihbgi)
-
-msihsi <- msiuniv %>%
-  group_by(HSI) %>%
-  summarize(n = n())
-view(msihsi)
-
-msihsistem <- msiuniv %>%
-  group_by(`HSI STEM`) %>%
-  summarize(n = n())
-view(msihsistem)
-
-msimseip <- msiuniv %>%
-  group_by(MSEIP) %>%
-  summarize(n = n())
-view(msimseip)
-
-msinasnti <- msiuniv %>%
-  group_by(NASNTI) %>%
-  summarize(n = n())
-view(msinasnti)
-
-msinasntif <- msiuniv %>%
-  group_by(`NASNTI F`) %>%
-  summarize(n = n())
-view(msinasntif)
-
-msipbif <- msiuniv %>%
-  group_by(`PBI F`) %>%
-  summarize(n = n())
-view(msipbif)
-
-msipbia <- msiuniv %>%
-  group_by(`PBI A`) %>%
-  summarize(n = n())
-view(msipbia)
-
-msippoha <- msiuniv %>%
-  group_by(PPOHA) %>%
-  summarize(n = n())
-view(msippoha)
-
-msisip <- msiuniv %>%
-  group_by(SIP) %>%
-  summarize(n = n())
-view(msisip)
-
-msitccu <- msiuniv %>%
-  group_by(TCCU) %>%
-  summarize(n = n())
-view(msitccu)
-
-```
-
 
 ### Social Network Analysis (SNA) of co-authorship: What social structures are organizing co-authorship? 
 Rachel Kudlacz 
 This is the placeholder for the question about the social struction of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
 Text to introduce the script and outputs
+
 ```{r co-authorship,echo=FALSE}
 #INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
 # Create a Social Network Analysis(SNA) Network from Co-Citation Network
@@ -393,11 +299,6 @@ plot(CoANet$graph, vertex.label.family = "Helvetica")
 
 write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
 
-#CoANet2 <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "auto", size=0.1, remove.multiple=FALSE, labelsize = 1, edgesize = 1, edges.min = 3, label.n = 10, cluster = "louvain", remove.isolates = TRUE)
-
-#plot(CoANet2$graph, vertex.label.family = "Helvetica")
-
-#write_graph(CoANet2$graph,"CBE_LSE_Co-authorshipedge3.graphml", c("graphml"))
 ```
 
 Text to explain what is shown in the figures.
@@ -450,126 +351,11 @@ ggplot((Aff_Freq)) +
        
 ```
 
+
 ### What are the intellectual structures? Document co-citation network and topic analysis
 
 Darcie Nelson
-<<<<<<< HEAD
-
-```{r top cited papers and sources}
-=======
-```{r citation}
-library(stringdist)
-library(stringr)
-library(stringi)
-library(plyr)
-library(dplyr)
-library(magrittr)
-library(broom)
-library(lazyeval)
-library(tidyr)
-library(reshape2)
-library(data.table)
-
-# citations
-
-# load functions
-  source("cleaningfunctions/citation_functions.R")
-
-# Extract citations from WOS list
-    work_data <- as.data.frame(extract_citation(data, "CR"))
-    #work_data$label <- as.character(work_data$label)
-    work_data$L1<- as.factor(work_data$L1)
-    work_data$index<-as.factor( work_data$index)
-
-    
-# Standardize the data----------------------------------------------------------
-   std_data <- standardize(work_data)
-
-# show authors who are longer than 50 characters
-   author_temp <- std_data %>%
-        select(authors) %>%
-        filter(nchar(authors) > 50)
-
-   
-# clean and standardize author names -------------------------------------------
-
-# Run fuzzy match function on a .2 threshold
-    std_data$authorBlock <- fuzzy_match(std_data$authors, .1, std_data$authors)
-
-# look at author clusters
-    author_merges <- std_data %>%
-      group_by(authorBlock) %>%
-      dplyr::summarise(count = n()) %>%
-      filter(count > 15) %>%
-      arrange(desc(count))
-
-# Run the clustering algorithm again to recluster top merge
-# get the top merged author
-    name <- author_merges[1, ][[1]]
-
-    std_data2 <- std_data %>%
-      filter(authorBlock == name) %>%
-      mutate(authorBlock = fuzzy_match(authors, .08, authors))
-
-    std_data3 <- std_data %>%
-      filter(authorBlock != name) %>%
-      bind_rows(std_data2)
-
-    std_data4 <- std_data3 %>%
-      filter(authorBlock == name) %>%
-      mutate(authorBlock = fuzzy_match(authors, .05, authors))
-
-    std_data5 <- std_data3 %>%
-      filter(authorBlock != name) %>%
-      bind_rows(std_data4)
-
-#Add specific criteria for problematic author names
-    std_data5$authorBlock[grep("assaraf", std_data5$authorBlock)]
-
-
-# Run clustering algorithm------------------------------------------------------
-    books <- std_data5 %>%
-        group_by(authorBlock, documentName, documentYear) %>%
-        filter(type == "book") %>%
-        mutate(mergedLabel = fuzzy_match(cleanLabel, .05, cleanLabel))
-
-    articles <- std_data5 %>%
-        group_by(authorBlock, documentName, documentYear) %>%
-        filter(type == "article") %>%
-        mutate(mergedLabel = fuzzy_match(cleanLabel, .01, cleanLabel))
-
-        clean_data <- rbind(books, articles)
-
-# create the flat data file
-    flat_data<- as.data.table(clean_data)[, toString(paste0(mergedLabel,collapse = ";")), by = list(L1)]
-
-# make sure to unwrap this again to check if it was wrapped properly
-    rownames(flat_data) <- as.character(flat_data$L1)
-    flat_data2 <- inner_join(data, flat_data, by = c("SR" = "L1"))
-    flat_data2$CR <- flat_data2$V1
-
-    
-# find the similarity  of the merges--------------------------------------------
-    clean_data <- clean_data %>%
-        mutate(jwSimilarity = calc_jw(cleanLabel, mergedLabel))
-
-
-# plot--------------------------------------------------------------------------
-    merged <- clean_data %>%
-        filter(jwSimilarity < 1)
-
-    hist(round(merged$jwSimilarity, 3),
-       xlab = "jw similarity distance",
-       main = "Freq Merges by similarity distance \n with year and document type boundary")
-
-    
-# save the data ----------------------------------------------------------------
-    write.csv(clean_data, "WOS_nodeList.csv", row.names = FALSE)
-    write.csv(flat_data2, "WOS_clean.csv", row.names = FALSE)
-    
-
-# Publications most frequently cited by articles in CBE-LSE
->>>>>>> db8511d25e37ecf888de6792ee7c2327b71597ab
+```{r citations, echo=FALSE}
 CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
 CRtable
@@ -580,16 +366,12 @@ CR2table
 
 write.csv(file = "Citations.csv",CR2table)
 
-sourcestable <-cbind(summary(factor(CR$Source))
-[1:10])
+# Sources Table
+sourcestable <-cbind(summary(factor(CR$Source))[1:10])
 sourcestable
 
-<<<<<<< HEAD
-write.csv(file = "Sources.csv", sourcestable)
-=======
 write.csv(file = "Sources.csv",sourcestable)
 
->>>>>>> db8511d25e37ecf888de6792ee7c2327b71597ab
 ```
 
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
@@ -610,6 +392,8 @@ write_graph(DCA$graph,"Gephi files/CBE_LSE_DCAedge4.graphml", c("graphml"))
 ```
 
 ```{r bibliographic coupling}
+
+# Group similar documents by references
 rownames(flat_data2) <- rownames(data)
 BC <- biblioNetwork(flat_data2, analysis = "coupling", network = "references", sep = ";")
 
@@ -621,6 +405,8 @@ write_graph(BCnet$graph,"Gephi files/CBE_LSE_BC4.graphml", c("graphml"))
 ```
 
 ```{r topics and keywords}
+
+# Show how key words appear together
 CS <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=19, clust= 4 ,k.max=20, stemming=TRUE, labelsize=10, documents=10)
 
 #CS4 <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=6, clust= "auto" ,k.max=20, stemming=TRUE, labelsize=4, documents=10)
