@@ -222,8 +222,9 @@ articleMap +
   theme(plot.margin = unit(c(1,1.82,1,1), "cm"),
         panel.background = element_blank()) +
   scale_fill_viridis_c(option="E", direction = -1)
+```
 
-
+```{r MSI, echo=FALSE}
 msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`)
 msieligible <- msiuniv %>%
   group_by(`Eligible/ Current Grant`) %>%
@@ -260,9 +261,7 @@ msisummary_perc <- temp%>%
   pivot_wider(names_from = name, values_from = c(perc))
 view(msisummary_perc)
 
-```
 
-```{r affilation plot}
 temp %>%
   filter(eligibility == "Current grantee") %>%
   arrange(perc, "desc") %>% 
@@ -295,105 +294,12 @@ MSIAffiliationPlot
 #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
 ```
 
-```{r eligibility tables, include = FALSE}
-#Eligibility tables
-msiaanapisi <- msiuniv %>%
-  group_by(AANAPISI) %>%
-  summarize(n = n())
-view(msiaanapisi)
-
-msiaanapisif <- msiuniv %>%
-  group_by(`AANAPISI F`) %>%
-  summarize(n = n())
-view(msiaanapisif)
-
-msiannh <- msiuniv %>%
-  group_by(ANNH) %>%
-  summarize(n = n())
-view(msiannh)
-
-msiannh <- msiuniv %>%
-  group_by(ANNH) %>%
-  summarize(n = n())
-view(msiannh)
-
-msiannhf <- msiuniv %>%
-  group_by(`ANNH F`) %>%
-  summarize(n = n())
-view(msiannhf)
-
-msihbcu <- msiuniv %>%
-  group_by(HBCU) %>%
-  summarize(n = n())
-view(msihbcu)
-
-msihbcumasters <- msiuniv %>%
-  group_by(`HBCU Masters`) %>%
-  summarize(n = n())
-view(msihbcumasters)
-
-msihbgi <- msiuniv %>%
-  group_by(HBGI) %>%
-  summarize(n = n())
-view(msihbgi)
-
-msihsi <- msiuniv %>%
-  group_by(HSI) %>%
-  summarize(n = n())
-view(msihsi)
-
-msihsistem <- msiuniv %>%
-  group_by(`HSI STEM`) %>%
-  summarize(n = n())
-view(msihsistem)
-
-msimseip <- msiuniv %>%
-  group_by(MSEIP) %>%
-  summarize(n = n())
-view(msimseip)
-
-msinasnti <- msiuniv %>%
-  group_by(NASNTI) %>%
-  summarize(n = n())
-view(msinasnti)
-
-msinasntif <- msiuniv %>%
-  group_by(`NASNTI F`) %>%
-  summarize(n = n())
-view(msinasntif)
-
-msipbif <- msiuniv %>%
-  group_by(`PBI F`) %>%
-  summarize(n = n())
-view(msipbif)
-
-msipbia <- msiuniv %>%
-  group_by(`PBI A`) %>%
-  summarize(n = n())
-view(msipbia)
-
-msippoha <- msiuniv %>%
-  group_by(PPOHA) %>%
-  summarize(n = n())
-view(msippoha)
-
-msisip <- msiuniv %>%
-  group_by(SIP) %>%
-  summarize(n = n())
-view(msisip)
-
-msitccu <- msiuniv %>%
-  group_by(TCCU) %>%
-  summarize(n = n())
-view(msitccu)
-
-```
-
 
 ### Social Network Analysis (SNA) of co-authorship: What social structures are organizing co-authorship? 
 Rachel Kudlacz 
 This is the placeholder for the question about the social struction of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
 Text to introduce the script and outputs
+
 ```{r co-authorship,echo=FALSE}
 #INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
 # Create a Social Network Analysis(SNA) Network from Co-Citation Network
@@ -406,11 +312,6 @@ plot(CoANet$graph, vertex.label.family = "Helvetica")
 
 write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
 
-#CoANet2 <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "auto", size=0.1, remove.multiple=FALSE, labelsize = 1, edgesize = 1, edges.min = 3, label.n = 10, cluster = "louvain", remove.isolates = TRUE)
-
-#plot(CoANet2$graph, vertex.label.family = "Helvetica")
-
-#write_graph(CoANet2$graph,"CBE_LSE_Co-authorshipedge3.graphml", c("graphml"))
 ```
 
 Text to explain what is shown in the figures.
