@@ -34,7 +34,11 @@
     <data key="g_xlim">-1</data>
     <data key="g_rescale">true</data>
     <data key="g_asp">0</data>
+<<<<<<< HEAD
     <data key="g_layout">-0.0953693776841608</data>
+=======
+    <data key="g_layout">0.0396458801703874</data>
+>>>>>>> 877fac0d1e7d3f3e765b88c10a6d0b588be2f1a9
     <data key="g_main">Top  University Collaborations</data>
     <node id="n0">
       <data key="v_name">michigan state univ</data>

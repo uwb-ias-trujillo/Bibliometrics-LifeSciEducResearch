@@ -17,6 +17,7 @@ require("tidyverse")
 require("xtable")
 require("sf")
 require("ggrepel")
+require("ggraph")
 devtools::install_github("massimoaria/bibliometrix")
 
 devtools::install_github("wmurphyrd/fiftystater")
@@ -139,6 +140,7 @@ ggplot(authordata, aes( x = NP, y = h_index)) +
   labs(y = "h—index", 
        x = "Publications",
        caption = "CBE — Life Science Education") +
+  coord_flip()+
   ggtitle("Author productivity", subtitle = "Number of publications and h-index for authors between 2010 and 2021")
 ```
 
@@ -316,12 +318,37 @@ Text to introduce the script and outputs
 ```{r co-authorship,echo=FALSE}
 #INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
 # Create a Social Network Analysis(SNA) Network from Co-Citation Network
-CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";",short = TRUE)
+CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";")
+
+
 
 # Plot the network - look into SNA application
-CoANet <- networkPlot(CoAMatrix, n = dim(CoAMatrix)[1], Title = "Social Network Analysis", type = "fruchterman", size=0.1, remove.multiple=TRUE, labelsize = 2, weighted = TRUE, curved = TRUE, edgesize = 5, edges.min = 1, halo = TRUE, label.n = 10,  cluster = "louvain", remove.isolates = TRUE, community.repulsion = 1)
+CoANet <- networkPlot(CoAMatrix, 
+                      #n = 400,
+                      #n = dim(CoAmatrix)[1], 
+                      #normalize = "jaccard", 
+                      #Title = "Social Network Analysis", 
+                     # type = "fruchterman", 
+                      #size=0.1, 
+                      #remove.multiple=TRUE, 
+                      remove.isolates = TRUE,
+                      #labelsize = 2, 
+                      #weighted = TRUE, 
+                      #curved = FALSE, 
+                      edgesize = 5, 
+                      edges.min = 4,
+                      #degree = 5,
+                      #label.n = 10,  
+                      size.cex = TRUE, 
+                      cluster = "louvain"
+                      )
 
-plot(CoANet$graph, vertex.label.family = "Helvetica")
+ggraph(CoANet$graph, layout = 'fr') +
+  geom_edge_link(aes(color = color)) + 
+    geom_node_point(aes(color = color, size = deg /100,))+
+  geom_node_label(aes(label = label ,color = color, check_overlap = TRUE, repel = TRUE))+
+  theme_void() + 
+  theme(legend.position = 'none')
 
 write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
 
