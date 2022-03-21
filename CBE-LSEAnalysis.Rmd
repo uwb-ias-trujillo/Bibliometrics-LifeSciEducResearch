@@ -294,8 +294,6 @@ Text to introduce the script and outputs
 # Create a Social Network Analysis(SNA) Network from Co-Citation Network
 CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";")
 
-
-
 # Plot the network - look into SNA application
 CoANet <- networkPlot(CoAMatrix, 
                       #n = 400,
@@ -317,14 +315,46 @@ CoANet <- networkPlot(CoAMatrix,
                       cluster = "louvain"
                       )
 
-ggraph(CoANet$graph, layout = 'fr') +
+ggraph(CoANet$graph, layout = "kk") +
   geom_edge_link(aes(color = color)) + 
     geom_node_point(aes(color = color, size = deg /100,))+
   geom_node_label(aes(label = label ,color = color, check_overlap = TRUE, repel = TRUE))+
   theme_void() + 
-  theme(legend.position = 'none')
+  theme(legend.position = 'none') +
+  coord_flip()
 
 write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
+
+
+# Plot the network - look into SNA application- Focus on degrees 
+CoANetdeg <- networkPlot(CoAMatrix, 
+                      #n = 400,
+                      #n = dim(CoAmatrix)[1], 
+                      #normalize = "jaccard", 
+                      #Title = "Social Network Analysis", 
+                     # type = "fruchterman", 
+                      #size=0.1, 
+                      #remove.multiple=TRUE, 
+                      remove.isolates = TRUE,
+                      #labelsize = 2, 
+                      #weighted = TRUE, 
+                      #curved = FALSE, 
+                      edgesize = 5, 
+                      edges.min = 0,
+                      #degree = 5,
+                      #label.n = 10,  
+                      size.cex = TRUE, 
+                      cluster = "louvain"
+                      )
+
+ggraph(CoANetdeg$graph, layout = "nicely") +
+  geom_edge_link(aes(color = color)) + 
+    geom_node_point(aes(color = color, size = deg /100,))+
+  geom_node_label(aes(label = label ,color = color, check_overlap = TRUE, repel = TRUE))+
+  theme_void() + 
+  theme(legend.position = 'none') +
+  coord_flip()
+
 
 ```
 
