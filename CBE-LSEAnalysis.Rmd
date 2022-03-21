@@ -167,7 +167,33 @@ spatial_data <- left_join(msistates,
                           get_urbn_map(map = "states", sf = TRUE),
                           by = "state_name")
 
-#Affiliation Map
+#Affiliation Map - World
+world <- map_data("world")
+world
+
+affiliationMapWorld <- ggplot() +
+  geom_map(spatial_data,
+          mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
+          color = "#ffffff", size = 0.25) +
+  labs(fill = "Author affiliations",
+       title = "Number of institutions in author affilitations by country",
+    x = NULL,
+    y = NULL
+    ) +
+  #scale_fill_gradient(labels = scales::percent) +
+  coord_sf(datum = NA) +
+  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE),
+               aes(label = state_abbv),
+               size = 3)
+
+affiliationMap +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"),
+        panel.background = element_blank()) +
+  scale_fill_viridis_c(option="E", direction = -1)
+
+
+
+#Affiliation Map - US
 affiliationMap <- ggplot() +
   geom_sf(spatial_data,
           mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
@@ -360,7 +386,7 @@ CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
 CRtable
 
-CR2 <- citations(flat_data2, field = "article", sep = ";")
+CR2 <- citations(data, field = "article", sep = ";")
 CR2table <-cbind(CR2$Cited[1:20])
 CR2table
 
@@ -378,7 +404,7 @@ write.csv(file = "Sources.csv",sourcestable)
 
 #DOCUMENT COCITATION NETWORK using 'data' file
 # Create a co-citation network
-DCAMatrix <- biblioNetwork(flat_data2, analysis = "co-citation", network = "references", sep = ";")
+DCAMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
 
 
 # Plot the network
@@ -394,8 +420,8 @@ write_graph(DCA$graph,"Gephi files/CBE_LSE_DCAedge4.graphml", c("graphml"))
 ```{r bibliographic coupling}
 
 # Group similar documents by references
-rownames(flat_data2) <- rownames(data)
-BC <- biblioNetwork(flat_data2, analysis = "coupling", network = "references", sep = ";")
+rownames(data) <- rownames(data)
+BC <- biblioNetwork(data, analysis = "coupling", network = "references", sep = ";")
 
 BCnet = networkPlot(BC, n = dim(BC)[1], Title = "Bibliographic Coupling", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 1, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
 
