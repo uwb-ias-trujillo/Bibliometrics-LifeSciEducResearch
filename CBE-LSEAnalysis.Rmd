@@ -316,9 +316,9 @@ CoANet <- networkPlot(CoAMatrix,
                       )
 
 ggraph(CoANet$graph, layout = "kk") +
-  geom_edge_link(aes(color = color)) + 
-    geom_node_point(aes(color = color, size = deg /100,))+
-  geom_node_label(aes(label = label ,color = color, check_overlap = TRUE, repel = TRUE))+
+  geom_edge_link(aes()) + 
+    geom_node_point(aes(color = factor(community), size = deg /100,))+
+  geom_node_label(aes(label = label ,color = factor(community), check_overlap = TRUE, repel = TRUE))+
   theme_void() + 
   theme(legend.position = 'none') +
   coord_flip()
@@ -344,18 +344,26 @@ CoANetdeg <- networkPlot(CoAMatrix,
                       #degree = 5,
                       #label.n = 10,  
                       size.cex = TRUE, 
-                      cluster = "louvain"
+                      cluster = "louvain",
+                     verbose = FALSE
                       )
 
+components <- igraph::clusters(CoANetdeg$graph, mode="weak")
+biggest_cluster_id <- which.max(components$csize)
+# ids
+vert_ids <- V(CoANetdeg$graph)[components$membership == biggest_cluster_id]
+V(CoANetdeg$graph)$components[V(CoANetdeg$graph) %in% vert_ids] <- TRUE
+#$graph <- delete.vertices(CoANetdeg$graph,vert_ids)
+#CoANetdeg$graph <- decompose(CoANetdeg$graph,mode="weak", max.comps = 1)
+
 ggraph(CoANetdeg$graph, layout = "nicely") +
-  geom_edge_link(aes(color = color)) + 
-    geom_node_point(aes(color = color, size = deg /100,))+
-  geom_node_label(aes(label = label ,color = color, check_overlap = TRUE, repel = TRUE))+
+  geom_edge_link(aes()) + 
+    geom_node_point(aes(filter = components == TRUE,#V(CoANetdeg$graph) %in% vert_ids, 
+                          color = factor(community), size = deg /100,))+
+  #geom_node_label(aes(label = label ,color = color, check_overlap = TRUE, repel = TRUE))+
   theme_void() + 
   theme(legend.position = 'none') +
   coord_flip()
-
-
 ```
 
 Text to explain what is shown in the figures.
