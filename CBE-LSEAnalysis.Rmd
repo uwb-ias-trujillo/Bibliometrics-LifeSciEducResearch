@@ -299,7 +299,7 @@ CoANet <- networkPlot(CoAMatrix,
                       #n = 400,
                       #n = dim(CoAmatrix)[1], 
                       #normalize = "jaccard", 
-                      #Title = "Social Network Analysis", 
+                      Title = "Authors who write 4 or more articles together", 
                      # type = "fruchterman", 
                       #size=0.1, 
                       #remove.multiple=TRUE, 
@@ -307,7 +307,7 @@ CoANet <- networkPlot(CoAMatrix,
                       #labelsize = 2, 
                       #weighted = TRUE, 
                       #curved = FALSE, 
-                      edgesize = 5, 
+                      edgesize = 10, 
                       edges.min = 4,
                       #degree = 5,
                       #label.n = 10,  
@@ -315,10 +315,10 @@ CoANet <- networkPlot(CoAMatrix,
                       cluster = "louvain"
                       )
 
-ggraph(CoANet$graph, layout = "kk") +
+ggraph(CoANet$graph, layout = "graphopt") +
   geom_edge_link(aes()) + 
     geom_node_point(aes(color = factor(community), size = deg /100,))+
-  geom_node_label(aes(label = label ,color = factor(community), check_overlap = TRUE, repel = TRUE))+
+  geom_node_label(aes(label = label ,color = factor(community)), repel = TRUE)+
   theme_void() + 
   theme(legend.position = 'none') +
   coord_flip()
@@ -349,21 +349,22 @@ CoANetdeg <- networkPlot(CoAMatrix,
                       )
 
 components <- igraph::clusters(CoANetdeg$graph, mode="weak")
+V(CoANetdeg$graph)$group <- components$membership
 biggest_cluster_id <- which.max(components$csize)
 # ids
-vert_ids <- V(CoANetdeg$graph)[components$membership == biggest_cluster_id]
-V(CoANetdeg$graph)$components[V(CoANetdeg$graph) %in% vert_ids] <- TRUE
-#$graph <- delete.vertices(CoANetdeg$graph,vert_ids)
-#CoANetdeg$graph <- decompose(CoANetdeg$graph,mode="weak", max.comps = 1)
+vert_ids <- V(CoANetdeg$graph)[components$membership != biggest_cluster_id]
 
-ggraph(CoANetdeg$graph, layout = "nicely") +
+degreeCoAgraph1<- ggraph(CoANetdeg$graph, layout = "nicely") +
   geom_edge_link(aes()) + 
-    geom_node_point(aes(filter = components == TRUE,#V(CoANetdeg$graph) %in% vert_ids, 
-                          color = factor(community), size = deg /100,))+
-  #geom_node_label(aes(label = label ,color = color, check_overlap = TRUE, repel = TRUE))+
+    geom_node_point(aes(filter = components$membership == biggest_cluster_id,
+                          color = factor(community), 
+                        size = deg /100, alpha = 0.3)
+                    )+
+  geom_node_label(aes(filter = , label = label ,color = color, alpha = 0.3), repel = TRUE)+
   theme_void() + 
   theme(legend.position = 'none') +
   coord_flip()
+degreeCoAgraph1
 ```
 
 Text to explain what is shown in the figures.
