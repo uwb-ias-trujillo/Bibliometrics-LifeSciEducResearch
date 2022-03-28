@@ -169,7 +169,33 @@ spatial_data <- left_join(msistates,
                           get_urbn_map(map = "states", sf = TRUE),
                           by = "state_name")
 
-#Affiliation Map
+#Affiliation Map - World
+world <- map_data("world")
+world
+
+affiliationMapWorld <- ggplot() +
+  geom_map(spatial_data,
+          mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
+          color = "#ffffff", size = 0.25) +
+  labs(fill = "Author affiliations",
+       title = "Number of institutions in author affilitations by country",
+    x = NULL,
+    y = NULL
+    ) +
+  #scale_fill_gradient(labels = scales::percent) +
+  coord_sf(datum = NA) +
+  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE),
+               aes(label = state_abbv),
+               size = 3)
+
+affiliationMap +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"),
+        panel.background = element_blank()) +
+  scale_fill_viridis_c(option="E", direction = -1)
+
+
+
+#Affiliation Map - US
 affiliationMap <- ggplot() +
   geom_sf(spatial_data,
           mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
