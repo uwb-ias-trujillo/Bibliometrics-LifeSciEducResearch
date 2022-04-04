@@ -344,10 +344,40 @@ Text to introduce the script and outputs
 # Create a Social Network Analysis(SNA) Network from Co-Citation Network
 CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";")
 
-
-
 # Plot the network - look into SNA application
 CoANet <- networkPlot(CoAMatrix, 
+                      #n = 400,
+                      #n = dim(CoAmatrix)[1], 
+                      #normalize = "jaccard", 
+                      Title = "Authors who write 4 or more articles together", 
+                     # type = "fruchterman", 
+                      #size=0.1, 
+                      #remove.multiple=TRUE, 
+                      remove.isolates = TRUE,
+                      #labelsize = 2, 
+                      #weighted = TRUE, 
+                      #curved = FALSE, 
+                      edgesize = 10, 
+                      edges.min = 4,
+                      #degree = 5,
+                      #label.n = 10,  
+                      size.cex = TRUE, 
+                      cluster = "louvain"
+                      )
+
+ggraph(CoANet$graph, layout = "graphopt") +
+  geom_edge_link(aes()) + 
+    geom_node_point(aes(color = factor(community), size = deg /100,))+
+  geom_node_label(aes(label = label ,color = factor(community)), repel = TRUE)+
+  theme_void() + 
+  theme(legend.position = 'none') +
+  coord_flip()
+
+write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
+
+
+# Plot the network - look into SNA application- Focus on degrees 
+CoANetdeg <- networkPlot(CoAMatrix, 
                       #n = 400,
                       #n = dim(CoAmatrix)[1], 
                       #normalize = "jaccard", 
@@ -360,22 +390,31 @@ CoANet <- networkPlot(CoAMatrix,
                       #weighted = TRUE, 
                       #curved = FALSE, 
                       edgesize = 5, 
-                      edges.min = 4,
+                      edges.min = 0,
                       #degree = 5,
                       #label.n = 10,  
                       size.cex = TRUE, 
-                      cluster = "louvain"
+                      cluster = "louvain",
+                     verbose = FALSE
                       )
 
-ggraph(CoANet$graph, layout = 'fr') +
-  geom_edge_link(aes(color = color)) + 
-    geom_node_point(aes(color = color, size = deg /100,))+
-  geom_node_label(aes(label = label ,color = color, check_overlap = TRUE, repel = TRUE))+
+components <- igraph::clusters(CoANetdeg$graph, mode="weak")
+V(CoANetdeg$graph)$group <- components$membership
+biggest_cluster_id <- which.max(components$csize)
+# ids
+vert_ids <- V(CoANetdeg$graph)[components$membership != biggest_cluster_id]
+
+degreeCoAgraph1<- ggraph(CoANetdeg$graph, layout = "nicely") +
+  geom_edge_link(aes()) + 
+    geom_node_point(aes(filter = components$membership == biggest_cluster_id,
+                          color = factor(community), 
+                        size = deg /100, alpha = 0.3)
+                    )+
+  geom_node_label(aes(filter = , label = label ,color = color, alpha = 0.3), repel = TRUE)+
   theme_void() + 
-  theme(legend.position = 'none')
-
-write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
-
+  theme(legend.position = 'none') +
+  coord_flip()
+degreeCoAgraph1
 ```
 
 Text to explain what is shown in the figures.

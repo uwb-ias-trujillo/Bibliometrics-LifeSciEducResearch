@@ -34,7 +34,27 @@
     <data key="g_xlim">-1</data>
     <data key="g_rescale">true</data>
     <data key="g_asp">0</data>
+<<<<<<< HEAD
     <data key="g_layout">-0.235621012112476</data>
+=======
+<<<<<<< HEAD
+    <data key="g_layout">-0.597283853987523</data>
+=======
+<<<<<<< HEAD
+    <data key="g_layout">0.118966431729241</data>
+    <data key="g_main">Social Network Analysis</data>
+    <node id="n0">
+      <data key="v_name">brownell se</data>
+      <data key="v_deg">52</data>
+      <data key="v_size">0.1</data>
+      <data key="v_label.cex">2</data>
+      <data key="v_color">#E41A1C80</data>
+      <data key="v_community">1</data>
+      <data key="v_labelsize">0</data>
+=======
+    <data key="g_layout">-0.586733492362122</data>
+>>>>>>> 242a001ec9bc06c6c89181835eea42d0ff2353d2
+>>>>>>> 43015f876d5981c5ebbf350d29d8d18990fba4e2
     <data key="g_main">Plot</data>
     <node id="n0">
       <data key="v_name">brownell se</data>
