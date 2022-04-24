@@ -302,6 +302,7 @@ types %>%
     )
 ```
 
+
 ```{r MSI cont}
 temp <- msiuniv %>%
   mutate_if(is.numeric,as.factor)%>%
@@ -395,10 +396,10 @@ CoANet <- networkPlot(CoAMatrix,
 ggraph(CoANet$graph, layout = "graphopt") +
   geom_edge_link(aes()) + 
     geom_node_point(aes(color = factor(community), size = deg /100,))+
-  geom_node_label(aes(label = label ,color = factor(community)), repel = TRUE)+
+  geom_node_label(aes(label = label ,color = factor(community)), repel = TRUE, check_overlap = FALSE, label.padding = 0.1 )+
   theme_void() + 
-  theme(legend.position = 'none') +
-  coord_flip()
+  theme(legend.position = 'none') #+
+  #coord_flip()
 
 write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
 
