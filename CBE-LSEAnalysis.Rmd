@@ -512,7 +512,9 @@ ggplot((Aff_Freq)) +
     y = NULL,
     title = "Number of papers by affiliated universities"
   )
-       
+
+ggsave("AffliationsTop10.jpg", device = "jpeg", dpi = 400)
+
 ```
 
 
