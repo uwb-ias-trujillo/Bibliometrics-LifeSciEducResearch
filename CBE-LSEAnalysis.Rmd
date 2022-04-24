@@ -104,7 +104,7 @@ ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group
     x = NULL,
     y = NULL
   )
-ggsave("AnnualProductivity.jpg", device = "jpeg")
+ggsave("AnnualProductivity.jpg", device = "jpeg", dpi = 400)
 xtable(S$MainInformationDF)
 ```
 
@@ -126,15 +126,17 @@ as_tibble(results$Authors)
 authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
   filter("n" > 5) # only showing authors with at least 5 publications.
 
-authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
+authorprod<-authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
   labs(title = "Top authors productivity from 2010 - 2021",x = NULL, y = NULL) +
   theme(legend.position="top") +
   theme_default
-  
 
-ggplot(authordata, aes( x = NP, y = h_index)) + 
+
+authordata %>%
+  filter(n > 8) %>%
+ggplot(aes( x = NP, y = h_index)) + 
   geom_point(alpha = 0.6) +
-  geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.0001, min.segment.length = Inf)  +
+  geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01)  +
   theme_dark()+
   theme_default +
   labs(y = "h—index", 
@@ -249,9 +251,34 @@ view(msieligible)
 msiuniv$`Type & Control` <- as.factor(msiuniv$`Type & Control`)
 msitype <- msiuniv %>%
   group_by(`Type & Control`) %>%
-  summarize(n = n())
-view(msitype)
+  summarize(n = n()) %>%
+  mutate(percent = 100*(n/sum(n)))
 
+msitypeall <- msidata %>%
+  group_by(`Type & Control`) %>%
+  summarize(n = n()) %>%
+  mutate(percent = 100*(n/sum(n)))
+
+types <- left_join(msitypeall,msitype, by = "Type & Control")
+colnames(types)<- c("SchoolType", "Number of Insitutions in US", "Percent in US", "Number of Institutes in LSE", "Percent in LSE")
+view(types)
+
+#We try to compare the percentage breakdown of institutions in the US accordings to the MSI eligibility matrix to amount in the LSE affilitations list.
+types %>%
+  pivot_longer(!SchoolType) %>%
+  filter(name == "Percent in US" | name == "Percent in LSE") %>%
+  ggplot(aes(name,value)) +
+  geom_col(aes(fill = SchoolType)) +
+  theme_default +
+  labs(
+    x = NULL,
+    y = NULL,
+    title = "What types of institutes are represented in LSE?",
+    subtitle = "Percent of institutions by type and control represented in LSE and US"
+    )
+```
+
+```{r MSI cont}
 temp <- msiuniv %>%
   mutate_if(is.numeric,as.factor)%>%
   mutate_if(is.character,as.factor)%>%
