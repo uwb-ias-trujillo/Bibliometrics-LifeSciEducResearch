@@ -34,28 +34,8 @@
     <data key="g_xlim">-1</data>
     <data key="g_rescale">true</data>
     <data key="g_asp">0</data>
-<<<<<<< HEAD
-    <data key="g_layout">-0.235621012112476</data>
-=======
-<<<<<<< HEAD
-    <data key="g_layout">-0.597283853987523</data>
-=======
-<<<<<<< HEAD
-    <data key="g_layout">0.118966431729241</data>
-    <data key="g_main">Social Network Analysis</data>
-    <node id="n0">
-      <data key="v_name">brownell se</data>
-      <data key="v_deg">52</data>
-      <data key="v_size">0.1</data>
-      <data key="v_label.cex">2</data>
-      <data key="v_color">#E41A1C80</data>
-      <data key="v_community">1</data>
-      <data key="v_labelsize">0</data>
-=======
-    <data key="g_layout">-0.586733492362122</data>
->>>>>>> 242a001ec9bc06c6c89181835eea42d0ff2353d2
->>>>>>> 43015f876d5981c5ebbf350d29d8d18990fba4e2
-    <data key="g_main">Plot</data>
+    <data key="g_layout">-0.609117771552064</data>
+    <data key="g_main">Authors who write 4 or more articles together</data>
     <node id="n0">
       <data key="v_name">brownell se</data>
       <data key="v_deg">260</data>
@@ -747,7 +727,7 @@
     </node>
     <edge source="n0" target="n4">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -755,7 +735,7 @@
     </edge>
     <edge source="n0" target="n4">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -763,7 +743,7 @@
     </edge>
     <edge source="n0" target="n4">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -771,7 +751,7 @@
     </edge>
     <edge source="n0" target="n4">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -779,7 +759,7 @@
     </edge>
     <edge source="n0" target="n4">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -787,7 +767,7 @@
     </edge>
     <edge source="n0" target="n4">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -795,7 +775,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -803,7 +783,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -811,7 +791,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -819,7 +799,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -827,7 +807,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -835,7 +815,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -843,7 +823,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -851,7 +831,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -859,7 +839,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -867,7 +847,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -875,7 +855,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -883,7 +863,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -891,7 +871,7 @@
     </edge>
     <edge source="n0" target="n6">
       <data key="e_num">13</data>
-      <data key="e_width">5</data>
+      <data key="e_width">10</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -899,7 +879,7 @@
     </edge>
     <edge source="n0" target="n10">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -907,7 +887,7 @@
     </edge>
     <edge source="n0" target="n10">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -915,7 +895,7 @@
     </edge>
     <edge source="n0" target="n10">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -923,14 +903,6 @@
     </edge>
     <edge source="n0" target="n10">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
-      <data key="e_color">#E41A1C40</data>
-      <data key="e_lty">1</data>
-      <data key="e_weight">10</data>
-      <data key="e_curved">false</data>
-    </edge>
-    <edge source="n0" target="n15">
-      <data key="e_num">8</data>
       <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
@@ -939,7 +911,7 @@
     </edge>
     <edge source="n0" target="n15">
       <data key="e_num">8</data>
-      <data key="e_width">3.07692307692308</data>
+      <data key="e_width">6.15384615384615</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -947,7 +919,7 @@
     </edge>
     <edge source="n0" target="n15">
       <data key="e_num">8</data>
-      <data key="e_width">3.07692307692308</data>
+      <data key="e_width">6.15384615384615</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -955,7 +927,7 @@
     </edge>
     <edge source="n0" target="n15">
       <data key="e_num">8</data>
-      <data key="e_width">3.07692307692308</data>
+      <data key="e_width">6.15384615384615</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -963,7 +935,7 @@
     </edge>
     <edge source="n0" target="n15">
       <data key="e_num">8</data>
-      <data key="e_width">3.07692307692308</data>
+      <data key="e_width">6.15384615384615</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -971,7 +943,7 @@
     </edge>
     <edge source="n0" target="n15">
       <data key="e_num">8</data>
-      <data key="e_width">3.07692307692308</data>
+      <data key="e_width">6.15384615384615</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -979,7 +951,7 @@
     </edge>
     <edge source="n0" target="n15">
       <data key="e_num">8</data>
-      <data key="e_width">3.07692307692308</data>
+      <data key="e_width">6.15384615384615</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -987,7 +959,15 @@
     </edge>
     <edge source="n0" target="n15">
       <data key="e_num">8</data>
-      <data key="e_width">3.07692307692308</data>
+      <data key="e_width">6.15384615384615</data>
+      <data key="e_color">#E41A1C40</data>
+      <data key="e_lty">1</data>
+      <data key="e_weight">10</data>
+      <data key="e_curved">false</data>
+    </edge>
+    <edge source="n0" target="n15">
+      <data key="e_num">8</data>
+      <data key="e_width">6.15384615384615</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -995,7 +975,7 @@
     </edge>
     <edge source="n0" target="n19">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1003,7 +983,7 @@
     </edge>
     <edge source="n0" target="n19">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1011,7 +991,7 @@
     </edge>
     <edge source="n0" target="n19">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1019,7 +999,7 @@
     </edge>
     <edge source="n0" target="n19">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1027,7 +1007,7 @@
     </edge>
     <edge source="n0" target="n19">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1035,7 +1015,7 @@
     </edge>
     <edge source="n0" target="n25">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1043,7 +1023,7 @@
     </edge>
     <edge source="n0" target="n25">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1051,7 +1031,7 @@
     </edge>
     <edge source="n0" target="n25">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1059,7 +1039,7 @@
     </edge>
     <edge source="n0" target="n25">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1067,7 +1047,7 @@
     </edge>
     <edge source="n0" target="n38">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1075,7 +1055,7 @@
     </edge>
     <edge source="n0" target="n38">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1083,7 +1063,7 @@
     </edge>
     <edge source="n0" target="n38">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1091,7 +1071,7 @@
     </edge>
     <edge source="n0" target="n38">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1099,7 +1079,7 @@
     </edge>
     <edge source="n0" target="n38">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1107,7 +1087,7 @@
     </edge>
     <edge source="n0" target="n52">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1115,7 +1095,7 @@
     </edge>
     <edge source="n0" target="n52">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1123,7 +1103,7 @@
     </edge>
     <edge source="n0" target="n52">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1131,7 +1111,7 @@
     </edge>
     <edge source="n0" target="n52">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1139,7 +1119,7 @@
     </edge>
     <edge source="n1" target="n31">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1147,7 +1127,7 @@
     </edge>
     <edge source="n1" target="n31">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1155,7 +1135,7 @@
     </edge>
     <edge source="n1" target="n31">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1163,7 +1143,7 @@
     </edge>
     <edge source="n1" target="n31">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1171,7 +1151,7 @@
     </edge>
     <edge source="n1" target="n32">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1179,7 +1159,7 @@
     </edge>
     <edge source="n1" target="n32">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1187,7 +1167,7 @@
     </edge>
     <edge source="n1" target="n32">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1195,7 +1175,7 @@
     </edge>
     <edge source="n1" target="n32">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1203,7 +1183,7 @@
     </edge>
     <edge source="n1" target="n34">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1211,7 +1191,7 @@
     </edge>
     <edge source="n1" target="n34">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1219,7 +1199,7 @@
     </edge>
     <edge source="n1" target="n34">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1227,7 +1207,7 @@
     </edge>
     <edge source="n1" target="n34">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1235,7 +1215,7 @@
     </edge>
     <edge source="n1" target="n40">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1243,7 +1223,7 @@
     </edge>
     <edge source="n1" target="n40">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1251,7 +1231,7 @@
     </edge>
     <edge source="n1" target="n40">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1259,7 +1239,7 @@
     </edge>
     <edge source="n1" target="n40">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1267,7 +1247,7 @@
     </edge>
     <edge source="n1" target="n46">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1275,7 +1255,7 @@
     </edge>
     <edge source="n1" target="n46">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1283,7 +1263,7 @@
     </edge>
     <edge source="n1" target="n46">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1291,7 +1271,7 @@
     </edge>
     <edge source="n1" target="n46">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#377EB840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1299,7 +1279,7 @@
     </edge>
     <edge source="n2" target="n11">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#4DAF4A40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1307,7 +1287,7 @@
     </edge>
     <edge source="n2" target="n11">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#4DAF4A40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1315,7 +1295,7 @@
     </edge>
     <edge source="n2" target="n11">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#4DAF4A40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1323,7 +1303,7 @@
     </edge>
     <edge source="n2" target="n11">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#4DAF4A40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1331,7 +1311,7 @@
     </edge>
     <edge source="n2" target="n35">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#4DAF4A40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1339,7 +1319,7 @@
     </edge>
     <edge source="n2" target="n35">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#4DAF4A40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1347,7 +1327,7 @@
     </edge>
     <edge source="n2" target="n35">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#4DAF4A40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1355,7 +1335,7 @@
     </edge>
     <edge source="n2" target="n35">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#4DAF4A40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1363,7 +1343,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1371,7 +1351,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1379,7 +1359,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1387,7 +1367,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1395,7 +1375,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1403,7 +1383,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1411,7 +1391,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1419,7 +1399,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1427,7 +1407,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1435,7 +1415,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1443,7 +1423,7 @@
     </edge>
     <edge source="n3" target="n5">
       <data key="e_num">11</data>
-      <data key="e_width">4.23076923076923</data>
+      <data key="e_width">8.46153846153846</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1451,7 +1431,7 @@
     </edge>
     <edge source="n3" target="n7">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1459,7 +1439,7 @@
     </edge>
     <edge source="n3" target="n7">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1467,7 +1447,7 @@
     </edge>
     <edge source="n3" target="n7">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1475,7 +1455,7 @@
     </edge>
     <edge source="n3" target="n7">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1483,7 +1463,7 @@
     </edge>
     <edge source="n3" target="n7">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1491,7 +1471,7 @@
     </edge>
     <edge source="n3" target="n7">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1499,7 +1479,7 @@
     </edge>
     <edge source="n3" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1507,7 +1487,7 @@
     </edge>
     <edge source="n3" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1515,7 +1495,7 @@
     </edge>
     <edge source="n3" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1523,7 +1503,7 @@
     </edge>
     <edge source="n3" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1531,7 +1511,7 @@
     </edge>
     <edge source="n3" target="n49">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1539,7 +1519,7 @@
     </edge>
     <edge source="n3" target="n49">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1547,7 +1527,7 @@
     </edge>
     <edge source="n3" target="n49">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1555,7 +1535,7 @@
     </edge>
     <edge source="n3" target="n49">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1563,7 +1543,7 @@
     </edge>
     <edge source="n4" target="n10">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1571,7 +1551,7 @@
     </edge>
     <edge source="n4" target="n10">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1579,7 +1559,7 @@
     </edge>
     <edge source="n4" target="n10">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1587,7 +1567,7 @@
     </edge>
     <edge source="n4" target="n10">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1595,7 +1575,7 @@
     </edge>
     <edge source="n5" target="n7">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1603,7 +1583,7 @@
     </edge>
     <edge source="n5" target="n7">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1611,7 +1591,7 @@
     </edge>
     <edge source="n5" target="n7">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1619,7 +1599,7 @@
     </edge>
     <edge source="n5" target="n7">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1627,7 +1607,7 @@
     </edge>
     <edge source="n5" target="n7">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1635,7 +1615,7 @@
     </edge>
     <edge source="n5" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1643,7 +1623,7 @@
     </edge>
     <edge source="n5" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1651,7 +1631,7 @@
     </edge>
     <edge source="n5" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1659,7 +1639,7 @@
     </edge>
     <edge source="n5" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1667,7 +1647,7 @@
     </edge>
     <edge source="n5" target="n49">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1675,7 +1655,7 @@
     </edge>
     <edge source="n5" target="n49">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1683,7 +1663,7 @@
     </edge>
     <edge source="n5" target="n49">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1691,7 +1671,7 @@
     </edge>
     <edge source="n5" target="n49">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1699,7 +1679,7 @@
     </edge>
     <edge source="n5" target="n50">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1707,7 +1687,7 @@
     </edge>
     <edge source="n5" target="n50">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1715,7 +1695,7 @@
     </edge>
     <edge source="n5" target="n50">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1723,7 +1703,7 @@
     </edge>
     <edge source="n5" target="n50">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1731,7 +1711,7 @@
     </edge>
     <edge source="n6" target="n19">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1739,7 +1719,7 @@
     </edge>
     <edge source="n6" target="n19">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1747,7 +1727,7 @@
     </edge>
     <edge source="n6" target="n19">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1755,7 +1735,7 @@
     </edge>
     <edge source="n6" target="n19">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1763,7 +1743,7 @@
     </edge>
     <edge source="n6" target="n19">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1771,7 +1751,7 @@
     </edge>
     <edge source="n6" target="n19">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#E41A1C40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1779,7 +1759,7 @@
     </edge>
     <edge source="n8" target="n12">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FF7F0040</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1787,7 +1767,7 @@
     </edge>
     <edge source="n8" target="n12">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FF7F0040</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1795,7 +1775,7 @@
     </edge>
     <edge source="n8" target="n12">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FF7F0040</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1803,7 +1783,7 @@
     </edge>
     <edge source="n8" target="n12">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FF7F0040</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1811,7 +1791,7 @@
     </edge>
     <edge source="n8" target="n41">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FF7F0040</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1819,7 +1799,7 @@
     </edge>
     <edge source="n8" target="n41">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FF7F0040</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1827,7 +1807,7 @@
     </edge>
     <edge source="n8" target="n41">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FF7F0040</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1835,7 +1815,7 @@
     </edge>
     <edge source="n8" target="n41">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FF7F0040</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1843,7 +1823,7 @@
     </edge>
     <edge source="n9" target="n20">
       <data key="e_num">7</data>
-      <data key="e_width">2.69230769230769</data>
+      <data key="e_width">5.38461538461538</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1851,7 +1831,7 @@
     </edge>
     <edge source="n9" target="n20">
       <data key="e_num">7</data>
-      <data key="e_width">2.69230769230769</data>
+      <data key="e_width">5.38461538461538</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1859,7 +1839,7 @@
     </edge>
     <edge source="n9" target="n20">
       <data key="e_num">7</data>
-      <data key="e_width">2.69230769230769</data>
+      <data key="e_width">5.38461538461538</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1867,7 +1847,7 @@
     </edge>
     <edge source="n9" target="n20">
       <data key="e_num">7</data>
-      <data key="e_width">2.69230769230769</data>
+      <data key="e_width">5.38461538461538</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1875,7 +1855,7 @@
     </edge>
     <edge source="n9" target="n20">
       <data key="e_num">7</data>
-      <data key="e_width">2.69230769230769</data>
+      <data key="e_width">5.38461538461538</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1883,7 +1863,7 @@
     </edge>
     <edge source="n9" target="n20">
       <data key="e_num">7</data>
-      <data key="e_width">2.69230769230769</data>
+      <data key="e_width">5.38461538461538</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1891,7 +1871,7 @@
     </edge>
     <edge source="n9" target="n20">
       <data key="e_num">7</data>
-      <data key="e_width">2.69230769230769</data>
+      <data key="e_width">5.38461538461538</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1899,7 +1879,7 @@
     </edge>
     <edge source="n9" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1907,7 +1887,7 @@
     </edge>
     <edge source="n9" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1915,7 +1895,7 @@
     </edge>
     <edge source="n9" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1923,7 +1903,7 @@
     </edge>
     <edge source="n9" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1931,7 +1911,7 @@
     </edge>
     <edge source="n13" target="n22">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#A6562840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1939,7 +1919,7 @@
     </edge>
     <edge source="n13" target="n22">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#A6562840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1947,7 +1927,7 @@
     </edge>
     <edge source="n13" target="n22">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#A6562840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1955,7 +1935,7 @@
     </edge>
     <edge source="n13" target="n22">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#A6562840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1963,7 +1943,7 @@
     </edge>
     <edge source="n13" target="n22">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#A6562840</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1971,7 +1951,7 @@
     </edge>
     <edge source="n14" target="n18">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1979,7 +1959,7 @@
     </edge>
     <edge source="n14" target="n18">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1987,7 +1967,7 @@
     </edge>
     <edge source="n14" target="n18">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -1995,7 +1975,7 @@
     </edge>
     <edge source="n14" target="n18">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2003,7 +1983,7 @@
     </edge>
     <edge source="n14" target="n18">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2011,7 +1991,7 @@
     </edge>
     <edge source="n14" target="n43">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2019,7 +1999,7 @@
     </edge>
     <edge source="n14" target="n43">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2027,7 +2007,7 @@
     </edge>
     <edge source="n14" target="n43">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2035,7 +2015,7 @@
     </edge>
     <edge source="n14" target="n43">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2043,7 +2023,7 @@
     </edge>
     <edge source="n14" target="n45">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2051,7 +2031,7 @@
     </edge>
     <edge source="n14" target="n45">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2059,7 +2039,7 @@
     </edge>
     <edge source="n14" target="n45">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2067,7 +2047,7 @@
     </edge>
     <edge source="n14" target="n45">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2075,7 +2055,7 @@
     </edge>
     <edge source="n16" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2083,7 +2063,7 @@
     </edge>
     <edge source="n16" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2091,7 +2071,7 @@
     </edge>
     <edge source="n16" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2099,7 +2079,7 @@
     </edge>
     <edge source="n16" target="n30">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#984EA340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2107,7 +2087,7 @@
     </edge>
     <edge source="n17" target="n29">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#99999940</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2115,7 +2095,7 @@
     </edge>
     <edge source="n17" target="n29">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#99999940</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2123,7 +2103,7 @@
     </edge>
     <edge source="n17" target="n29">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#99999940</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2131,7 +2111,7 @@
     </edge>
     <edge source="n17" target="n29">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#99999940</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2139,7 +2119,7 @@
     </edge>
     <edge source="n18" target="n43">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2147,7 +2127,7 @@
     </edge>
     <edge source="n18" target="n43">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2155,7 +2135,7 @@
     </edge>
     <edge source="n18" target="n43">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2163,7 +2143,7 @@
     </edge>
     <edge source="n18" target="n43">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2171,7 +2151,7 @@
     </edge>
     <edge source="n18" target="n45">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2179,7 +2159,7 @@
     </edge>
     <edge source="n18" target="n45">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2187,7 +2167,7 @@
     </edge>
     <edge source="n18" target="n45">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2195,7 +2175,7 @@
     </edge>
     <edge source="n18" target="n45">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#F781BF40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2203,7 +2183,7 @@
     </edge>
     <edge source="n21" target="n37">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#66C2A540</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2211,7 +2191,7 @@
     </edge>
     <edge source="n21" target="n37">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#66C2A540</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2219,7 +2199,7 @@
     </edge>
     <edge source="n21" target="n37">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#66C2A540</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2227,7 +2207,7 @@
     </edge>
     <edge source="n21" target="n37">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#66C2A540</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2235,7 +2215,7 @@
     </edge>
     <edge source="n21" target="n37">
       <data key="e_num">5</data>
-      <data key="e_width">1.92307692307692</data>
+      <data key="e_width">3.84615384615385</data>
       <data key="e_color">#66C2A540</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2243,7 +2223,7 @@
     </edge>
     <edge source="n23" target="n39">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FC8D6240</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2251,7 +2231,7 @@
     </edge>
     <edge source="n23" target="n39">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FC8D6240</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2259,7 +2239,7 @@
     </edge>
     <edge source="n23" target="n39">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FC8D6240</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2267,7 +2247,7 @@
     </edge>
     <edge source="n23" target="n39">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FC8D6240</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2275,7 +2255,7 @@
     </edge>
     <edge source="n24" target="n47">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#8DA0CB40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2283,7 +2263,7 @@
     </edge>
     <edge source="n24" target="n47">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#8DA0CB40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2291,7 +2271,7 @@
     </edge>
     <edge source="n24" target="n47">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#8DA0CB40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2299,7 +2279,7 @@
     </edge>
     <edge source="n24" target="n47">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#8DA0CB40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2307,7 +2287,7 @@
     </edge>
     <edge source="n26" target="n48">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E78AC340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2315,7 +2295,7 @@
     </edge>
     <edge source="n26" target="n48">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E78AC340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2323,7 +2303,7 @@
     </edge>
     <edge source="n26" target="n48">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E78AC340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2331,7 +2311,7 @@
     </edge>
     <edge source="n26" target="n48">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#E78AC340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2339,7 +2319,7 @@
     </edge>
     <edge source="n27" target="n28">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2347,7 +2327,7 @@
     </edge>
     <edge source="n27" target="n28">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2355,7 +2335,7 @@
     </edge>
     <edge source="n27" target="n28">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2363,7 +2343,7 @@
     </edge>
     <edge source="n27" target="n28">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2371,7 +2351,7 @@
     </edge>
     <edge source="n27" target="n28">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2379,7 +2359,7 @@
     </edge>
     <edge source="n27" target="n28">
       <data key="e_num">6</data>
-      <data key="e_width">2.30769230769231</data>
+      <data key="e_width">4.61538461538462</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2387,7 +2367,7 @@
     </edge>
     <edge source="n27" target="n33">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2395,7 +2375,7 @@
     </edge>
     <edge source="n27" target="n33">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2403,7 +2383,7 @@
     </edge>
     <edge source="n27" target="n33">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2411,7 +2391,7 @@
     </edge>
     <edge source="n27" target="n33">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2419,7 +2399,7 @@
     </edge>
     <edge source="n28" target="n33">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2427,7 +2407,7 @@
     </edge>
     <edge source="n28" target="n33">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2435,7 +2415,7 @@
     </edge>
     <edge source="n28" target="n33">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2443,7 +2423,7 @@
     </edge>
     <edge source="n28" target="n33">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#A6D85440</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2451,7 +2431,7 @@
     </edge>
     <edge source="n36" target="n51">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FFD92F40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2459,7 +2439,7 @@
     </edge>
     <edge source="n36" target="n51">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FFD92F40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2467,7 +2447,7 @@
     </edge>
     <edge source="n36" target="n51">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FFD92F40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2475,7 +2455,7 @@
     </edge>
     <edge source="n36" target="n51">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#FFD92F40</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2483,7 +2463,7 @@
     </edge>
     <edge source="n42" target="n44">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#B3B3B340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2491,7 +2471,7 @@
     </edge>
     <edge source="n42" target="n44">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#B3B3B340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2499,7 +2479,7 @@
     </edge>
     <edge source="n42" target="n44">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#B3B3B340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
@@ -2507,7 +2487,7 @@
     </edge>
     <edge source="n42" target="n44">
       <data key="e_num">4</data>
-      <data key="e_width">1.53846153846154</data>
+      <data key="e_width">3.07692307692308</data>
       <data key="e_color">#B3B3B340</data>
       <data key="e_lty">1</data>
       <data key="e_weight">10</data>
