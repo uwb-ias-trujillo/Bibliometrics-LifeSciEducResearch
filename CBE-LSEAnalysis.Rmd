@@ -289,19 +289,18 @@ msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`
 msieligible <- msiuniv %>%
   group_by(`Eligible/ Current Grant`) %>%
   summarize(n = n())
-view(msieligible)
 
 msiuniv$`Type & Control` <- as.factor(msiuniv$`Type & Control`)
 
 msitype <- msiuniv %>%
   group_by(`Type & Control`) %>%
   summarize(n = n()) %>%
-  mutate(percent = 100*(n/sum(n)))
+  mutate(percent = (n/sum(n)))
 
 msitypeall <- msidata %>%
   group_by(`Type & Control`) %>%
   summarize(n = n()) %>%
-  mutate(percent = 100*(n/sum(n)))
+  mutate(percent = (n/sum(n)))
 
 types <- left_join(msitypeall,msitype, by = "Type & Control")
 colnames(types)<- c("SchoolType", "Number of Insitutions in US", "US", "Number of Institutes in LSE", "LSE")
@@ -313,27 +312,32 @@ types %>%
   pivot_longer(!SchoolType) %>%
   filter(name == "US" | name == "LSE") %>%
   filter(SchoolType != FALSE) %>%
+  mutate(colorlevel = case_when(
+      name == "US" ~ 0.9,
+      name == "LSE" ~ 0.7)
+  ) %>%
   ggplot(aes(x = (name),value)) +
-  geom_col(aes(fill = SchoolType)) +
+  geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), size = 4) +
+  geom_text(
+    aes(label = paste0(round(value*100, 0),"%")),
+     vjust = 0.5, nudge_y = -.016, #nudge_x = 0.2,
+     size = 4, fontface = "bold", #family = "Fira Sans"
+  ) +
   theme_default +
-  theme() +
-  labs(
-    x = NULL,
-    y = "%",
-    title = "What types of institutes are represented in LSE?",
-    subtitle = "Percent of institutions by type represented for LSE and US"
-    )+
-  facet_wrap(~SchoolType, nrow = 2)+
-  theme(legend.position="none", strip.background = element_rect(fill = "#F2F2F2")
+  theme(legend.position="none", 
+        strip.background = element_rect(fill = "#F2F2F2"),
+        panel.grid.major.x = element_blank(),
+        axis.text = element_text(size = 12)
         )+
-  scale_y_continuous(minor_breaks = NULL) +
+  scale_color_identity(guide = "none") +
+  scale_y_continuous(minor_breaks = NULL,labels = scales::percent) +
   labs(
     x = NULL,
     y = NULL,
     title = "What types of institutes are represented in LSE?",
     subtitle = "Percent of institutions by type represented for LSE and US"
     )+
-  facet_wrap(~SchoolType, nrow = 2)
+  facet_wrap(~SchoolType, nrow = 1)
 
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
