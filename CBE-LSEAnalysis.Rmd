@@ -292,6 +292,7 @@ msieligible <- msiuniv %>%
 view(msieligible)
 
 msiuniv$`Type & Control` <- as.factor(msiuniv$`Type & Control`)
+
 msitype <- msiuniv %>%
   group_by(`Type & Control`) %>%
   summarize(n = n()) %>%
@@ -402,8 +403,8 @@ ggsave("figures/MsiAffiliations.jpg", device = "jpeg", dpi = 400)
 
 
 ### Social Network Analysis (SNA) of co-authorship: What social structures are organizing co-authorship? 
-Rachel Kudlacz 
-This is the placeholder for the question about the social struction of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
+
+This is the placeholder for the question about the social structures of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
 Text to introduce the script and outputs
 
 ```{r co-authorship,echo=FALSE}
@@ -490,24 +491,55 @@ degreeCoAgraph1<- ggraph(CoANetdeg$graph, layout = "nicely") +
 degreeCoAgraph1
 ```
 
-Text to explain what is shown in the figures.
 
 ### What are the collaborative connections between institutions?
 
-Germaine Ng 
+```{r top 10 affiliations}
+Affiliation <- results$Affiliations[1:10]
+Affiliation <- as.data.frame(Affiliation) %>%
+  mutate(
+    color = case_when(
+      row_number() == 1 ~ "lightgreen",
+      row_number() == 2 ~ "goldenrod1",
+      row_number() == 3 ~ "coral2",
+      ## all others should be gray
+      TRUE ~ "gray70"
+    ))
 
-This is the placeholder for the question about collaborations between different universities (institutions)
-Text to introduce the script and outputs
+ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +  
+  geom_col(aes(fill = color)) +
+  geom_text(
+    aes(label = reorder(str_to_title(AFF), Freq), y=0.13),
+     hjust = 0, nudge_y = .5,
+     size = 4, fontface = "bold", #family = "Fira Sans",
+    fill = "white", label.size = 0
+  ) +
+  geom_text(
+    aes(label = Freq),
+     hjust = 0, nudge_y = .5,
+     size = 4, fontface = "bold", #family = "Fira Sans"
+  ) +
+  coord_flip() +
+  theme_default +
+  labs(
+    x = NULL,
+    y = NULL,
+    title = "Top 10 author affiliations",
+    subtitle = "The frequency distribution of affiliations of all co-authors for each paper"
+  )+
+  scale_fill_identity(guide = "none") +
+  scale_x_discrete(labels = NULL)+ 
+  scale_y_continuous(labels = NULL)+
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        legend.position = 'none',
+        )
 
-```{r institution productivity}
-Affiliation=results$Affiliations[1:20]
-Affiliation
+ggsave("figures/AffliationsTop10.jpg", device = "jpeg", dpi = 400)
 
-Aff_Freq <- results[["Aff_frac"]] %>%
-  arrange(desc(Frequency))%>%
-  top_n(10)
-Aff_Freq
 ```
+
 
 
 ```{r collaborative, echo=FALSE}
@@ -537,19 +569,6 @@ ggsave("figures/CollaborationNetwork4.jpg", device = "jpeg", dpi = 400)
 write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge4.graphml", c("graphml"))
 
 head(Uninet$nodeDegree) # Top six universities by degree of publications with other universities
-
-ggplot((Aff_Freq)) +
-         geom_col(aes(x = reorder(Affiliation, Frequency), y = Frequency)) +
-  coord_flip() +
-  theme_default +
-  labs(
-    x = NULL,
-    y = NULL,
-    title = "Number of papers by affiliated universities"
-  )
-
-ggsave("figures/AffliationsTop10.jpg", device = "jpeg", dpi = 400)
-
 ```
 
 
