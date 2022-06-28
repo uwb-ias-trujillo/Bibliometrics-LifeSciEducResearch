@@ -150,29 +150,9 @@ ggplot(aes( x = NP, y = h_index)) +
 ```
 
 ### Affiliations
-```{r affiliations, echo=FALSE}
+```{r world affiliations, echo=FALSE}
 
-#Joining files
-msidata <- read_excel("rawdata/2020eligibilitymatrix.xlsx", 
-    skip = 10)
-affiliations <- read_excel("tables/UnivIndex.xlsx")
-msiuniv <- left_join(affiliations, msidata) %>%
-  filter(OPEID != "NA")
 
-#Tables
-msistates <- msiuniv %>%
-  group_by(St) %>%
-  summarize(n = n(), articles = sum(Freq) ) %>%
-  filter(!(St %in% c("DC", "MH", "PR", "VI", "GU"))) %>% 
-  rename(states = St, affiliations = n) %>%
-  group_by(affiliations, articles)
-view(msistates)
-
-msistates$state_name <- state.name[match(msistates$states,state.abb)]
-
-spatial_data <- left_join(msistates,
-                          get_urbn_map(map = "states", sf = TRUE),
-                          by = "state_name")
 
 spatial_data_World <- left_join(as.data.frame(results$Countries),
                           get_urbn_map(map = "countries", sf = TRUE),
@@ -225,21 +205,65 @@ spatial_data_World <- left_join(as.data.frame(results$Countries),
 world_map = map_data("world") %>% 
   filter(! long > 180)
 
-countries = world_map %>% 
+countries <- world_map %>% 
   distinct(region) %>% 
   rowid_to_column()
 
-<- countries %>%
-  left_join(as.data.frame(results$Countries), join )
+countryfreq <- results$Countries%>%
+  as.data.frame()%>%
+  mutate(Tab = str_to_title(Tab)) %>% 
+  mutate(Tab = case_when(
+    Tab == "Usa" ~ "USA",
+    Tab == "United Kingdom" ~"UK",
+    TRUE ~ Tab
+  )) 
 
-countries %>% 
-  ggplot(aes(fill = rowid, map_id = region)) +
+
+countries %>%
+  full_join(countryfreq, by = c("region" = "Tab")) %>% 
+  ggplot(aes(fill = Freq, map_id = region)) +
   geom_map(map = world_map) +
   expand_limits(x = world_map$long, y = world_map$lat) +
-  coord_map("moll") +
-  theme_map()
+  #coord_map("moll") +
+  theme_map()#+
+  #scale_fill_continuous_tableau(limits=c(1, 20))
+```
 
+```{r US affiliations}
 #Affiliation Map - US
+#Joining files
+msidata <- read_excel("rawdata/2020eligibilitymatrix.xlsx", 
+    skip = 10)
+affiliations <- read_excel("tables/UnivIndex.xlsx")
+msiuniv <- left_join(affiliations, msidata) %>%
+  filter(OPEID != "NA")
+
+#Tables
+msistates <- msiuniv %>%
+  group_by(St) %>%
+  summarize(n = n(), articles = sum(Freq) ) %>%
+  filter(!(St %in% c("DC", "MH", "PR", "VI", "GU"))) %>% 
+  rename(states = St, affiliations = n) %>%
+  group_by(affiliations, articles)
+view(msistates)
+
+msistates$state_name <- state.name[match(msistates$states,state.abb)]
+
+spatial_data <- left_join(msistates,
+                          us,
+                          by = "state_name")
+us <- fortify(map_data("state"), region = "region")
+
+full_join(spatial_data, us)
+
+affiliationMap <- ggplot() +
+  geom_map(data  =  us, map = us,
+             aes(x = long, y = lat, map_id = region, group = group),
+             fill = "white", color = "black", size = 0.25) +
+  coord_map("albers", lat0 = 39, lat1 = 45) +
+  theme_map()
+gg
+
 affiliationMap <- ggplot() +
   geom_sf(spatial_data,
           mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
