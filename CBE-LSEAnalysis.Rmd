@@ -75,7 +75,6 @@ options(width=100)
 S <- summary(object = results, pause = FALSE)
 S
 #plot(x=results, k=10, pause=F)
-
 S$MainInformationDF
 
 dir.create("tables")
@@ -146,61 +145,12 @@ ggplot(aes( x = NP, y = h_index)) +
        x = "Publications",
        caption = "CBE — Life Science Education") +
   coord_flip()+
-  ggtitle("Author productivity", subtitle = "Number of publications and h-index for authors between 2010 and 2021")
+  ggtitle("Author productivity", subtitle = "Number of publications and h-index for LSE authors between 2010 and 2021")
 ```
 
 ### Affiliations
+
 ```{r world affiliations, echo=FALSE}
-
-
-
-spatial_data_World <- left_join(as.data.frame(results$Countries),
-                          get_urbn_map(map = "countries", sf = TRUE),
-                          by = c("Tab", "Countries"))
-
-#Affiliation Map - World
-# world <- map_data("world")
-# world
-# 
-# affiliationMapWorld <- ggplot() +
-#   geom_map(data = results$Countries, 
-#            map  = world,
-#            mapping = aes(map_id = region, fill = Freq),
-#            color = "#ffffff", size = 0.25) +
-#   labs(fill = "Author affiliations",
-#        title = "Number of institutions in author affilitations by country",
-#     x = NULL,
-#     y = NULL)
-# 
-# affiliationMapWorld
-# 
-#   #scale_fill_gradient(labels = scales::percent) +
-#   coord_sf(datum = NA) +
-#   geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE),
-#                aes(label = state_abbv),
-#                size = 3)
-# 
-# 
-# affiliationMapWorld <- ggplot() +
-#   geom_map(spatial_data, 
-#            map = "world",
-#            mapping = aes(fill = affiliations, geometry = geometry),
-#            color = "#ffffff", size = 0.25) +
-#   labs(fill = "Author affiliations",
-#        title = "Number of institutions in author affilitations by country",
-#     x = NULL,
-#     y = NULL) +
-#   
-#   #scale_fill_gradient(labels = scales::percent) +
-#   coord_sf(datum = NA) +
-#   geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE),
-#                aes(label = state_abbv),
-#                size = 3)
-# 
-# affiliationMapWorld +
-#   theme(plot.margin = unit(c(1,1,1,1), "cm"),
-#         panel.background = element_blank()) +
-#   scale_fill_viridis_c(option="E", direction = -1)
 
 world_map = map_data("world") %>% 
   filter(! long > 180)
@@ -224,9 +174,41 @@ countries %>%
   ggplot(aes(fill = Freq, map_id = region)) +
   geom_map(map = world_map) +
   expand_limits(x = world_map$long, y = world_map$lat) +
-  #coord_map("moll") +
-  theme_map()#+
-  #scale_fill_continuous_tableau(limits=c(1, 20))
+  coord_map("moll") +
+  theme_map()+
+  #theme_default +
+  theme(#legend.position = "none",
+        plot.margin= unit(c(1,1,1,1), "cm"),
+        plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot",
+        panel.background = element_rect(
+          fill = "#F2F2F2"),
+        panel.grid = element_line(size = .25, color = "#99CCCC"),
+        #axis.ticks = element_line(color = "#F2F2F2"),
+        legend.key = element_rect(color = "#F2F2F2"),
+        legend.background = element_rect(
+          fill = "#F2F2F2"),
+        #legend.position = "top",
+        # plot.background = element_rect(
+        #   fill = "#F2F2F2")
+        ) +  
+  scale_fill_viridis_c(option="D", 
+                       direction = -1,
+                       trans = scales::pseudo_log_trans(sigma = 0.01), 
+                       breaks = c(1,10, 100, 1000),
+                       labels = c(1,10, 100, 1000),
+                       limits = c(1,1000)
+  )+
+  labs(fill = "Count of affiliations",
+       title = "Frequency of author affilitations by country",
+    x = NULL,
+    y = NULL
+    ) 
+
+ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 5,
+  units = "in", limitsize = FALSE)
 ```
 
 ```{r US affiliations}
@@ -234,7 +216,9 @@ countries %>%
 #Joining files
 msidata <- read_excel("rawdata/2020eligibilitymatrix.xlsx", 
     skip = 10)
+
 affiliations <- read_excel("tables/UnivIndex.xlsx")
+
 msiuniv <- left_join(affiliations, msidata) %>%
   filter(OPEID != "NA")
 
@@ -242,69 +226,67 @@ msiuniv <- left_join(affiliations, msidata) %>%
 msistates <- msiuniv %>%
   group_by(St) %>%
   summarize(n = n(), articles = sum(Freq) ) %>%
-  filter(!(St %in% c("DC", "MH", "PR", "VI", "GU"))) %>% 
+  filter(!(St %in% c("MH", "PR", "VI", "GU"))) %>% 
   rename(states = St, affiliations = n) %>%
   group_by(affiliations, articles)
-view(msistates)
+#view(msistates)
 
 msistates$state_name <- state.name[match(msistates$states,state.abb)]
 
-spatial_data <- left_join(msistates,
+us <- fortify(map_data("state"), region = "region") %>%
+  mutate(region = str_to_title(region))
+spatial_data <- right_join(msistates,
                           us,
-                          by = "state_name")
-us <- fortify(map_data("state"), region = "region")
-
-full_join(spatial_data, us)
+                          by = c("state_name" ="region"))
 
 affiliationMap <- ggplot() +
-  geom_map(data  =  us, map = us,
-             aes(x = long, y = lat, map_id = region, group = group),
-             fill = "white", color = "black", size = 0.25) +
+  geom_map(data  =  spatial_data, map = us,
+             aes(x = long, y = lat, map_id = state_name, group = group, fill = affiliations, label = states),
+             color = "black", size = 0.25) +
   coord_map("albers", lat0 = 39, lat1 = 45) +
-  theme_map()
-gg
-
-affiliationMap <- ggplot() +
-  geom_sf(spatial_data,
-          mapping = aes(fill = affiliations, geometry = geometry), stat = "sf",
-          color = "#ffffff", size = 0.25) +
+  theme_map()+
+  theme_default +
+  scale_fill_viridis_c(option="E", 
+                       direction = -1)+
   labs(fill = "Author affiliations",
-       title = "Number of institutions in author affilitations by state",
+       title = "Number of LSE author affilitations by state",
     x = NULL,
     y = NULL
-    ) +
-  #scale_fill_gradient(labels = scales::percent) +
-  coord_sf(datum = NA) +
-  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE),
-               aes(label = state_abbv),
-               size = 3)
-
-affiliationMap +
+    )  +
   theme(plot.margin = unit(c(1,1,1,1), "cm"),
-        panel.background = element_blank()) +
-  scale_fill_viridis_c(option="E", direction = -1)
+        panel.background = element_blank())
 
+ggsave("figures/AffiliationUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 5,
+  units = "in", limitsize = FALSE)
+
+
+centroids <- spatial_data %>%
+  group_by(state_name, articles) %>%
+  summarise(latitude = exp(mean(log(lat))), longitude = exp(mean(log(long))))
 
 #Article Map
-articleMap <- ggplot() +
-  geom_sf(spatial_data,
-          mapping = aes(fill = articles, geometry = geometry), stat = "sf",
-          color = "#ffffff", size = 0.25) +
+ggplot() +
+  geom_map(data  =  spatial_data, map = us,
+             aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
+             color = "black", size = 0.25) +
+  #geom_text_repel(data= centroids, aes(x = longitude, y = latitude, label = articles)) +
+  coord_map("albers", lat0 = 39, lat1 = 45) +
+  theme_map() +
+  theme_default +
   labs(fill = "Publications",
-       title = "Number of articles by state",
+       title = "Number of LSE publication by state of author affiliation",
     x = NULL,
     y = NULL
     ) +
-  #scale_fill_gradient(labels = scales::percent) +
-  coord_sf(datum = NA) +
-  geom_sf_text(data = get_urbn_labels(map = "states", sf = TRUE), 
-               aes(label = state_abbv),
-               size = 3) 
+  scale_fill_viridis_c(option="E", 
+                       direction = -1) +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"),
+        panel.background = element_blank())
 
-articleMap +
-  theme(plot.margin = unit(c(1,1.82,1,1), "cm"),
-        panel.background = element_blank()) +
-  scale_fill_viridis_c(option="E", direction = -1)
+ggsave("figures/ArticlesUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 5,
+  units = "in", limitsize = FALSE)
 ```
 
 ```{r MSI, echo=FALSE}
@@ -358,8 +340,8 @@ types %>%
   labs(
     x = NULL,
     y = NULL,
-    title = "What types of institutes are represented in LSE?",
-    subtitle = "Percent of institutions by type represented for LSE and US"
+    title = "Percent of institutions by type represented in LSE author affiliations and US Dept. of Ed.",
+    caption = "Source: CBE-LSE, 2020 US Dept. of Ed. Eligibility Matrix"
     )+
   facet_wrap(~SchoolType, nrow = 1)
 
