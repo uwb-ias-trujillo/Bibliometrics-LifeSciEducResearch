@@ -171,27 +171,27 @@ countryfreq <- results$Countries%>%
 
 countries %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>% 
-  ggplot(aes(fill = Freq, map_id = region)) +
+  ggplot(aes(fill = Freq, map_id = region), col = "white") +
   geom_map(map = world_map) +
   expand_limits(x = world_map$long, y = world_map$lat) +
   coord_map("moll") +
   theme_map()+
   #theme_default +
   theme(#legend.position = "none",
-        plot.margin= unit(c(1,1,1,1), "cm"),
-        plot.caption = element_text(hjust = 0, face= "italic"),
-        plot.title.position = "plot",
-        plot.caption.position =  "plot",
-        panel.background = element_rect(
-          fill = "#F2F2F2"),
-        panel.grid = element_line(size = .25, color = "#99CCCC"),
-        #axis.ticks = element_line(color = "#F2F2F2"),
-        legend.key = element_rect(color = "#F2F2F2"),
-        legend.background = element_rect(
-          fill = "#F2F2F2"),
-        #legend.position = "top",
-        # plot.background = element_rect(
-        #   fill = "#F2F2F2")
+         plot.margin= unit(c(1,1,1,1), "cm"),
+        # plot.caption = element_text(hjust = 0, face= "italic"),
+        # plot.title.position = "plot",
+        # plot.caption.position =  "plot",
+        # panel.background = element_rect(
+        #   fill = "#F2F2F2"),
+        # panel.grid = element_line(size = .25, color = "#99CCCC"),
+        # #axis.ticks = element_line(color = "#F2F2F2"),
+        # legend.key = element_rect(color = "#F2F2F2"),
+        # legend.background = element_rect(
+        #   fill = "#F2F2F2"),
+        legend.position = "top",
+        # # plot.background = element_rect(
+        # #   fill = "#F2F2F2")
         ) +  
   scale_fill_viridis_c(option="D", 
                        direction = -1,
@@ -269,11 +269,11 @@ centroids <- spatial_data %>%
 ggplot() +
   geom_map(data  =  spatial_data, map = us,
              aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
-             color = "black", size = 0.25) +
+             color = "white", size = 0.25) +
   #geom_text_repel(data= centroids, aes(x = longitude, y = latitude, label = articles)) +
   coord_map("albers", lat0 = 39, lat1 = 45) +
   theme_map() +
-  theme_default +
+  #theme_default +
   labs(fill = "Publications",
        title = "Number of LSE publication by state of author affiliation",
     x = NULL,
