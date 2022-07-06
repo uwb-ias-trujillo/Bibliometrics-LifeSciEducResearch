@@ -19,6 +19,7 @@ require("sf")
 require("ggrepel")
 require("ggraph")
 require("ggthemes")
+require("rcartocolor")
 devtools::install_github("massimoaria/bibliometrix")
 
 devtools::install_github("wmurphyrd/fiftystater")
@@ -27,6 +28,7 @@ library(urbnmapr)
 library(bibliometrix)
 library(tidyverse)
 library(networkD3)
+library(rcartocolor)
 library(rgexf)
 library(igraph)
 library(xtable)
@@ -168,34 +170,25 @@ countryfreq <- results$Countries%>%
     TRUE ~ Tab
   )) 
 
-
 countries %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>% 
-  ggplot(aes(fill = Freq, map_id = region), col = "white") +
-  geom_map(map = world_map) +
+  ggplot(aes(fill = Freq, map_id = region), color = 1) +
+  #geom_hline(yintercept=0, color = "light grey") +
+  geom_map(map = world_map, colour = "white", lwd = 0.2) +
   expand_limits(x = world_map$long, y = world_map$lat) +
   coord_map("moll") +
+  #coord_quickmap()+
   theme_map()+
   #theme_default +
-  theme(#legend.position = "none",
-         plot.margin= unit(c(1,1,1,1), "cm"),
-        # plot.caption = element_text(hjust = 0, face= "italic"),
-        # plot.title.position = "plot",
-        # plot.caption.position =  "plot",
-        # panel.background = element_rect(
-        #   fill = "#F2F2F2"),
-        # panel.grid = element_line(size = .25, color = "#99CCCC"),
-        # #axis.ticks = element_line(color = "#F2F2F2"),
-        # legend.key = element_rect(color = "#F2F2F2"),
-        # legend.background = element_rect(
-        #   fill = "#F2F2F2"),
-        legend.position = "top",
-        # # plot.background = element_rect(
-        # #   fill = "#F2F2F2")
+  theme( plot.margin= unit(c(0,0,0,1), "cm"),
+         # plot.caption = element_text(hjust = 0, face= "italic"),
+         # plot.title.position = "plot",
+         # plot.caption.position =  "plot",
+        legend.title = element_blank(),
+        #legend.position = "left"
         ) +  
-  scale_fill_viridis_c(option="D", 
-                       direction = -1,
-                       trans = scales::pseudo_log_trans(sigma = 0.01), 
+  scale_fill_carto_c(palette = "DarkMint", direction = 1,
+                       trans = scales::pseudo_log_trans(sigma = 0.01),
                        breaks = c(1,10, 100, 1000),
                        labels = c(1,10, 100, 1000),
                        limits = c(1,1000)
@@ -207,7 +200,7 @@ countries %>%
     ) 
 
 ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 5,
+  height = 4,
   units = "in", limitsize = FALSE)
 ```
 
@@ -271,7 +264,8 @@ ggplot() +
              aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
              color = "white", size = 0.25) +
   #geom_text_repel(data= centroids, aes(x = longitude, y = latitude, label = articles)) +
-  coord_map("albers", lat0 = 39, lat1 = 45) +
+  #coord_map("albers", lat0 = 39, lat1 = 45) +
+  coord_equal() +
   theme_map() +
   #theme_default +
   labs(fill = "Publications",
@@ -282,7 +276,9 @@ ggplot() +
   scale_fill_viridis_c(option="E", 
                        direction = -1) +
   theme(plot.margin = unit(c(1,1,1,1), "cm"),
-        panel.background = element_blank())
+        panel.background = element_blank(),
+        legend.background = element_blank(),
+        legend.position = "top")
 
 ggsave("figures/ArticlesUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
