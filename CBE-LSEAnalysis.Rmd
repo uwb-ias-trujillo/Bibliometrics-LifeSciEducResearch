@@ -327,13 +327,13 @@ types %>%
   geom_text(
     aes(label = paste0(round(value*100, 0),"%")),
      vjust = 0.5, nudge_y = -.016, #nudge_x = 0.2,
-     size = 4, fontface = "bold", #family = "Fira Sans"
+     size = 3, fontface = "bold", #family = "Fira Sans"
   ) +
   theme_default +
   theme(legend.position="none", 
         strip.background = element_rect(fill = "#F2F2F2"),
         panel.grid.major.x = element_blank(),
-        axis.text = element_text(size = 12)
+        axis.text = element_text(size = 10)
         )+
   scale_color_identity(guide = "none") +
   scale_y_continuous(minor_breaks = NULL,labels = scales::percent) +
