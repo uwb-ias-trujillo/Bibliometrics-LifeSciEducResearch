@@ -283,6 +283,33 @@ ggplot() +
 ggsave("figures/ArticlesUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
   units = "in", limitsize = FALSE)
+
+
+
+#Article Map copy
+ggplot() +
+  geom_map(data  =  spatial_data, map = us,
+             aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
+             color = "white", size = 0.25) +
+  #geom_text_repel(data= centroids, aes(x = longitude, y = latitude, label = articles)) +
+  coord_map("moll") +
+  #coord_equal() +
+  theme_map() +
+  #theme_default +
+  labs(fill = "Publications",
+       title = "Number of LSE publication by state of author affiliation",
+    x = NULL,
+    y = NULL
+    ) +
+  scale_fill_carto_c(palette = "DarkMint", direction = 1) +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"),
+        panel.background = element_blank(),
+        legend.background = element_blank(),
+        legend.position = "top")
+
+ggsave("figures/ArticlesUSMapCopy.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 5,
+  units = "in", limitsize = FALSE)
 ```
 
 ```{r MSI, echo=FALSE}
