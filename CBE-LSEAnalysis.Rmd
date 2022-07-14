@@ -180,14 +180,20 @@ countries %>%
   #coord_quickmap()+
   theme_map()+
   #theme_default +
-  theme( plot.margin= unit(c(0,0,0,1), "cm"),
-         # plot.caption = element_text(hjust = 0, face= "italic"),
-         # plot.title.position = "plot",
-         # plot.caption.position =  "plot",
+  theme(plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        # plot.caption = element_text(hjust = 0, face= "italic"),
+        # plot.title.position = "plot",
+        # plot.caption.position =  "plot",
         legend.title = element_blank(),
+        panel.background = element_rect(fill = "lightblue", color = "lightblue"),
+        legend.position = c(0.03, 0.06),
+        legend.background = element_rect(fill = "lightblue"),
+        legend.direction = "horizontal",
+        legend.key.size = unit(0.4, "cm"),
+        #legend.margin = margin(6, 12, 4, 1)
         #legend.position = "left"
         ) +  
-  scale_fill_carto_c(palette = "DarkMint", direction = 1,
+  scale_fill_carto_c(palette = "BluGrn", direction = 1,
                        trans = scales::pseudo_log_trans(sigma = 0.01),
                        breaks = c(1,10, 100, 1000),
                        labels = c(1,10, 100, 1000),
@@ -289,27 +295,27 @@ ggsave("figures/ArticlesUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
 #Article Map copy
 ggplot() +
   geom_map(data  =  spatial_data, map = us,
-             aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
+           aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
              color = "white", size = 0.25) +
-  #geom_text_repel(data= centroids, aes(x = longitude, y = latitude, label = articles)) +
   coord_map("moll") +
-  #coord_equal() +
   theme_map() +
-  #theme_default +
   labs(fill = "Publications",
        title = "Number of LSE publication by state of author affiliation",
     x = NULL,
     y = NULL
     ) +
-  scale_fill_carto_c(palette = "DarkMint", direction = 1) +
+  scale_fill_carto_c(palette = "BluGrn", direction = 1) +
   theme(plot.margin = unit(c(1,1,1,1), "cm"),
         panel.background = element_blank(),
         legend.background = element_blank(),
-        legend.position = "top")
+        legend.direction = "horizontal"
+        #legend.position = "top"
+        )
 
-ggsave("figures/ArticlesUSMapCopy.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 5,
-  units = "in", limitsize = FALSE)
+ggsave("figures/ArticlesUSMapCopy.jpg",
+       device = "jpeg", dpi = 400,
+       width = 7, height = 5,
+       units = "in", limitsize = FALSE)
 ```
 
 ```{r MSI, echo=FALSE}
