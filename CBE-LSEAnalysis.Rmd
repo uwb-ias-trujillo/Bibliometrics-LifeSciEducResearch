@@ -20,6 +20,7 @@ require("ggrepel")
 require("ggraph")
 require("ggthemes")
 require("rcartocolor")
+require("ggpubr")
 devtools::install_github("massimoaria/bibliometrix")
 
 devtools::install_github("wmurphyrd/fiftystater")
@@ -39,6 +40,7 @@ library("fiftystater")
 library(sf)
 library(readxl)
 library(ggthemes)
+library(ggpubr)
 ```
 
 ##Introduction
@@ -259,7 +261,7 @@ countryfreq <- results$Countries%>%
     TRUE ~ Tab
   )) 
 
-countries %>%
+AffiliationWorldMap <- countries %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>% 
   ggplot(aes(fill = Freq, map_id = region), color = 1) +
   #geom_hline(yintercept=0, color = "light grey") +
@@ -293,7 +295,7 @@ countries %>%
     x = NULL,
     y = NULL
     ) 
-
+AffiliationWorldMap
 ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 4,
   units = "in", limitsize = FALSE)
@@ -353,36 +355,8 @@ centroids <- spatial_data %>%
   group_by(state_name, articles) %>%
   summarise(latitude = exp(mean(log(lat))), longitude = exp(mean(log(long))))
 
-#Article Map
-ggplot() +
-  geom_map(data  =  spatial_data, map = us,
-             aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
-             color = "white", size = 0.25) +
-  #geom_text_repel(data= centroids, aes(x = longitude, y = latitude, label = articles)) +
-  #coord_map("albers", lat0 = 39, lat1 = 45) +
-  coord_equal() +
-  theme_map() +
-  #theme_default +
-  labs(fill = "Publications",
-       title = "Number of LSE publication by state of author affiliation",
-    x = NULL,
-    y = NULL
-    ) +
-  scale_fill_viridis_c(option="E", 
-                       direction = -1) +
-  theme(plot.margin = unit(c(1,1,1,1), "cm"),
-        panel.background = element_blank(),
-        legend.background = element_blank(),
-        legend.position = "top")
-
-ggsave("figures/ArticlesUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 5,
-  units = "in", limitsize = FALSE)
-
-
-
-#Article Map copy
-ggplot() +
+#Article Map 
+ArticlesUSMap <- ggplot() +
   geom_map(data  =  spatial_data, map = us,
            aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
              color = "white", size = 0.25) +
@@ -400,11 +374,16 @@ ggplot() +
         legend.direction = "horizontal"
         #legend.position = "top"
         )
-
-ggsave("figures/ArticlesUSMapCopy.jpg",
+ArticlesUSMap
+ggsave("figures/ArticlesUSMap.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 5,
        units = "in", limitsize = FALSE)
+```
+
+```{r combining maps}
+ggarrange(AffiliationWorldMap,ArticlesUSMap, legend = "bottom", nrow = 2, ncol = 1#, common.legend = TRUE
+          )
 ```
 
 ```{r MSI, echo=FALSE}
@@ -517,11 +496,15 @@ MSIAffiliationPlot <- temp %>%
   theme_default + 
   labs(
     title = "Author affiliations by Minority Serving Institution status",
-    caption = "Percent of the 479 CBE-LSE author affilations found in 2020 US Dept. of Ed. Eligibility Matrix",
+    subtitle  = "Percent of the 479 CBE-LSE author affilations found in 2020 US Dept. of Ed. Eligibility Matrix",
     y = NULL, 
     x = NULL
   )  +
-  theme(legend.title = element_blank())
+  theme(legend.title = element_blank(),
+         panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        legend.position = "bottom")
 
 MSIAffiliationPlot
 ggsave("figures/MsiAffiliations.jpg", device = "jpeg", dpi = 400)
