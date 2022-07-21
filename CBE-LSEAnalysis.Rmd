@@ -54,26 +54,23 @@ txt <- c("rawdata/CBE-LSE-2010-2021/CBE LSE 2010-2021 1-926.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
- theme_default <- theme(
+theme_default <- theme(
     plot.caption = element_text(hjust = 0, face= "italic"),
     plot.title.position = "plot",
     plot.caption.position =  "plot",
-    panel.background = element_rect(
-      fill = "#F2F2F2"),
+    panel.background = element_rect(fill = "#F2F2F2"),
     panel.grid = element_line(size = .25, color = "#99CCCC"),
     axis.ticks = element_line(color = "#F2F2F2"),
     legend.key = element_rect(color = "#F2F2F2"),
-    legend.background = element_rect(
-      fill = "#F2F2F2"),
+    legend.background = element_rect(fill = "#F2F2F2"),
     legend.position = "top",
-    plot.background = element_rect(
-      fill = "#F2F2F2")
+    plot.background = element_rect(fill = "#F2F2F2")
     )
  
-authorProdOverTime <- function (M, k = 10, graph = TRUE) 
-{
-    if (!("DI" %in% names(M))) {
-        M$DI = "NA"
+authorProdOverTime <- function (M, k = 10, graph = TRUE)
+  {
+  if (!("DI" %in% names(M))) {
+    M$DI = "NA"
     }
     M$TC <- as.numeric(M$TC)
     M$PY <- as.numeric(M$PY)
@@ -81,8 +78,7 @@ authorProdOverTime <- function (M, k = 10, graph = TRUE)
     Y <- as.numeric(substr(Sys.time(), 1, 4))
     listAU <- (strsplit(M$AU, ";"))
     nAU <- lengths(listAU)
-    df <- data.frame(AU = trimws(unlist(listAU)), SR = rep(M$SR, 
-        nAU))
+    df <- data.frame(AU = trimws(unlist(listAU)), SR = rep(M$SR,nAU))
     AU <- df %>% group_by(.data$AU) %>% count() %>% arrange(desc(.data$n)) %>% 
         ungroup()
     k <- min(k, nrow(AU))
@@ -165,8 +161,8 @@ write.csv(file = "tables/Universities.csv", results$Affiliations)
 colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
 
 ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
-  geom_line(stat = "identity", color = "#F26E50", size = 1.5)+
-  theme_dark()+
+  geom_line(stat = "identity", color = "#F26E50", size = 1.5) +
+  theme_dark() +
   theme_default +
   labs(
     title = "Annual productivity by articles published per year",
@@ -198,7 +194,7 @@ authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by
 authorprod<-authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
   labs(title = "Top authors productivity from 2010 - 2021",x = NULL, y = NULL) +
   theme(legend.position="top") +
-  theme_minimal()+
+  theme_minimal() +
   theme_default
 
 authorprod
@@ -210,18 +206,18 @@ authordata %>%
   filter(n > 8) %>%
 ggplot(aes( x = NP, y = h_index)) + 
   geom_point(alpha = 0.6) +
-  geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01)  +
-  theme_dark()+
+  geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01) +
+  theme_dark() +
   theme_default +
   labs(y = "h—index",
        x = "Publications",
        caption = "CBE — Life Science Education") +
-  coord_flip()+
+  coord_flip() +
   ggtitle("Author productivity", subtitle = "Number of publications and h-index for LSE authors between 2010 and 2021")
 
 authordata %>%
   filter(n > 8) %>%
-ggplot(aes( x = reorder(AU, (NP)), y = NP)) + 
+ggplot(aes(x = reorder(AU, (NP)), y = NP)) + 
   geom_col(alpha = 1) +
   #geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01)  +
   #theme_minimal()+
@@ -229,7 +225,7 @@ ggplot(aes( x = reorder(AU, (NP)), y = NP)) +
   labs(y = NULL,
        x = NULL,
        caption = "CBE — Life Science Education between 2010 and 2021") +
-  coord_flip()+
+  coord_flip() +
   theme(axis.text.y = element_text(size = 8),
         panel.grid.major.y = element_blank(),
         #panel.grid.major.x = element_blank(),
@@ -252,8 +248,8 @@ countries <- world_map %>%
   distinct(region) %>% 
   rowid_to_column()
 
-countryfreq <- results$Countries%>%
-  as.data.frame()%>%
+countryfreq <- results$Countries %>%
+  as.data.frame() %>%
   mutate(Tab = str_to_title(Tab)) %>% 
   mutate(Tab = case_when(
     Tab == "Usa" ~ "USA",
@@ -278,9 +274,11 @@ AffiliationWorldMap <- countries %>%
         legend.title = element_blank(),
         panel.background = element_rect(fill = "lightblue", color = "lightblue"),
         legend.position = c(0.03, 0.06),
-        legend.background = element_rect(fill = "lightblue"),
-        legend.direction = "horizontal",
-        legend.key.size = unit(0.4, "cm"),
+        legend.background = element_rect(fill = NA),
+        legend.direction = "vertical",
+        #legend.key.size = unit(0.4, "cm"),
+        legend.key.height= unit(.5, 'cm'),
+        legend.key.width= unit(.5, 'cm')
         #legend.margin = margin(6, 12, 4, 1)
         #legend.position = "left"
         ) +  
@@ -289,12 +287,13 @@ AffiliationWorldMap <- countries %>%
                        breaks = c(1,10, 100, 1000),
                        labels = c(1,10, 100, 1000),
                        limits = c(1,1000)
-  )+
+  ) +
   labs(fill = "Count of affiliations",
        title = "Frequency of author affilitations by country",
     x = NULL,
     y = NULL
-    ) 
+    )
+
 AffiliationWorldMap
 ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 4,
@@ -334,15 +333,14 @@ affiliationMap <- ggplot() +
              aes(x = long, y = lat, map_id = state_name, group = group, fill = affiliations, label = states),
              color = "black", size = 0.25) +
   coord_map("albers", lat0 = 39, lat1 = 45) +
-  theme_map()+
+  theme_map() +
   theme_default +
-  scale_fill_viridis_c(option="E", 
+  scale_fill_viridis_c(option = "E", 
                        direction = -1)+
   labs(fill = "Author affiliations",
        title = "Number of LSE author affilitations by state",
-    x = NULL,
-    y = NULL
-    )  +
+       x = NULL,
+       y = NULL) +
   theme(plot.margin = unit(c(1,1,1,1), "cm"),
         panel.background = element_blank())
 
@@ -363,7 +361,7 @@ ArticlesUSMap <- ggplot() +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
-       title = "Number of LSE publication by state of author affiliation",
+       title = "Number of LSE publications by state of author affiliation",
     x = NULL,
     y = NULL
     ) +
@@ -371,9 +369,13 @@ ArticlesUSMap <- ggplot() +
   theme(plot.margin = unit(c(1,1,1,1), "cm"),
         panel.background = element_blank(),
         legend.background = element_blank(),
-        legend.direction = "horizontal"
+        legend.direction = "vertical",
+        legend.title=element_blank(),
+        legend.key.height= unit(.5, 'cm'),
+        legend.key.width= unit(.5, 'cm')
         #legend.position = "top"
         )
+
 ArticlesUSMap
 ggsave("figures/ArticlesUSMap.jpg",
        device = "jpeg", dpi = 400,
@@ -382,8 +384,8 @@ ggsave("figures/ArticlesUSMap.jpg",
 ```
 
 ```{r combining maps}
-ggarrange(AffiliationWorldMap,ArticlesUSMap, legend = "bottom", nrow = 2, ncol = 1#, common.legend = TRUE
-          )
+ggarrange(AffiliationWorldMap, ArticlesUSMap, legend = "right", nrow = 2, align = c("hv"))
+
 ```
 
 ```{r MSI, echo=FALSE}
