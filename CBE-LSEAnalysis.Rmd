@@ -267,6 +267,7 @@ AffiliationWorldMap <- countries %>%
   #coord_quickmap()+
   theme_map()+
   #theme_default +
+  #labs(caption = "") +
   theme(plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
         # plot.caption = element_text(hjust = 0, face= "italic"),
         # plot.title.position = "plot",
@@ -278,21 +279,23 @@ AffiliationWorldMap <- countries %>%
         legend.direction = "vertical",
         #legend.key.size = unit(0.4, "cm"),
         legend.key.height= unit(.5, 'cm'),
-        legend.key.width= unit(.5, 'cm')
+        legend.key.width= unit(.5, 'cm'),
+        #plot.caption.position = "plot",
+        #plot.caption = element_text(hjust = 0)
         #legend.margin = margin(6, 12, 4, 1)
         #legend.position = "left"
-        ) +  
+        ) +
   scale_fill_carto_c(palette = "BluGrn", direction = 1,
                        trans = scales::pseudo_log_trans(sigma = 0.01),
                        breaks = c(1,10, 100, 1000),
                        labels = c(1,10, 100, 1000),
                        limits = c(1,1000)
   ) +
-  labs(fill = "Count of affiliations",
-       title = "Frequency of author affilitations by country",
+  labs(fill = "Count of article",
+       title = "Articles by author's affiliated country",
     x = NULL,
     y = NULL
-    )
+    ) 
 
 AffiliationWorldMap
 ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7,
@@ -338,7 +341,7 @@ affiliationMap <- ggplot() +
   scale_fill_viridis_c(option = "E", 
                        direction = -1)+
   labs(fill = "Author affiliations",
-       title = "Number of LSE author affilitations by state",
+       title = "Number of author affilitations by state",
        x = NULL,
        y = NULL) +
   theme(plot.margin = unit(c(1,1,1,1), "cm"),
@@ -361,7 +364,8 @@ ArticlesUSMap <- ggplot() +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
-       title = "Number of LSE publications by state of author affiliation",
+       title = "Articles by author's state affiliation",
+       caption = "Counts are summarized by state of each article by each author's affiliation",
     x = NULL,
     y = NULL
     ) +
@@ -372,7 +376,9 @@ ArticlesUSMap <- ggplot() +
         legend.direction = "vertical",
         legend.title=element_blank(),
         legend.key.height= unit(.5, 'cm'),
-        legend.key.width= unit(.5, 'cm')
+        legend.key.width= unit(.5, 'cm'),
+        plot.caption.position = "plot",
+        plot.caption = element_text(hjust = 0)
         #legend.position = "top"
         )
 
