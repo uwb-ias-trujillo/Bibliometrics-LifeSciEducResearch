@@ -34,7 +34,11 @@
     <data key="g_xlim">-1</data>
     <data key="g_rescale">true</data>
     <data key="g_asp">0</data>
+<<<<<<< HEAD
+    <data key="g_layout">-0.754420897547722</data>
+=======
     <data key="g_layout">0.0246027958678356</data>
+>>>>>>> 4cb5e9f5937c031310f2e08e151703fb3a1d35ef
     <data key="g_main">Authors who write 4 or more articles together</data>
     <node id="n0">
       <data key="v_name">brownell se</data>
