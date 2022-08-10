@@ -703,7 +703,7 @@ write_graph(BCnet$graph,"Gephi files/CBE_LSE_BC4.graphml", c("graphml"))
 ```{r topics and keywords}
 
 # Show how key words appear together
-CS <- conceptualStructure(data,field ="ID", method = "MCA", minDegree= 18, clust= 4 ,k.max=20, stemming= FALSE, labelsize=10, documents=2)
+CS <- conceptualStructure(data, field ="ID", method = "MCA", minDegree= 15, clust= 4 , k.max=20, stemming= TRUE, labelsize=10, documents=2)
 
 #CS4 <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=6, clust= "auto" ,k.max=20, stemming=TRUE, labelsize=4, documents=10)
 
