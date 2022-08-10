@@ -192,10 +192,10 @@ authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by
   filter("n" > 5) # only showing authors with at least 5 publications.
 
 authorprod<-authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
-  labs(title = "Top authors productivity from 2010 - 2021",x = NULL, y = NULL) +
-  theme(legend.position="top") +
-  theme_minimal() +
-  theme_default
+  labs(title = "Top authors productivity from 2010 - 2021",x = NULL, y = NULL) + 
+  #theme(legend.position="top") 
+  theme_minimal()
+  #theme_default
 
 authorprod
 ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400,  width = 7,
@@ -391,6 +391,10 @@ ggsave("figures/ArticlesUSMap.jpg",
 
 ```{r combining maps}
 ggarrange(AffiliationWorldMap, ArticlesUSMap, legend = "right", nrow = 2, align = c("hv"))
+ggsave("figures/WorldUSMap.jpg",
+       device = "jpeg", dpi = 400,
+       width = 7, height = 7,
+       units = "in", limitsize = FALSE)
 
 ```
 
