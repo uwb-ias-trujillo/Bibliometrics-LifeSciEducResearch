@@ -569,9 +569,10 @@ Affiliation <- as.data.frame(Affiliation) %>%
       row_number() == 2 ~ "goldenrod1",
       row_number() == 3 ~ "coral2",
       ## all others should be gray
-      TRUE ~ "gray70"
+      TRUE ~ "gray85"
     ))
 
+#Author affiliations
 ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +  
   geom_col(aes(fill = color)) +
   geom_text(
@@ -591,7 +592,6 @@ ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
     x = NULL,
     y = NULL,
     title = "Top 10 author affiliations",
-    subtitle = "The frequency distribution of affiliations of all co-authors for each paper"
   )+
   scale_fill_identity(guide = "none") +
   scale_x_discrete(labels = NULL)+ 
@@ -602,7 +602,12 @@ ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
         legend.position = 'none',
         )
 
-ggsave("figures/AffliationsTop10.jpg", device = "jpeg", dpi = 400)
+ggsave("figures/AffliationsTop10.jpg", 
+       device = "jpeg", dpi = 400,
+       width = 7, height = 5,
+       units = "in", limitsize = FALSE
+       )
+
 
 ```
 
