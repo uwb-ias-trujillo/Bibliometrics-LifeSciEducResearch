@@ -235,7 +235,7 @@ AffiliationWorldMap <- countries %>%
                        limits = c(1,1000)
   ) +
   labs(fill = "Count of article",
-       title = "Articles by author's affiliated country",
+       title = "Articles by author's country affiliation",
     x = NULL,
     y = NULL
     ) 
@@ -308,7 +308,7 @@ ArticlesUSMap <- ggplot() +
   theme_map() +
   labs(fill = "Publications",
        title = "Articles by author's state affiliation",
-       caption = "Counts are summarized by state of each article by each author's affiliation",
+       caption = "DC: 21, PR: 8, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
     x = NULL,
     y = NULL
     ) +
@@ -333,10 +333,10 @@ ggsave("figures/ArticlesUSMap.jpg",
 ```
 
 ```{r combining maps}
-ggarrange(AffiliationWorldMap, ArticlesUSMap, legend = "right", nrow = 2, align = c("hv"))
+ggarrange(AffiliationWorldMap, ArticlesUSMap, legend = "right", ncol = 1, nrow = 2, align = c("hv"))
 ggsave("figures/WorldUSMap.jpg",
        device = "jpeg", dpi = 400,
-       width = 7, height = 7,
+       width = 7, height = 8,
        units = "in", limitsize = FALSE)
 
 ```
