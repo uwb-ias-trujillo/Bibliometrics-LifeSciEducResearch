@@ -373,32 +373,29 @@ types %>%
   filter(SchoolType != FALSE) %>%
   mutate(colorlevel = case_when(
       name == "US" ~ 0.9,
-      name == "LSE" ~ 0.7)
-  ) %>%
+      name == "LSE" ~ 0.7)) %>%
   ggplot(aes(x = (name),value)) +
-  geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), size = 4) +
-  geom_text(
-    aes(label = paste0(round(value*100, 0),"%")),
-     vjust = 0.5, nudge_y = -.016, #nudge_x = 0.2,
-     size = 3, fontface = "bold", #family = "Fira Sans"
-  ) +
+  geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), 
+           size = 4) +
+  geom_text(aes(label = paste0(round(value*100, 0),"%")),
+            vjust = 0.5, nudge_y = -.04,
+            size = 3, fontface = "bold") +
   theme_default +
   theme(legend.position="none", 
         strip.background = element_rect(fill = "#F2F2F2"),
         #panel.grid.major.x = element_blank(),
         axis.text = element_text(size = 10)
-        )+
+        ) +
   scale_color_identity(guide = "none") +
   scale_y_continuous(minor_breaks = NULL,
-    labels = scales::percent) +
-  labs(
-    x = NULL,
-    y = NULL,
-    title = "What types of institutions are represented in LSE?",
-    #caption = "Source: CBE-LSE, 2020 US Dept. of Ed. Eligibility Matrix"
-    )+
+                     labels = scales::percent) +
+  labs(x = NULL, y = NULL,
+       title = "What types of institutions are represented in LSE?"
+       ) +
   facet_wrap(~SchoolType, nrow = 2) +
-  theme(panel.spacing = unit(2, "lines"))
+  theme(panel.spacing = unit(2, "lines"),
+        axis.text.y = element_text(margin = margin(l = 0.25, unit = "in")),
+        plot.margin = margin(t = .25, r = .25, b = .25, l = .25, unit = "in"))
 
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
