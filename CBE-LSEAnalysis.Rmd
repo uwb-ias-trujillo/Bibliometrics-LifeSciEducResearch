@@ -384,18 +384,20 @@ types %>%
   theme_default +
   theme(legend.position="none", 
         strip.background = element_rect(fill = "#F2F2F2"),
-        panel.grid.major.x = element_blank(),
+        #panel.grid.major.x = element_blank(),
         axis.text = element_text(size = 10)
         )+
   scale_color_identity(guide = "none") +
-  scale_y_continuous(minor_breaks = NULL,labels = scales::percent) +
+  scale_y_continuous(minor_breaks = NULL,
+    labels = scales::percent) +
   labs(
     x = NULL,
     y = NULL,
-    title = "Percent of institutions by type represented in LSE author affiliations and US Dept. of Ed.",
-    caption = "Source: CBE-LSE, 2020 US Dept. of Ed. Eligibility Matrix"
+    title = "What types of institutions are represented in LSE?",
+    #caption = "Source: CBE-LSE, 2020 US Dept. of Ed. Eligibility Matrix"
     )+
-  facet_wrap(~SchoolType, nrow = 1)
+  facet_wrap(~SchoolType, nrow = 2) +
+  theme(panel.spacing = unit(2, "lines"))
 
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
@@ -604,7 +606,7 @@ ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
 
 ggsave("figures/AffliationsTop10.jpg", 
        device = "jpeg", dpi = 400,
-       width = 7, height = 5,
+       width = 7, height = 4,
        units = "in", limitsize = FALSE
        )
 
