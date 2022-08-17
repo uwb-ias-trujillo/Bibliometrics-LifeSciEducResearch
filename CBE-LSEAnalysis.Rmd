@@ -442,29 +442,32 @@ temp$name<- factor(x = temp$name, levels = (x_levels))
 
 
 MSIAffiliationPlot <- temp %>% 
-  filter(#eligibility != "Ineligible" & 
+  filter(#eligibility != "Ineligible" &
     eligibility != "Undetermined", !is.na(name)) %>%
   ggplot(aes(x = name, y = perc, fill = eligibility)) +
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
-  theme_dark()+
-  scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9"))+
+  theme_dark() +
+  scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
   theme_default + 
   labs(
     title = "Author affiliations by Minority Serving Institution status",
-    subtitle  = "Percent of the 479 CBE-LSE author affilations found in 2020 US Dept. of Ed. Eligibility Matrix",
     y = NULL, 
     x = NULL
   )  +
   theme(legend.title = element_blank(),
-         panel.grid.major.y = element_blank(),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        legend.position = "bottom")
+        legend.position = "bottom",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text.y = element_text(margin = margin(r = -0.5, l = 0.4, unit = "cm")),
+       )
 
 MSIAffiliationPlot
-ggsave("figures/MsiAffiliations.jpg", device = "jpeg", dpi = 400)
+ggsave("figures/MsiAffiliations.jpg",
+       device = "jpeg", dpi = 400,
+       width = 7, height = 4,
+       units = "in", limitsize = FALSE)
 
 #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
 ```
