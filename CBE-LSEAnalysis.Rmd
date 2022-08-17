@@ -138,11 +138,12 @@ authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph +
   theme_minimal() +
   theme(plot.title.position = "plot",
         panel.grid.major.y = element_blank(),
-        legend.title = element_text())
+        legend.title = element_text(),
+        axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
 
 authorprod
 ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 4.5,
+  height = 5,
   units = "in", limitsize = FALSE)
 
 authordata %>%
