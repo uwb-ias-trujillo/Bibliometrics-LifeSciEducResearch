@@ -673,7 +673,7 @@ DCA <- networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Networ
 
 names(DCA$nodeDegree["american association 2011-1"])<- "AAAS 2011"
 
-ggraph(DCA$graph, layout = "stress") +
+DCAplot<- ggraph(DCA$graph, layout = "stress") +
   geom_edge_link(aes(edge_width = num / 200, color = color, alpha = 0.1, edge_linetype = factor(lty)), edge_alpha = 0.1) + 
     geom_node_point(aes(color = color, size = deg))+
   geom_node_label(aes(label = label,color = color), repel = TRUE, label.padding = 0.1 )+
@@ -684,6 +684,7 @@ ggraph(DCA$graph, layout = "stress") +
     title = "Which publications are cited together most frequently?" ,
     subtitle = "Cited documents who were cited together 4 or more times"
   )
+DCAplot
 
 ggsave("figures/DocumentCocitationNetwork.jpg", device = "jpeg", dpi = 400, width = 7,
   height = 5,
