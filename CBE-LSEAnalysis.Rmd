@@ -138,11 +138,12 @@ authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph +
   theme_minimal() +
   theme(plot.title.position = "plot",
         panel.grid.major.y = element_blank(),
-        legend.title = element_text())
+        legend.title = element_text(),
+        axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
 
 authorprod
 ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 4.5,
+  height = 5,
   units = "in", limitsize = FALSE)
 
 authordata %>%
@@ -372,30 +373,29 @@ types %>%
   filter(SchoolType != FALSE) %>%
   mutate(colorlevel = case_when(
       name == "US" ~ 0.9,
-      name == "LSE" ~ 0.7)
-  ) %>%
+      name == "LSE" ~ 0.7)) %>%
   ggplot(aes(x = (name),value)) +
-  geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), size = 4) +
-  geom_text(
-    aes(label = paste0(round(value*100, 0),"%")),
-     vjust = 0.5, nudge_y = -.016, #nudge_x = 0.2,
-     size = 3, fontface = "bold", #family = "Fira Sans"
-  ) +
+  geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), 
+           size = 4) +
+  geom_text(aes(label = paste0(round(value*100, 0),"%")),
+            vjust = 0.5, nudge_y = -.04,
+            size = 3, fontface = "bold") +
   theme_default +
   theme(legend.position="none", 
         strip.background = element_rect(fill = "#F2F2F2"),
-        panel.grid.major.x = element_blank(),
+        #panel.grid.major.x = element_blank(),
         axis.text = element_text(size = 10)
-        )+
+        ) +
   scale_color_identity(guide = "none") +
-  scale_y_continuous(minor_breaks = NULL,labels = scales::percent) +
-  labs(
-    x = NULL,
-    y = NULL,
-    title = "Percent of institutions by type represented in LSE author affiliations and US Dept. of Ed.",
-    caption = "Source: CBE-LSE, 2020 US Dept. of Ed. Eligibility Matrix"
-    )+
-  facet_wrap(~SchoolType, nrow = 1)
+  scale_y_continuous(minor_breaks = NULL,
+                     labels = scales::percent) +
+  labs(x = NULL, y = NULL,
+       title = "What types of institutions are represented in LSE?"
+       ) +
+  facet_wrap(~SchoolType, nrow = 2) +
+  theme(panel.spacing = unit(2, "lines"),
+        axis.text.y = element_text(margin = margin(l = 0.25, unit = "in")),
+        plot.margin = margin(t = .25, r = .25, b = .25, l = .25, unit = "in"))
 
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
@@ -440,29 +440,32 @@ temp$name<- factor(x = temp$name, levels = (x_levels))
 
 
 MSIAffiliationPlot <- temp %>% 
-  filter(#eligibility != "Ineligible" & 
+  filter(#eligibility != "Ineligible" &
     eligibility != "Undetermined", !is.na(name)) %>%
   ggplot(aes(x = name, y = perc, fill = eligibility)) +
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
-  theme_dark()+
-  scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9"))+
+  theme_dark() +
+  scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
   theme_default + 
   labs(
     title = "Author affiliations by Minority Serving Institution status",
-    subtitle  = "Percent of the 479 CBE-LSE author affilations found in 2020 US Dept. of Ed. Eligibility Matrix",
     y = NULL, 
     x = NULL
   )  +
   theme(legend.title = element_blank(),
-         panel.grid.major.y = element_blank(),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        legend.position = "bottom")
+        legend.position = "bottom",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text.y = element_text(margin = margin(r = -0.5, l = 0.4, unit = "cm")),
+       )
 
 MSIAffiliationPlot
-ggsave("figures/MsiAffiliations.jpg", device = "jpeg", dpi = 400)
+ggsave("figures/MsiAffiliations.jpg",
+       device = "jpeg", dpi = 400,
+       width = 7, height = 4,
+       units = "in", limitsize = FALSE)
 
 #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
 ```
@@ -569,9 +572,10 @@ Affiliation <- as.data.frame(Affiliation) %>%
       row_number() == 2 ~ "goldenrod1",
       row_number() == 3 ~ "coral2",
       ## all others should be gray
-      TRUE ~ "gray70"
+      TRUE ~ "gray85"
     ))
 
+#Author affiliations
 ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +  
   geom_col(aes(fill = color)) +
   geom_text(
@@ -591,7 +595,6 @@ ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
     x = NULL,
     y = NULL,
     title = "Top 10 author affiliations",
-    subtitle = "The frequency distribution of affiliations of all co-authors for each paper"
   )+
   scale_fill_identity(guide = "none") +
   scale_x_discrete(labels = NULL)+ 
@@ -602,7 +605,12 @@ ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
         legend.position = 'none',
         )
 
-ggsave("figures/AffliationsTop10.jpg", device = "jpeg", dpi = 400)
+ggsave("figures/AffliationsTop10.jpg", 
+       device = "jpeg", dpi = 400,
+       width = 7, height = 4,
+       units = "in", limitsize = FALSE
+       )
+
 
 ```
 
