@@ -743,8 +743,8 @@ CS2 <- conceptualStructure(data,
                           labelsize=10, 
                           documents=2)
 
-ggsave("figures/ConceptualStructure.png", plot = CS2$graph_terms, device = "png")
+ggsave("figures/ConceptualStructure2.png", plot = CS2$graph_terms, device = "png")
 
 
-ggsave("figures/ConceptualCluster.png", plot = CS2$graph_dendogram + coord_flip(), device = "png")
+ggsave("figures/ConceptualCluster2.png", plot = CS2$graph_dendogram + coord_flip(), device = "png")
 ```
