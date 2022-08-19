@@ -719,32 +719,10 @@ CS <- bibliometrix::conceptualStructure(data,
                           field ="ID", 
                           ngrams = 1, 
                           method = "MCA", 
-                          minDegree= 18,
-                          clust= 4,#"auto", 
+                          minDegree= 30,
+                          clust= "auto", 
                           k.max=5, 
-                          stemming= FALSE, 
-                          labelsize=10, 
-                          documents=2)
-
-bibliometrix::conceptualStructure(data, 
-                          field ="ID", 
-                          ngrams = 1, 
-                          method = "MCA", 
-                          minDegree= 15,
-                          clust= 4,#"auto", 
-                          k.max=5, 
-                          stemming= FALSE, 
-                          labelsize=10, 
-                          documents=2)
-
-bibliometrix::conceptualStructure(data, 
-                          field ="ID", 
-                          ngrams = 1, 
-                          method = "MCA", 
-                          minDegree= 25,
-                          clust= 4,#"auto", 
-                          k.max=5, 
-                          stemming= FALSE, 
+                          stemming= TRUE, 
                           labelsize=10, 
                           documents=2)
 
@@ -753,6 +731,9 @@ bibliometrix::conceptualStructure(data,
 termExtraction(data)
 
 ggsave("figures/ConceptualStructure.png", plot = CS$graph_terms, device = "png")
+
+
+ggsave("figures/ConceptualCluster.png", plot = CS$graph_dendogram, device = "png")
 
 CS.res.var<- CS$res$var
 as.list(CS$res$var)
