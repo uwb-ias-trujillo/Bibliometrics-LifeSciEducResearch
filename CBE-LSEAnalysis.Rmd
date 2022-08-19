@@ -408,7 +408,7 @@ ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
 temp <- msiuniv %>%
   mutate_if(is.numeric,as.factor)%>%
   mutate_if(is.character,as.factor)%>%
-  select(`Institution Name`,`AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`	, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU) %>%
+  select(`Institution Name`,`AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU) %>%
   pivot_longer(cols = !`Institution Name`) %>%
   mutate(eligibility = if_else(value == 1 | value == 2| value == 3, "Ineligible", "NA")) %>%
   mutate(eligibility = if_else(value == 4 | value == '4R' |value == 5 | value == '5R', "Eligible or potentially eligible", eligibility))%>%
@@ -666,6 +666,8 @@ write.csv(file = "Sources.csv",sourcestable)
 
 ```
 
+
+
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
 
 #DOCUMENT COCITATION NETWORK using 'data' file
@@ -724,17 +726,25 @@ CS <- bibliometrix::conceptualStructure(data,
                           k.max=5, 
                           stemming= TRUE, 
                           labelsize=10, 
-                          documents=2)
-
-#CS4 <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=6, clust= "auto" ,k.max=20, stemming=TRUE, labelsize=4, documents=10)
-
-termExtraction(data)
-
+                          documents=10)
 ggsave("figures/ConceptualStructure.png", plot = CS$graph_terms, device = "png")
 
+ggsave("figures/ConceptualCluster.png", plot = CS$graph_dendogram + coord_flip(), device = "png")
 
-ggsave("figures/ConceptualCluster.png", plot = CS$graph_dendogram, device = "png")
+source(functions.r)
+CS2 <- conceptualStructure(data, 
+                          field ="ID", 
+                          ngrams = 1, 
+                          method = "MCA", 
+                          minDegree= 30,
+                          clust= "auto", 
+                          k.max=5, 
+                          stemming= TRUE, 
+                          labelsize=10, 
+                          documents=2)
 
-CS.res.var<- CS$res$var
-as.list(CS$res$var)
+ggsave("figures/ConceptualStructure.png", plot = CS2$graph_terms, device = "png")
+
+
+ggsave("figures/ConceptualCluster.png", plot = CS2$graph_dendogram + coord_flip(), device = "png")
 ```
