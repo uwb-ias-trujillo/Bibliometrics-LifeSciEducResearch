@@ -429,6 +429,23 @@ msisummary_perc <- temp%>%
   pivot_wider(names_from = name, values_from = c(perc))
 view(msisummary_perc)
 
+generalpopmsi <- msidata %>%
+  mutate_if(is.numeric,as.factor) %>%
+  mutate_if(is.character,as.factor) %>%
+  select(`Institution Name`,
+         #`Type & Control`,
+         `AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`	, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU) %>%
+  pivot_longer(cols =! `Institution Name`) %>%
+  mutate(eligibility = if_else(value == 1 | value == 2| value == 3, "Ineligible", "NA")) %>%
+  mutate(eligibility = if_else(value == 4 | value == '4R' |value == 5 | value == '5R', "Eligible or potentially eligible", eligibility))%>%
+  mutate(eligibility = if_else(value == 6, "Current grantee", eligibility)) %>%
+  mutate(eligibility = if_else(value == 0, "Undetermined", eligibility)) %>%
+  group_by(name,eligibility)%>%
+  summarize(n=n())%>%
+  mutate(perc = round(n/sum(n),3)) %>%
+  filter(eligibility == "Eligible or potentially eligible")
+
+generalpopmsi
 
 temp %>%
   filter(eligibility == "Current grantee") %>%
@@ -438,12 +455,15 @@ temp %>%
 
 temp$name<- factor(x = temp$name, levels = (x_levels))
 
+generalpopmsi$name<- factor(x = generalpopmsi$name, levels = (x_levels))
+
 
 MSIAffiliationPlot <- temp %>% 
   filter(#eligibility != "Ineligible" &
     eligibility != "Undetermined", !is.na(name)) %>%
   ggplot(aes(x = name, y = perc, fill = eligibility)) +
   geom_col(position = position_stack(reverse = TRUE)) +
+  geom_point(data = generalpopmsi, aes(x = name, y = perc, fill = eligibility), color = "Black",shape = 5)+
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
   theme_dark() +
@@ -751,6 +771,8 @@ bibliometrix::conceptualStructure(data,
                           documents=2)
 
 #CS4 <- conceptualStructure(data,field ="ID", method = "MCA", minDegree=6, clust= "auto" ,k.max=20, stemming=TRUE, labelsize=4, documents=10)
+
+termExtraction(data)
 
 ggsave("figures/ConceptualStructure.png", plot = CS$graph_terms, device = "png")
 
