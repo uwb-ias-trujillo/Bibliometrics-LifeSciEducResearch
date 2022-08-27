@@ -212,7 +212,7 @@ AffiliationWorldMap <- countries %>%
   theme_map()+
   #theme_default +
   #labs(caption = "") +
-  theme(plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+  theme(#plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
         # plot.caption = element_text(hjust = 0, face= "italic"),
         # plot.title.position = "plot",
         # plot.caption.position =  "plot",
@@ -243,7 +243,7 @@ AffiliationWorldMap <- countries %>%
 
 AffiliationWorldMap
 ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 4,
+  height = 3,
   units = "in", limitsize = FALSE)
 ```
 
@@ -314,7 +314,7 @@ ArticlesUSMap <- ggplot() +
     y = NULL
     ) +
   scale_fill_carto_c(palette = "BluGrn", direction = 1) +
-  theme(plot.margin = unit(c(1,1,1,1), "cm"),
+  theme(#plot.margin = unit(c(-2,0,0,0), "cm"),
         panel.background = element_blank(),
         legend.background = element_blank(),
         legend.direction = "vertical",
@@ -329,7 +329,7 @@ ArticlesUSMap <- ggplot() +
 ArticlesUSMap
 ggsave("figures/ArticlesUSMap.jpg",
        device = "jpeg", dpi = 400,
-       width = 7, height = 5,
+       width = 7, height = 4,
        units = "in", limitsize = FALSE)
 ```
 
@@ -570,7 +570,7 @@ Affiliation <- as.data.frame(Affiliation) %>%
       row_number() == 2 ~ "goldenrod1",
       row_number() == 3 ~ "coral2",
       ## all others should be gray
-      TRUE ~ "gray85"
+      TRUE ~ "gray75"
     ))
 
 #Author affiliations
@@ -579,13 +579,13 @@ ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
   geom_text(
     aes(label = reorder(str_to_title(AFF), Freq), y=0.13),
      hjust = 0, nudge_y = .5,
-     size = 4, fontface = "bold", #family = "Fira Sans",
+     size = 3.5, fontface = "bold", #family = "Fira Sans",
     fill = "white", label.size = 0
   ) +
   geom_text(
     aes(label = Freq),
      hjust = 0, nudge_y = .5,
-     size = 4, fontface = "bold", #family = "Fira Sans"
+     size = 3.5, fontface = "bold", #family = "Fira Sans"
   ) +
   coord_flip() +
   theme_default +
