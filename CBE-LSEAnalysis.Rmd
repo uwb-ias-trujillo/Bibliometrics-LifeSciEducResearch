@@ -61,13 +61,13 @@ theme_default <- theme(
     plot.caption = element_text(hjust = 0, face= "italic"),
     plot.title.position = "plot",
     plot.caption.position =  "plot",
-    panel.background = element_rect(fill = "#F2F2F2"),
+    panel.background = element_rect(fill = "white"),
     panel.grid = element_line(size = .25, color = "#99CCCC"),
-    axis.ticks = element_line(color = "#F2F2F2"),
+    axis.ticks = element_blank(),
     legend.key = element_rect(color = "#F2F2F2"),
-    legend.background = element_rect(fill = "#F2F2F2"),
+    legend.background = element_rect(fill = "white"),
     legend.position = "top",
-    plot.background = element_rect(fill = "#F2F2F2")
+    plot.background = element_rect(fill = "white")
     )
  
 ```
@@ -366,7 +366,7 @@ colnames(types)<- c("SchoolType", "Number of Insitutions in US", "US", "Number o
 types$SchoolType <- recode(types$SchoolType, "Pri 2yr" = "Private 2-year", "Pri 4yr" = "Private 4-year","Pub 2yr" = "Public 2-year", "Pub 4yr" = "Public 4-year") 
 view(types)
 
-#We try to compare the percentage breakdown of institutions in the US accordings to the MSI eligibility matrix to amount in the LSE affilitations list.
+#We try to compare the percentage breakdown of institutions in the US according to the MSI eligibility matrix to amount in the LSE affiliations list.
 types %>%
   pivot_longer(!SchoolType) %>%
   filter(name == "US" | name == "LSE") %>%
@@ -393,9 +393,11 @@ types %>%
        title = "What types of institutions are represented in LSE?"
        ) +
   facet_wrap(~SchoolType, nrow = 2) +
-  theme(panel.spacing = unit(2, "lines"),
-        axis.text.y = element_text(margin = margin(l = 0.25, unit = "in")),
-        plot.margin = margin(t = .25, r = .25, b = .25, l = .25, unit = "in"))
+  theme(panel.spacing.y = unit(1, "lines"),
+        axis.text.y = element_text(margin = margin(l = 0.2, unit = "in")),
+        strip.text.x = element_text(size = 11),
+        strip.background = element_rect(fill = "white"),
+        plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"))
 
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
