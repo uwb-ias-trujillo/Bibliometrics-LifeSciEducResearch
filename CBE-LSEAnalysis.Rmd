@@ -48,19 +48,19 @@ library(RColorBrewer)
 
 ## Introduction
 
-There has tremendous growth in the area undergraduate biology research over the last two decades. This study attempts to summarize and analyze the progress of this growth for the journal of *CBE-LSE*. 
+There has been tremendous growth in the area of undergraduate biology research over the last fifteen years. This study attempts to summarize and analyze the progress of this growth for the journal of *CBE-LSE*. 
 
 ### Summary of initial data set
 
 ```{r dataset}
-txt <- c("rawdata/CBE-LSE-2010-2021/CBE LSE 2010-2021 1-926.txt")
+txt <- c("rawdata/CBE-LSE-2008-June2022/CBE-LSE-2008-June2022.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
 theme_default <- theme(
     plot.caption = element_text(hjust = 0, face= "italic"),
     plot.title.position = "plot",
-    plot.caption.position =  "plot",
+    plot.caption.position = "plot",
     panel.background = element_rect(fill = "white"),
     panel.grid = element_line(size = .25, color = "#99CCCC"),
     axis.ticks = element_blank(),
@@ -69,10 +69,9 @@ theme_default <- theme(
     legend.position = "top",
     plot.background = element_rect(fill = "white")
     )
- 
 ```
 
-After results are processed, these are stored as data tables for information reporting. 
+After the results are processed, they are stored as data tables for information reporting. 
 
 ```{r biblio}
 options(width=100)
@@ -116,7 +115,7 @@ ggsave("figures/AnnualProductivity.jpg", device = "jpeg", dpi = 400)
 ```
 
 
-##Authoring
+## Authoring
 
 ```{r author productivity}
 
@@ -131,10 +130,11 @@ indices$H %>%
 as_tibble(results$Authors)
 
 authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
-  filter("n" > 5) # only showing authors with at least 5 publications.
+  filter("n" > 5) #only showing authors with at least 5 publications.
+
 
 authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
-  labs(title = "Author productivity from 2010 - 2021", x = NULL, y = NULL) + 
+  labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) + 
   theme_minimal() +
   theme(plot.title.position = "plot",
         panel.grid.major.y = element_blank(),
@@ -145,6 +145,7 @@ authorprod
 ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
   units = "in", limitsize = FALSE)
+
 
 authordata %>%
   filter(n > 8) %>%
@@ -163,7 +164,7 @@ authordata %>%
   filter(n > 8) %>%
 ggplot(aes(x = reorder(AU, (NP)), y = NP)) + 
   geom_col(alpha = 1) +
-  #geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01)  +
+  #geom_label_repel(aes(label = AU), size = 2, box.padding = 0.001, min.segment.length = 0.01)  +
   #theme_minimal()+
   theme_default +
   labs(y = NULL,
@@ -178,7 +179,7 @@ ggplot(aes(x = reorder(AU, (NP)), y = NP)) +
   ggtitle("Author productivity", subtitle = "Number of publications by LSE authors")
 
 # Add color for school type using the other graph to depict these. 
-# Going to to use full join between data on author productivity and their affiliation (university or instution). 
+# Going to use full join between data on author productivity and their affiliation (university or institution). 
 ```
 
 ### Affiliations
