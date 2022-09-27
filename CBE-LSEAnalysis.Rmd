@@ -1,7 +1,7 @@
 ---
 title: "CBE-LSE Bibliometric Analysis"
 author: "Caleb Trujillo, Darcie Nelson, Rachel Kudlacz, Germaine Ng"
-date: "4/25/2022"
+date: "`r Sys.Date()`"
 output:
   html_document: default
   word_document: default
@@ -103,7 +103,7 @@ colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
 
 ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
   geom_line(stat = "identity", color = "#F26E50", size = 1.5) +
-  theme_dark() +
+  #theme_dark() +
   theme_default +
   labs(
     title = "Annual productivity by articles published per year",
@@ -142,7 +142,7 @@ authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph +
         axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
 
 authorprod
-ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400,  width = 7,
+ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400, width = 7,
   height = 5,
   units = "in", limitsize = FALSE)
 
@@ -152,7 +152,7 @@ authordata %>%
 ggplot(aes( x = NP, y = h_index)) + 
   geom_point(alpha = 0.6) +
   geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01) +
-  theme_dark() +
+  #theme_dark() +
   theme_default +
   labs(y = "h—index",
        x = "Publications",
@@ -447,7 +447,7 @@ MSIAffiliationPlot <- temp %>%
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
-  theme_dark() +
+  #theme_dark() +
   scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
   theme_default + 
   labs(
