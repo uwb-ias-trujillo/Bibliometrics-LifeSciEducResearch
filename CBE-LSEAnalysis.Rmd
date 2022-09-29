@@ -1,7 +1,7 @@
 ---
 title: "CBE-LSE Bibliometric Analysis"
 author: "Caleb Trujillo, Darcie Nelson, Rachel Kudlacz, Germaine Ng"
-date: "4/25/2022"
+date: "`r Sys.Date()`"
 output:
   html_document: default
   word_document: default
@@ -142,9 +142,7 @@ authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph +
         axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
 
 authorprod
-ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 5,
-  units = "in", limitsize = FALSE)
+ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400, width = 7, height = 5, units = "in", bg = "white", limitsize = FALSE)
 
 
 authordata %>%
@@ -182,7 +180,7 @@ ggplot(aes(x = reorder(AU, (NP)), y = NP)) +
 # Going to use full join between data on author productivity and their affiliation (university or institution). 
 ```
 
-### Affiliations
+### Affiliations around the world
 
 ```{r world affiliations, echo=FALSE}
 
@@ -247,6 +245,8 @@ ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7
   height = 3,
   units = "in", limitsize = FALSE)
 ```
+
+### Affiliations in the US
 
 ```{r US affiliations}
 #Affiliation Map - US
@@ -339,7 +339,7 @@ ggarrange(AffiliationWorldMap, ArticlesUSMap, legend = "right", ncol = 1, nrow =
 ggsave("figures/WorldUSMap.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
-       units = "in", limitsize = FALSE)
+       units = "in", bg = "white", limitsize = FALSE)
 
 ```
 
@@ -447,7 +447,7 @@ MSIAffiliationPlot <- temp %>%
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
-  theme_dark() +
+  #theme_dark() +
   scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
   theme_default + 
   labs(
