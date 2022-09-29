@@ -142,9 +142,7 @@ authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph +
         axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
 
 authorprod
-ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400, width = 7,
-  height = 5,
-  units = "in", limitsize = FALSE)
+ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400, width = 7, height = 5, units = "in", bg = "white", limitsize = FALSE)
 
 
 authordata %>%
@@ -182,7 +180,7 @@ ggplot(aes(x = reorder(AU, (NP)), y = NP)) +
 # Going to use full join between data on author productivity and their affiliation (university or institution). 
 ```
 
-### Affiliations
+### Affiliations around the world
 
 ```{r world affiliations, echo=FALSE}
 
@@ -247,6 +245,8 @@ ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7
   height = 3,
   units = "in", limitsize = FALSE)
 ```
+
+### Affiliations in the US
 
 ```{r US affiliations}
 #Affiliation Map - US
@@ -339,7 +339,7 @@ ggarrange(AffiliationWorldMap, ArticlesUSMap, legend = "right", ncol = 1, nrow =
 ggsave("figures/WorldUSMap.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
-       units = "in", limitsize = FALSE)
+       units = "in", bg = "white", limitsize = FALSE)
 
 ```
 
