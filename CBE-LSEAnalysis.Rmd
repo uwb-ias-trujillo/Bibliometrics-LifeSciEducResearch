@@ -103,7 +103,7 @@ colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
 
 ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
   geom_line(stat = "identity", color = "#F26E50", size = 1.5) +
-  theme_dark() +
+  #theme_dark() +
   theme_default +
   labs(
     title = "Annual productivity by articles published per year",
@@ -152,7 +152,7 @@ authordata %>%
 ggplot(aes( x = NP, y = h_index)) + 
   geom_point(alpha = 0.6) +
   geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01) +
-  theme_dark() +
+  #theme_dark() +
   theme_default +
   labs(y = "h—index",
        x = "Publications",
