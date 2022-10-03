@@ -108,7 +108,8 @@ ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group
   labs(
     title = "Annual productivity by articles published per year",
     x = NULL,
-    y = NULL
+    y = NULL,
+    
   )
 ggsave("figures/AnnualProductivity.jpg", device = "jpeg", dpi = 400)
 
@@ -721,25 +722,28 @@ write_graph(BCnet$graph,"Gephi files/CBE_LSE_BC4.graphml", c("graphml"))
 
 # Show how key words appear together
 CS <- bibliometrix::conceptualStructure(data, 
-                          field ="ID", 
-                          ngrams = 1, 
-                          method = "MCA", 
-                          minDegree= 30,
-                          clust= "auto", 
-                          k.max=5, 
-                          stemming= TRUE, 
-                          labelsize=10, 
-                          documents=10)
+                          #field ="ID", 
+                          #ngrams = 1, 
+                          #method = "MCA", 
+                          #minDegree= 8,
+                          #clust= "auto", 
+                         # k.max=5, 
+                          #stemming= TRUE, 
+                         # labelsize=10, 
+                          #documents=10
+                          )
 ggsave("figures/ConceptualStructure.png", plot = CS$graph_terms, device = "png")
 
 ggsave("figures/ConceptualCluster.png", plot = CS$graph_dendogram + coord_flip(), device = "png")
 
-source(functions.r)
+source('functions.r')
 CS2 <- conceptualStructure(data, 
                           field ="ID", 
                           ngrams = 1, 
-                          method = "MCA", 
-                          minDegree= 30,
+                          method = "MCA",
+                          quali.supp = NULL,
+                          quanti.supp = NULL,
+                          minDegree= 50,
                           clust= "auto", 
                           k.max=5, 
                           stemming= TRUE, 
