@@ -1,0 +1,753 @@
+---
+title: "CBE-LSE Bibliometric Analysis"
+author: "Caleb Trujillo, Darcie Nelson, Rachel Kudlacz, Germaine Ng"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require("devtools")
+require("rgexf")
+require("bibliometrix")
+require("igraph")
+require("tidyverse")
+require("xtable")
+require("sf")
+require("ggrepel")
+require("ggraph")
+require("ggthemes")
+require("rcartocolor")
+require("ggpubr")
+devtools::install_github("massimoaria/bibliometrix")
+
+devtools::install_github("wmurphyrd/fiftystater")
+devtools::install_github("UrbanInstitute/urbnmapr")
+library(urbnmapr)
+library(bibliometrix)
+library(tidyverse)
+library(networkD3)
+library(rcartocolor)
+library(rgexf)
+library(igraph)
+library(xtable)
+library(readxl)
+library(scales)
+library(ggplot2)
+library("fiftystater")
+library(sf)
+library(readxl)
+library(ggthemes)
+library(ggpubr)
+library(RColorBrewer)
+
+# source('functions.r')
+```
+
+## Introduction
+
+There has been tremendous growth in the area of undergraduate biology research over the last fifteen years. This study attempts to summarize and analyze the progress of this growth for the journal of *CBE-LSE*. 
+
+### Summary of initial data set
+
+```{r dataset}
+txt <- c("rawdata/CBE-LSE-2008-June2022/CBE-LSE-2008-June2022.txt")
+data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
+results <- biblioAnalysis(data, sep = ";")
+
+theme_default <- theme(
+    plot.caption = element_text(hjust = 0, face= "italic"),
+    plot.title.position = "plot",
+    plot.caption.position = "plot",
+    panel.background = element_rect(fill = "white"),
+    panel.grid = element_line(size = .25, color = "#99CCCC"),
+    axis.ticks = element_blank(),
+    legend.key = element_rect(color = "#F2F2F2"),
+    legend.background = element_rect(fill = "white"),
+    legend.position = "top",
+    plot.background = element_rect(fill = "white")
+    )
+```
+
+After the results are processed, they are stored as data tables for information reporting. 
+
+```{r biblio}
+options(width=100)
+
+S <- summary(object = results, pause = FALSE)
+S
+#plot(x=results, k=10, pause=F)
+S$MainInformationDF
+
+dir.create("tables")
+write.csv(file = "tables/keywords.csv",as.data.frame(results$ID[1:20]))
+
+write.csv(file = "tables/Maininformation.csv",S$MainInformationDF)
+
+write.csv(file = "tables/ArticlesYears.csv",S$AnnualProduction)
+
+write.csv(file = "tables/MostCitedPapers.csv",S$MostCitedPapers)
+
+write.csv(file = "tables/MostProdAuthors.csv", S$MostProdAuthors)
+
+write.csv(file = "tables/Universities.csv", results$Affiliations)
+```
+## Research Questions
+
+### Basic overview of the field
+
+```{r overview, skip = TRUE}
+colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
+
+ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
+  geom_line(stat = "identity", color = "#F26E50", size = 1.5) +
+  #theme_dark() +
+  theme_default +
+  labs(
+    title = "Annual productivity by articles published per year",
+    x = NULL,
+    y = NULL
+  )
+ggsave("figures/AnnualProductivity.jpg", device = "jpeg", dpi = 400)
+
+```
+
+
+## Authoring
+
+```{r author productivity}
+
+S$MostProdAuthors 
+
+authors=gsub(","," ",names(results$Authors))
+indices <- Hindex(data, field = "author", elements = authors, sep = ";", years = Inf)
+
+indices$H %>%
+  dplyr::arrange(desc(NP))
+
+as_tibble(results$Authors)
+
+authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
+  filter("n" > 5) #only showing authors with at least 5 publications.
+
+
+authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
+  labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) + 
+  theme_minimal() +
+  theme(plot.title.position = "plot",
+        panel.grid.major.y = element_blank(),
+        legend.title = element_text(),
+        axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
+
+authorprod
+ggsave("figures/AuthorProd.jpg", device = "jpeg", dpi = 400, width = 7, height = 5, units = "in", bg = "white", limitsize = FALSE)
+
+
+authordata %>%
+  filter(n > 8) %>%
+ggplot(aes( x = NP, y = h_index)) + 
+  geom_point(alpha = 0.6) +
+  geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01) +
+  #theme_dark() +
+  theme_default +
+  labs(y = "h—index",
+       x = "Publications",
+       caption = "CBE — Life Science Education") +
+  coord_flip() +
+  ggtitle("Author productivity", subtitle = "Number of publications and h-index for LSE authors between 2010 and 2021")
+
+authordata %>%
+  filter(n > 8) %>%
+ggplot(aes(x = reorder(AU, (NP)), y = NP)) + 
+  geom_col(alpha = 1) +
+  #geom_label_repel(aes(label = AU), size = 2, box.padding = 0.001, min.segment.length = 0.01)  +
+  #theme_minimal()+
+  theme_default +
+  labs(y = NULL,
+       x = NULL,
+       caption = "CBE — Life Science Education between 2010 and 2021") +
+  coord_flip() +
+  theme(axis.text.y = element_text(size = 8),
+        panel.grid.major.y = element_blank(),
+        #panel.grid.major.x = element_blank(),
+        #panel.grid.minor.x = element_blank(),
+        legend.position = 'none') +
+  ggtitle("Author productivity", subtitle = "Number of publications by LSE authors")
+
+# Add color for school type using the other graph to depict these. 
+# Going to use full join between data on author productivity and their affiliation (university or institution). 
+```
+
+### Affiliations around the world
+
+```{r world affiliations, echo=FALSE}
+
+world_map = map_data("world") %>% 
+  filter(! long > 180)
+
+countries <- world_map %>% 
+  distinct(region) %>% 
+  rowid_to_column()
+
+countryfreq <- results$Countries %>%
+  as.data.frame() %>%
+  mutate(Tab = str_to_title(Tab)) %>% 
+  mutate(Tab = case_when(
+    Tab == "Usa" ~ "USA",
+    Tab == "United Kingdom" ~"UK",
+    TRUE ~ Tab
+  )) 
+
+AffiliationWorldMap <- countries %>%
+  full_join(countryfreq, by = c("region" = "Tab")) %>% 
+  ggplot(aes(fill = Freq, map_id = region), color = 1) +
+  #geom_hline(yintercept=0, color = "light grey") +
+  geom_map(map = world_map, colour = "white", lwd = 0.2) +
+  expand_limits(x = world_map$long, y = world_map$lat) +
+  coord_map("moll") +
+  #coord_quickmap()+
+  theme_map()+
+  #theme_default +
+  #labs(caption = "") +
+  theme(#plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        # plot.caption = element_text(hjust = 0, face= "italic"),
+        # plot.title.position = "plot",
+        # plot.caption.position =  "plot",
+        legend.title = element_blank(),
+        panel.background = element_rect(fill = "lightblue", color = "lightblue"),
+        legend.position = c(0.03, 0.06),
+        legend.background = element_rect(fill = NA),
+        legend.direction = "vertical",
+        #legend.key.size = unit(0.4, "cm"),
+        legend.key.height= unit(.5, 'cm'),
+        legend.key.width= unit(.5, 'cm'),
+        #plot.caption.position = "plot",
+        #plot.caption = element_text(hjust = 0)
+        #legend.margin = margin(6, 12, 4, 1)
+        #legend.position = "left"
+        ) +
+  scale_fill_carto_c(palette = "BluGrn", direction = 1,
+                       trans = scales::pseudo_log_trans(sigma = 0.01),
+                       breaks = c(1,10, 100, 1000),
+                       labels = c(1,10, 100, 1000),
+                       limits = c(1,1000)
+  ) +
+  labs(fill = "Count of article",
+       title = "Articles by author's country affiliation",
+    x = NULL,
+    y = NULL
+    ) 
+
+AffiliationWorldMap
+ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 3,
+  units = "in", limitsize = FALSE)
+```
+
+### Affiliations in the US
+
+```{r US affiliations}
+#Affiliation Map - US
+#Joining files
+msidata <- read_excel("rawdata/2020eligibilitymatrix.xlsx", 
+    skip = 10)
+
+affiliations <- read_excel("tables/UnivIndex.xlsx")
+
+msiuniv <- left_join(affiliations, msidata) %>%
+  filter(OPEID != "NA")
+
+#Tables
+msistates <- msiuniv %>%
+  group_by(St) %>%
+  summarize(n = n(), articles = sum(Freq) ) %>%
+  filter(!(St %in% c("MH", "PR", "VI", "GU"))) %>% 
+  rename(states = St, affiliations = n) %>%
+  group_by(affiliations, articles)
+#view(msistates)
+
+msistates$state_name <- state.name[match(msistates$states,state.abb)]
+
+us <- fortify(map_data("state"), region = "region") %>%
+  mutate(region = str_to_title(region))
+spatial_data <- right_join(msistates,
+                          us,
+                          by = c("state_name" ="region"))
+
+affiliationMap <- ggplot() +
+  geom_map(data  =  spatial_data, map = us,
+             aes(x = long, y = lat, map_id = state_name, group = group, fill = affiliations, label = states),
+             color = "black", size = 0.25) +
+  coord_map("albers", lat0 = 39, lat1 = 45) +
+  theme_map() +
+  theme_default +
+  scale_fill_viridis_c(option = "E", 
+                       direction = -1)+
+  labs(fill = "Author affiliations",
+       title = "Number of author affilitations by state",
+       x = NULL,
+       y = NULL) +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"),
+        panel.background = element_blank())
+
+ggsave("figures/AffiliationUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 5,
+  units = "in", limitsize = FALSE)
+
+
+centroids <- spatial_data %>%
+  group_by(state_name, articles) %>%
+  summarise(latitude = exp(mean(log(lat))), longitude = exp(mean(log(long))))
+
+#Article Map 
+ArticlesUSMap <- ggplot() +
+  geom_map(data  =  spatial_data, map = us,
+           aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
+             color = "white", size = 0.25) +
+  coord_map("moll") +
+  theme_map() +
+  labs(fill = "Publications",
+       title = "Articles by author's state affiliation",
+       caption = "DC: 21, PR: 8, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
+    x = NULL,
+    y = NULL
+    ) +
+  scale_fill_carto_c(palette = "BluGrn", direction = 1) +
+  theme(#plot.margin = unit(c(-2,0,0,0), "cm"),
+        panel.background = element_blank(),
+        legend.background = element_blank(),
+        legend.direction = "vertical",
+        legend.title=element_blank(),
+        legend.key.height= unit(.5, 'cm'),
+        legend.key.width= unit(.5, 'cm'),
+        plot.caption.position = "plot",
+        plot.caption = element_text(hjust = 0)
+        #legend.position = "top"
+        )
+
+ArticlesUSMap
+ggsave("figures/ArticlesUSMap.jpg",
+       device = "jpeg", dpi = 400,
+       width = 7, height = 4,
+       units = "in", limitsize = FALSE)
+```
+
+```{r combining maps}
+ggarrange(AffiliationWorldMap, ArticlesUSMap, legend = "right", ncol = 1, nrow = 2, align = c("hv"))
+ggsave("figures/WorldUSMap.jpg",
+       device = "jpeg", dpi = 400,
+       width = 7, height = 8,
+       units = "in", bg = "white", limitsize = FALSE)
+
+```
+
+```{r MSI, echo=FALSE}
+msiuniv$`Eligible/ Current Grant` <- as.factor(msiuniv$`Eligible/ Current Grant`)
+
+msieligible <- msiuniv %>%
+  group_by(`Eligible/ Current Grant`) %>%
+  summarize(n = n())
+
+msiuniv$`Type & Control` <- as.factor(msiuniv$`Type & Control`)
+
+msitype <- msiuniv %>%
+  group_by(`Type & Control`) %>%
+  summarize(n = n()) %>%
+  mutate(percent = (n/sum(n)))
+
+msitypeall <- msidata %>%
+  group_by(`Type & Control`) %>%
+  summarize(n = n()) %>%
+  mutate(percent = (n/sum(n)))
+
+types <- left_join(msitypeall,msitype, by = "Type & Control")
+colnames(types)<- c("SchoolType", "Number of Insitutions in US", "US", "Number of Institutes in LSE", "LSE")
+types$SchoolType <- recode(types$SchoolType, "Pri 2yr" = "Private 2-year", "Pri 4yr" = "Private 4-year","Pub 2yr" = "Public 2-year", "Pub 4yr" = "Public 4-year") 
+view(types)
+
+#We try to compare the percentage breakdown of institutions in the US according to the MSI eligibility matrix to amount in the LSE affiliations list.
+types %>%
+  pivot_longer(!SchoolType) %>%
+  filter(name == "US" | name == "LSE") %>%
+  filter(SchoolType != FALSE) %>%
+  mutate(colorlevel = case_when(
+      name == "US" ~ 0.9,
+      name == "LSE" ~ 0.7)) %>%
+  ggplot(aes(x = (name),value)) +
+  geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), 
+           size = 4) +
+  geom_text(aes(label = paste0(round(value*100, 0),"%")),
+            vjust = 0.5, nudge_y = -.04,
+            size = 3, fontface = "bold") +
+  theme_default +
+  theme(legend.position="none", 
+        strip.background = element_rect(fill = "#F2F2F2"),
+        #panel.grid.major.x = element_blank(),
+        axis.text = element_text(size = 10)
+        ) +
+  scale_color_identity(guide = "none") +
+  scale_y_continuous(minor_breaks = NULL,
+                     labels = scales::percent) +
+  labs(x = NULL, y = NULL,
+       title = "What types of institutions are represented in LSE?"
+       ) +
+  facet_wrap(~SchoolType, nrow = 2) +
+  theme(panel.spacing.y = unit(1, "lines"),
+        axis.text.y = element_text(margin = margin(l = 0.2, unit = "in")),
+        strip.text.x = element_text(size = 11),
+        strip.background = element_rect(fill = "white"),
+        plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"))
+
+ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 5,
+  units = "in", limitsize = FALSE)
+
+```
+
+
+```{r MSI cont}
+temp <- msiuniv %>%
+  mutate_if(is.numeric,as.factor)%>%
+  mutate_if(is.character,as.factor)%>%
+  select(`Institution Name`,`AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU) %>%
+  pivot_longer(cols = !`Institution Name`) %>%
+  mutate(eligibility = if_else(value == 1 | value == 2| value == 3, "Ineligible", "NA")) %>%
+  mutate(eligibility = if_else(value == 4 | value == '4R' |value == 5 | value == '5R', "Eligible or potentially eligible", eligibility))%>%
+  mutate(eligibility = if_else(value == 6, "Current grantee", eligibility)) %>%
+  mutate(eligibility = if_else(value == 0, "Undetermined", eligibility)) %>%
+  group_by(name,eligibility)%>%
+  summarize(n=n())%>%
+  mutate(perc = round(n/sum(n),3))
+
+msisummary_n <- temp%>%
+  select(!perc)%>%
+  pivot_wider(names_from = name, values_from = c(n))
+view(msisummary_n)
+
+msisummary_perc <- temp%>%
+  select(!n)%>%
+  mutate(perc = label_percent()(perc)) %>% 
+  pivot_wider(names_from = name, values_from = c(perc))
+view(msisummary_perc)
+
+temp %>%
+  filter(eligibility == "Current grantee") %>%
+  arrange(perc, "desc") %>% 
+  mutate(name = reorder(as.factor(name), desc(perc)), order = (perc)) %>%
+  pull(name)-> x_levels
+
+temp$name<- factor(x = temp$name, levels = (x_levels))
+
+MSIAffiliationPlot <- temp %>% 
+  filter(#eligibility != "Ineligible" &
+    eligibility != "Undetermined", !is.na(name)) %>%
+  ggplot(aes(x = name, y = perc, fill = eligibility)) +
+  geom_col(position = position_stack(reverse = TRUE)) +
+  scale_y_continuous(labels = scales::percent) +
+  coord_flip() +
+  #theme_dark() +
+  scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
+  theme_default + 
+  labs(
+    title = "Author affiliations by Minority Serving Institution status",
+    y = NULL, 
+    x = NULL
+  )  +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text.y = element_text(margin = margin(r = -0.5, l = 0.4, unit = "cm")),
+       )
+
+MSIAffiliationPlot
+ggsave("figures/MsiAffiliations.jpg",
+       device = "jpeg", dpi = 400,
+       width = 7, height = 4,
+       units = "in", limitsize = FALSE)
+
+#mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
+```
+
+
+### Social Network Analysis (SNA) of co-authorship: What social structures are organizing co-authorship? 
+
+This is the placeholder for the question about the social structures of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
+Text to introduce the script and outputs
+
+```{r co-authorship,echo=FALSE}
+#INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
+# Create a Social Network Analysis(SNA) Network from Co-Citation Network
+CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";")
+
+# Plot the network - look into SNA application
+CoANet <- networkPlot(CoAMatrix, 
+                      #n = 400,
+                      #n = dim(CoAmatrix)[1], 
+                      #normalize = "jaccard", 
+                      Title = "Authors who write 4 or more articles together", 
+                     # type = "fruchterman", 
+                      #size=0.1, 
+                      #remove.multiple=TRUE, 
+                      remove.isolates = TRUE,
+                      #labelsize = 2, 
+                      #weighted = TRUE, 
+                      #curved = FALSE, 
+                      edgesize = 10, 
+                      edges.min = 4,
+                      #degree = 5,
+                      #label.n = 10,  
+                      size.cex = TRUE, 
+                      cluster = "louvain"
+                      )
+
+ggraph(CoANet$graph, layout = "kk") +
+  geom_edge_link(aes()) + 
+    geom_node_point(aes(color = factor(community), size = deg /100,))+
+  geom_node_label(aes(label = label ,color = factor(community)), repel = TRUE, check_overlap = FALSE, label.padding = 0.1 )+
+  theme_void() + 
+  theme(legend.position = 'none') +
+  coord_flip() +
+  labs(
+    title = "Which authors write together most frequently?" ,
+    subtitle = "Authors who write 4 or more articles together"
+  )
+
+ggsave("figures/CoAuthorshipNetwork4.jpg", device = "jpeg", dpi = 400)
+
+write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
+
+
+# Plot the network - look into SNA application- Focus on degrees 
+CoANetdeg <- networkPlot(CoAMatrix, 
+                      #n = 400,
+                      #n = dim(CoAmatrix)[1], 
+                      #normalize = "jaccard", 
+                      #Title = "Social Network Analysis", 
+                     # type = "fruchterman", 
+                      #size=0.1, 
+                      #remove.multiple=TRUE, 
+                      remove.isolates = TRUE,
+                      #labelsize = 2, 
+                      #weighted = TRUE, 
+                      #curved = FALSE, 
+                      edgesize = 5, 
+                      edges.min = 0,
+                      #degree = 5,
+                      #label.n = 10,  
+                      size.cex = TRUE, 
+                      cluster = "louvain",
+                     verbose = FALSE
+                      )
+
+components <- igraph::clusters(CoANetdeg$graph, mode="weak")
+V(CoANetdeg$graph)$group <- components$membership
+biggest_cluster_id <- which.max(components$csize)
+# ids
+vert_ids <- V(CoANetdeg$graph)[components$membership != biggest_cluster_id]
+
+degreeCoAgraph1<- ggraph(CoANetdeg$graph, layout = "nicely") +
+  geom_edge_link(aes()) + 
+    geom_node_point(aes(filter = components$membership == biggest_cluster_id,
+                          color = factor(community), 
+                        size = deg /100, alpha = 0.3)
+                    )+
+  geom_node_label(aes(filter = , label = label ,color = color, alpha = 0.3), repel = TRUE)+
+  theme_void() + 
+  theme(legend.position = 'none') +
+  coord_flip()
+degreeCoAgraph1
+```
+
+
+### What are the collaborative connections between institutions?
+
+```{r top 10 affiliations}
+Affiliation <- results$Affiliations[1:10]
+Affiliation <- as.data.frame(Affiliation) %>%
+  mutate(
+    color = case_when(
+      row_number() == 1 ~ "goldenrod1",
+      row_number() == 2 ~ "lightgreen",
+      row_number() == 3 ~ "coral2",
+      ## all others should be gray
+      TRUE ~ "gray75"
+    ))
+
+#Author affiliations
+ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +  
+  geom_col(aes(fill = color)) +
+  geom_text(
+    aes(label = reorder(str_to_title(AFF), Freq), y=0.13),
+     hjust = 0, nudge_y = .5,
+     size = 3.5, fontface = "bold", #family = "Fira Sans",
+    fill = "white", label.size = 0
+  ) +
+  geom_text(
+    aes(label = Freq),
+     hjust = 0, nudge_y = .5,
+     size = 3.5, fontface = "bold", #family = "Fira Sans"
+  ) +
+  coord_flip() +
+  theme_default +
+  labs(
+    x = NULL,
+    y = NULL,
+    title = "Top 10 author affiliations",
+  )+
+  scale_fill_identity(guide = "none") +
+  scale_x_discrete(labels = NULL)+ 
+  scale_y_continuous(labels = NULL)+
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        legend.position = 'none',
+        )
+
+ggsave("figures/AffliationsTop10.jpg", 
+       device = "jpeg", dpi = 400,
+       width = 7, height = 4,
+       units = "in", limitsize = FALSE
+       )
+
+
+```
+
+
+
+```{r collaborative, echo=FALSE}
+#INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
+#UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";")
+
+UniNetMatrix <- biblioNetwork(data, analysis = "collaboration", network = "universities", sep = ";")
+
+# Plot the network
+
+Uninet=networkPlot(UniNetMatrix, n = dim(UniNetMatrix)[1], Title = "Top 20 University Collaborations", type = "auto", remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7, edges.min = 4)
+
+ggraph(Uninet$graph, layout = "auto") +
+  geom_edge_link(aes(edge_width = num / 200, color = color, alpha = 0.1, edge_linetype = factor(lty)), edge_alpha = 0.1) + 
+    geom_node_point(aes(color = color, size = deg /5))+
+  geom_node_label(aes(label = label,color = color), repel = TRUE, label.padding = 0.1 )+
+  theme_void() + 
+  theme(legend.position = 'none') +
+  coord_flip() +
+  labs(
+    title = "Which univeristies collaborate together most frequently?" ,
+    subtitle = "Univeristies who published 4 or more articles together"
+  )
+
+ggsave("figures/CollaborationNetwork4.jpg", device = "jpeg", dpi = 400)
+
+write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge4.graphml", c("graphml"))
+
+head(Uninet$nodeDegree) # Top six universities by degree of publications with other universities
+```
+
+
+### What are the intellectual structures? Document co-citation network and topic analysis
+
+Darcie Nelson
+```{r citations, echo=FALSE}
+CR <- citations(data, field = "article", sep = ";")
+CRtable <-cbind(CR$Cited[1:20])
+CRtable
+
+CR2 <- citations(data, field = "article", sep = ";")
+CR2table <-cbind(CR2$Cited[1:20])
+CR2table
+
+write.csv(file = "Citations.csv",CR2table)
+
+# Sources Table
+sourcestable <-cbind(summary(factor(CR$Source))[1:10])
+sourcestable
+
+write.csv(file = "Sources.csv",sourcestable)
+
+```
+
+
+
+```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
+
+#DOCUMENT COCITATION NETWORK using 'data' file
+# Create a co-citation network
+DCAMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
+
+
+# Plot the network
+DCA <- networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 7, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+
+
+names(DCA$nodeDegree["american association 2011-1"])<- "AAAS 2011"
+
+DCAplot<- ggraph(DCA$graph, layout = "stress") +
+  geom_edge_link(aes(edge_width = num / 200, color = color, alpha = 0.1, edge_linetype = factor(lty)), edge_alpha = 0.1) + 
+    geom_node_point(aes(color = color, size = deg))+
+  geom_node_label(aes(label = label,color = color), repel = TRUE, label.padding = 0.1 )+
+  theme_void() + 
+  theme(legend.position = 'none') +
+  coord_flip() +
+  labs(
+    title = "Which publications are cited together most frequently?" ,
+    subtitle = "Cited documents who were cited together 4 or more times"
+  )
+DCAplot
+
+ggsave("figures/DocumentCocitationNetwork.jpg", device = "jpeg", dpi = 400, width = 7,
+  height = 5,
+  units = "in", limitsize = FALSE)
+
+write_graph(DCA$graph,"Gephi files/CBE_LSE_DCAedge4.graphml", c("graphml"))
+```
+
+```{r bibliographic coupling}
+
+# Group similar documents by references
+rownames(data) <- rownames(data)
+BC <- biblioNetwork(data, analysis = "coupling", network = "references", sep = ";")
+
+BCnet = networkPlot(BC, n = dim(BC)[1], Title = "Bibliographic Coupling", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 1, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
+
+ggsave("figures/bibliographiccoupling4.png", plot = BCnet$graph_terms, device = "png")
+
+write_graph(BCnet$graph,"Gephi files/CBE_LSE_BC4.graphml", c("graphml"))
+```
+
+```{r topics and keywords}
+
+# Show how key words appear together
+CS <- bibliometrix::conceptualStructure(data, 
+                          field ="ID", 
+                          ngrams = 1, 
+                          method = "MCA", 
+                          minDegree= 30,
+                          clust= "auto", 
+                          k.max=5, 
+                          stemming= TRUE, 
+                          labelsize=10, 
+                          documents=10)
+ggsave("figures/ConceptualStructure.png", plot = CS$graph_terms, device = "png")
+
+ggsave("figures/ConceptualCluster.png", plot = CS$graph_dendogram + coord_flip(), device = "png")
+
+source(functions.r)
+CS2 <- conceptualStructure(data, 
+                          field ="ID", 
+                          ngrams = 1, 
+                          method = "MCA", 
+                          minDegree= 30,
+                          clust= "auto", 
+                          k.max=5, 
+                          stemming= TRUE, 
+                          labelsize=10, 
+                          documents=2)
+
+ggsave("figures/ConceptualStructure2.png", plot = CS2$graph_terms, device = "png")
+
+
+ggsave("figures/ConceptualCluster2.png", plot = CS2$graph_dendogram + coord_flip(), device = "png")
+```
