@@ -472,97 +472,6 @@ ggsave("figures/MsiAffiliations.jpg",
 #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
 ```
 
-
-### Social Network Analysis (SNA) of co-authorship: What social structures are organizing co-authorship? 
-
-This is the placeholder for the question about the social structures of co-authorship the among the CBE-LSE authors. A social network analysis approach was used...
-Text to introduce the script and outputs
-
-```{r co-authorship,echo=FALSE}
-#INSERT FUNCTION FOR CREATING DOCUMENT COCITATION NETWORK using 'data' file
-# Create a Social Network Analysis(SNA) Network from Co-Citation Network
-CoAMatrix <- biblioNetwork(data, analysis = "collaboration", network = "authors", sep = ";")
-
-# Plot the network - look into SNA application
-CoANet <- networkPlot(CoAMatrix, 
-                      #n = 400,
-                      #n = dim(CoAmatrix)[1], 
-                      #normalize = "jaccard", 
-                      Title = "Authors who write 4 or more articles together", 
-                     # type = "fruchterman", 
-                      #size=0.1, 
-                      #remove.multiple=TRUE, 
-                      remove.isolates = TRUE,
-                      #labelsize = 2, 
-                      #weighted = TRUE, 
-                      #curved = FALSE, 
-                      edgesize = 10, 
-                      edges.min = 4,
-                      #degree = 5,
-                      #label.n = 10,  
-                      size.cex = TRUE, 
-                      cluster = "louvain"
-                      )
-
-ggraph(CoANet$graph, layout = "kk") +
-  geom_edge_link(aes()) + 
-    geom_node_point(aes(color = factor(community), size = deg /100,))+
-  geom_node_label(aes(label = label ,color = factor(community)), repel = TRUE, check_overlap = FALSE, label.padding = 0.1 )+
-  theme_void() + 
-  theme(legend.position = 'none') +
-  coord_flip() +
-  labs(
-    title = "Which authors write together most frequently?" ,
-    subtitle = "Authors who write 4 or more articles together"
-  )
-
-ggsave("figures/CoAuthorshipNetwork4.jpg", device = "jpeg", dpi = 400)
-
-write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge1.graphml", c("graphml"))
-
-
-# Plot the network - look into SNA application- Focus on degrees 
-CoANetdeg <- networkPlot(CoAMatrix, 
-                      #n = 400,
-                      #n = dim(CoAmatrix)[1], 
-                      #normalize = "jaccard", 
-                      #Title = "Social Network Analysis", 
-                     # type = "fruchterman", 
-                      #size=0.1, 
-                      #remove.multiple=TRUE, 
-                      remove.isolates = TRUE,
-                      #labelsize = 2, 
-                      #weighted = TRUE, 
-                      #curved = FALSE, 
-                      edgesize = 5, 
-                      edges.min = 0,
-                      #degree = 5,
-                      #label.n = 10,  
-                      size.cex = TRUE, 
-                      cluster = "louvain",
-                     verbose = FALSE
-                      )
-
-components <- igraph::clusters(CoANetdeg$graph, mode="weak")
-V(CoANetdeg$graph)$group <- components$membership
-biggest_cluster_id <- which.max(components$csize)
-# ids
-vert_ids <- V(CoANetdeg$graph)[components$membership != biggest_cluster_id]
-
-degreeCoAgraph1<- ggraph(CoANetdeg$graph, layout = "nicely") +
-  geom_edge_link(aes()) + 
-    geom_node_point(aes(filter = components$membership == biggest_cluster_id,
-                          color = factor(community), 
-                        size = deg /100, alpha = 0.3)
-                    )+
-  geom_node_label(aes(filter = , label = label ,color = color, alpha = 0.3), repel = TRUE)+
-  theme_void() + 
-  theme(legend.position = 'none') +
-  coord_flip()
-degreeCoAgraph1
-```
-
-
 ### What are the collaborative connections between institutions?
 
 ```{r top 10 affiliations}
@@ -570,8 +479,8 @@ Affiliation <- results$Affiliations[1:10]
 Affiliation <- as.data.frame(Affiliation) %>%
   mutate(
     color = case_when(
-      row_number() == 1 ~ "lightgreen",
-      row_number() == 2 ~ "goldenrod1",
+      row_number() == 1 ~ "goldenrod1",
+      row_number() == 2 ~ "lightgreen",
       row_number() == 3 ~ "coral2",
       ## all others should be gray
       TRUE ~ "gray75"
@@ -612,41 +521,7 @@ ggsave("figures/AffliationsTop10.jpg",
        width = 7, height = 4,
        units = "in", limitsize = FALSE
        )
-
-
 ```
-
-
-
-```{r collaborative, echo=FALSE}
-#INSERT FUNCTION FOR CREATING INSTITUTIONAL NETWORK using 'data' file
-#UNdata <- metaTagExtraction(data, Field = "AU_UN", sep = ";")
-
-UniNetMatrix <- biblioNetwork(data, analysis = "collaboration", network = "universities", sep = ";")
-
-# Plot the network
-
-Uninet=networkPlot(UniNetMatrix, n = dim(UniNetMatrix)[1], Title = "Top 20 University Collaborations", type = "auto", remove.multiple=FALSE, remove.isolates = TRUE, labelsize=0.7, edges.min = 4)
-
-ggraph(Uninet$graph, layout = "auto") +
-  geom_edge_link(aes(edge_width = num / 200, color = color, alpha = 0.1, edge_linetype = factor(lty)), edge_alpha = 0.1) + 
-    geom_node_point(aes(color = color, size = deg /5))+
-  geom_node_label(aes(label = label,color = color), repel = TRUE, label.padding = 0.1 )+
-  theme_void() + 
-  theme(legend.position = 'none') +
-  coord_flip() +
-  labs(
-    title = "Which univeristies collaborate together most frequently?" ,
-    subtitle = "Univeristies who published 4 or more articles together"
-  )
-
-ggsave("figures/CollaborationNetwork4.jpg", device = "jpeg", dpi = 400)
-
-write_graph(CoANet$graph,"Gephi files/CBE_LSE_Co-authorshipedge4.graphml", c("graphml"))
-
-head(Uninet$nodeDegree) # Top six universities by degree of publications with other universities
-```
-
 
 ### What are the intellectual structures? Document co-citation network and topic analysis
 
@@ -667,60 +542,15 @@ sourcestable <-cbind(summary(factor(CR$Source))[1:10])
 sourcestable
 
 write.csv(file = "Sources.csv",sourcestable)
-
 ```
 
 
 
-```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
-
-#DOCUMENT COCITATION NETWORK using 'data' file
-# Create a co-citation network
-DCAMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
-
-
-# Plot the network
-DCA <- networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Network", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 10, edgesize = 5, edges.min = 7, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
-
-
-names(DCA$nodeDegree["american association 2011-1"])<- "AAAS 2011"
-
-DCAplot<- ggraph(DCA$graph, layout = "stress") +
-  geom_edge_link(aes(edge_width = num / 200, color = color, alpha = 0.1, edge_linetype = factor(lty)), edge_alpha = 0.1) + 
-    geom_node_point(aes(color = color, size = deg))+
-  geom_node_label(aes(label = label,color = color), repel = TRUE, label.padding = 0.1 )+
-  theme_void() + 
-  theme(legend.position = 'none') +
-  coord_flip() +
-  labs(
-    title = "Which publications are cited together most frequently?" ,
-    subtitle = "Cited documents who were cited together 4 or more times"
-  )
-DCAplot
-
-ggsave("figures/DocumentCocitationNetwork.jpg", device = "jpeg", dpi = 400, width = 7,
-  height = 5,
-  units = "in", limitsize = FALSE)
-
-write_graph(DCA$graph,"Gephi files/CBE_LSE_DCAedge4.graphml", c("graphml"))
-```
-
-```{r bibliographic coupling}
-
-# Group similar documents by references
-rownames(data) <- rownames(data)
-BC <- biblioNetwork(data, analysis = "coupling", network = "references", sep = ";")
-
-BCnet = networkPlot(BC, n = dim(BC)[1], Title = "Bibliographic Coupling", type = "auto", size.cex = TRUE, remove.multiple=FALSE, labelsize = 1, edgesize = 5, edges.min = 4, label.n = 30, cluster = "louvain", remove.isolates = TRUE, label.cex = TRUE)
-
-ggsave("figures/bibliographiccoupling4.png", plot = BCnet$graph_terms, device = "png")
-
-write_graph(BCnet$graph,"Gephi files/CBE_LSE_BC4.graphml", c("graphml"))
-```
+### Multiple Correspondence Analysis
 
 ```{r topics and keywords}
 
-# Show how key words appear together
+# Show how key words appear together using Multiple Correspondence Analysis
 CS <- bibliometrix::conceptualStructure(data, 
                           #field ="ID", 
                           #ngrams = 1, 
