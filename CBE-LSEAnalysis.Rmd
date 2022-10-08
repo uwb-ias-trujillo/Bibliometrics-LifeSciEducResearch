@@ -522,17 +522,13 @@ ggsave("figures/AffliationsTop10.jpg",
        )
 ```
 
-### What are the intellectual structures? Document co-citation network and topic analysis
+### Most cited papers and journals
 
 Darcie Nelson
 ```{r citations, echo=FALSE}
 CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
 CRtable
-
-CR2 <- citations(data, field = "article", sep = ";")
-CR2table <-cbind(CR2$Cited[1:20])
-CR2table
 
 write.csv(file = "Citations.csv",CR2table)
 
