@@ -102,13 +102,14 @@ write.csv(file = "tables/Universities.csv", results$Affiliations)
 colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
 
 ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
-  geom_line(stat = "identity", color = "#F26E50", size = 1.5) +
+  geom_line(stat = "identity", color = "#F26E50", size = 1.5) + geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "#F26E50", size = 1.5, alpha = 0.8)+ # added projected articles.
   #theme_dark() +
+  scale_x_discrete(breaks = function(x){x[c(TRUE, FALSE)]}) +
   theme_default +
   labs(
-    title = "Annual productivity by articles published per year",
+    title = "Articles published per year",
     x = NULL,
-    y = NULL
+    y = NULL,
   )
 ggsave("figures/AnnualProductivity.jpg", device = "jpeg", dpi = 400)
 
@@ -544,31 +545,114 @@ write.csv(file = "Sources.csv",sourcestable)
 ### Multiple Correspondence Analysis
 
 ```{r topics and keywords}
-
 # Show how key words appear together using Multiple Correspondence Analysis
 CS <- bibliometrix::conceptualStructure(data, 
                           field ="ID", 
                           ngrams = 1, 
                           method = "MCA", 
                           minDegree= 30,
-                          clust= "auto", 
+                          clust= "3", 
                           k.max=5, 
-                          stemming= TRUE, 
+                          stemming= FALSE, 
                           labelsize=10, 
-                          documents=10)
+                          documents=10
+                          )
+
+CS$res$eig
+
 ggsave("figures/ConceptualStructure.png", plot = CS$graph_terms, device = "png")
 
 ggsave("figures/ConceptualCluster.png", plot = CS$graph_dendogram + coord_flip(), device = "png")
+```
 
-source(functions.r)
-CS2 <- conceptualStructure(data, 
-                          field ="ID", 
+
+```{r title topics}
+hypened<-results$ID[results$ID>10] %>%
+  row.names()%>%
+  str_detect("-") 
+spaced<- results$ID[results$ID>10] %>%
+  row.names()%>%
+  str_detect(" ")
+compound<-results$ID[results$ID>10][hypened|spaced]%>%
+  row.names()
+
+compound <- compound[!compound %in% "UNDERGRADUATE RESEARCH EXPERIENCES"]
+  
+TitleTerms <- termExtraction(data, "TI",stemming = FALSE, keep.terms = compound) %>%
+KeywordGrowth(Tag= "TI_TM", top = 1000) %>%
+  pivot_longer(cols = !c('Year')) %>%
+  group_by(Year) %>%
+  mutate(sum = sum(value), perc = value / sum) %>%
+  filter(value > 1) %>%
+  filter(perc > 0.005)
+
+SharedTerms <- TitleTerms %>%
+  #select(Year,name) %>%
+  group_by(name) %>%
+  summarize(total = n()) %>%
+  filter(total > 2)
+
+TopTerms<- TitleTerms %>% 
+  filter(name %in% SharedTerms$name) %>%
+  group_by(Year) %>%
+  arrange(value, .by_group = TRUE) %>%
+  top_n(15)
+
+TitleText <- TitleTerms %>%
+  group_by(name) %>%
+  top_n(1, Year) %>%
+  filter(name %in% SharedTerms$name)
+
+TitleTerms %>% 
+  filter(name %in% TopTerms$name) %>%
+  ggplot(aes(Year, perc, group = name, color=name, fill=name, label = name))+
+  geom_line() + 
+  geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  size = 2, 
+                  color = "black",
+                  arrow = arrow(length = unit(0.02, "npc")),
+                  box.padding = 0.5
+                  ) + 
+  scale_y_log10(labels = label_percent()) + 
+  
+  theme_default +
+  labs(title = "Conceptual trends based on article titles")+
+  theme(legend.position="none")
+
+TitleTerms %>% 
+  filter(name %in% TopTerms$name) %>%
+  ggplot(aes(Year, reorder(as.factor(str_to_sentence(name)),cumsum(value)), group = name, color=name, fill=name, label = name, size = perc), alpha = 0.3)+
+  #geom_violin(alpha = 0.3)+
+  geom_point() +
+  geom_line(alpha = 0.8, size = 0.5)+
+  geom_text(aes(label = str_to_sentence(name)), data = . %>% group_by(name) %>% top_n(-1, Year), #%>% filter(Year > 2012), 
+                  size = 2, 
+                  color = "black",
+                  #arrow = arrow(length = unit(0.02, "npc")),
+                  #box.padding = 0.5
+                  nudge_x = 0,hjust = -0)+
+  scale_x_continuous(labels = label_date(format = "%y")) +
+  scale_y_discrete()+
+  theme_default +
+  labs(title = "Conceptual trends based on article titles", y = NULL, x = NULL, )+
+  theme(legend.position="none",
+        axis.text.y = element_blank())
+
+ggsave("figures/TitleTrends.png", device = "png")
+```
+
+
+```{r topics and keywords}
+CS2 <- termExtraction(data, "TI",stemming = FALSE, keep.terms = compound) %>%
+  conceptualStructure(field ="TI_TM", 
                           ngrams = 1, 
-                          method = "MCA", 
-                          minDegree= 30,
+                          method = "MCA",
+                          quali.supp = NULL,
+                          quanti.supp = NULL,
+                          minDegree= 50,
                           clust= "auto", 
                           k.max=5, 
-                          stemming= TRUE, 
+                          stemming= FALSE, 
                           labelsize=10, 
                           documents=2)
 
