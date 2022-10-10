@@ -267,10 +267,10 @@ msiuniv <- left_join(affiliations, msidata) %>%
 msistates <- msiuniv %>%
   group_by(St) %>%
   summarize(n = n(), articles = sum(Freq) ) %>%
-  filter(!(St %in% c("MH", "PR", "VI", "GU"))) %>% 
+  #filter(!(St %in% c("MH", "PR", "VI", "GU"))) %>% 
   rename(states = St, affiliations = n) %>%
   group_by(affiliations, articles)
-#view(msistates)
+view(msistates)
 
 msistates$state_name <- state.name[match(msistates$states,state.abb)]
 
@@ -314,7 +314,7 @@ ArticlesUSMap <- ggplot() +
   theme_map() +
   labs(fill = "Publications",
        title = "Articles by author's state affiliation",
-       caption = "DC: 21, PR: 8, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
+       caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
     x = NULL,
     y = NULL
     ) +
@@ -452,10 +452,16 @@ MSIAffiliationPlot <- temp %>%
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
   #theme_dark() +
-  scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
+  #scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
+  #scale_fill_viridis(discrete = TRUE, option = "F") +
+  scale_fill_manual(values = c("#1d4f60", "#4da284", "lightblue")) +
+ #scale_fill_carto_d(palette = "BluGrn", direction = -1) +
+  
+  #c4e6c3,#96d2a4,#6dbc90,#4da284,#36877a,#266b6e,#1d4f60
+  
   theme_default + 
   labs(
-    title = "Author affiliations by Minority Serving Institution status",
+    title = "US Author affiliations by Minority Serving Institution status",
     y = NULL, 
     x = NULL
   )  +
