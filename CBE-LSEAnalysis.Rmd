@@ -102,7 +102,8 @@ write.csv(file = "tables/Universities.csv", results$Affiliations)
 colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
 
 ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
-  geom_line(stat = "identity", color = "#F26E50", size = 1.5) + geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "#F26E50", size = 1.5, alpha = 0.8)+ # added projected articles.
+  geom_line(stat = "identity", color = "#F26E50", size = 1.5) + 
+  geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "#F26E50", size = 1.5, alpha = 0.8) + # added projected articles.
   #theme_dark() +
   scale_x_discrete(breaks = function(x){x[c(TRUE, FALSE)]}) +
   theme_default +
@@ -582,7 +583,7 @@ compound<-results$ID[results$ID>10][hypened|spaced]%>%
 
 compound <- compound[!compound %in% "UNDERGRADUATE RESEARCH EXPERIENCES"]
   
-TitleTerms <- termExtraction(data, "TI",stemming = FALSE, keep.terms = compound) %>%
+TitleTerms <- termExtraction(data, "TI",stemming = TRUE, keep.terms = compound) %>%
 KeywordGrowth(Tag= "TI_TM", top = 1000) %>%
   pivot_longer(cols = !c('Year')) %>%
   group_by(Year) %>%
