@@ -43,7 +43,7 @@ library(ggthemes)
 library(ggpubr)
 library(RColorBrewer)
 
-# source('functions.r')
+source('functions.r')
 ```
 
 ## Introduction
@@ -140,6 +140,7 @@ authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by
 authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
   labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) + 
   theme_minimal() +
+  scale_color_carto_c(palette = "BluGrn", direction = 1)+
   theme(plot.title.position = "plot",
         panel.grid.major.y = element_blank(),
         legend.title = element_text(),
@@ -385,11 +386,8 @@ types %>%
       name == "US" ~ 0.9,
       name == "LSE" ~ 0.7)) %>%
   ggplot(aes(x = (name),value)) +
-
 #  geom_col(aes(fill = SchoolType, 
 #               color = scale_fill_manual(values = c("LSE" = "darkblue", "US" = "red")))) +
-
-  
     geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), 
            size = 4) +
   geom_text(aes(label = paste0(round(value*100, 0),"%")),
@@ -419,6 +417,41 @@ ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
   units = "in", limitsize = FALSE)
 
+
+#SECOND ATTEMPT AT COLOR SCHEME
+
+types %>%
+  pivot_longer(!SchoolType) %>%
+  filter(name == "US" | name == "LSE") %>%
+  filter(SchoolType != FALSE) %>%
+  ggplot(aes(x = (name),value)) +
+    geom_col(aes(fill = value))+
+    #geom_col(aes(fill = c("red",carto_pal(n = 7, "BluGrn")),
+                  # c("red","#c4e6c3", "#96d2a4", "#6dbc90", "#4da284", "#36877a", "#266b6e", "#1d4f60")), 
+    #       size = 4)) +
+  geom_text(aes(label = paste0(round(value*100, 0),"%")),
+            vjust = 0.5, nudge_y = -.04,
+            size = 3, fontface = "bold") +
+  theme_default +
+  theme(legend.position="none", 
+        strip.background = element_rect(fill = "#F2F2F2"),
+        #panel.grid.major.x = element_blank(),
+        axis.text = element_text(size = 10)
+        ) +
+  #scale_color_identity(guide = "none") +
+  scale_fill_carto_c(type = "quatitative", palette = "BluGrn")+
+  scale_y_continuous(minor_breaks = NULL,
+                     labels = scales::percent) +
+  labs(x = NULL, y = NULL,
+       title = "What types of institutions are represented in LSE?"
+       ) +
+  facet_wrap(~SchoolType, nrow = 2) +
+  theme(panel.spacing.y = unit(1, "lines"),
+        axis.text.y = element_text(margin = margin(l = 0.2, unit = "in")),
+        strip.text.x = element_text(size = 11),
+        strip.background = element_rect(fill = "white"),
+        plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"))
+
 ```
 
 
@@ -447,25 +480,29 @@ msisummary_perc <- temp%>%
   pivot_wider(names_from = name, values_from = c(perc))
 view(msisummary_perc)
 
-temp %>%
-  filter(eligibility == "Current grantee") %>%
-  arrange(perc, "desc") %>% 
-  mutate(name = reorder(as.factor(name), desc(perc)), order = (perc)) %>%
-  pull(name)-> x_levels
-
-temp$name<- factor(x = temp$name, levels = (x_levels))
+# temp %>%
+#   filter(eligibility == "Current grantee") %>%
+#   arrange(perc, "desc") %>% 
+#   mutate(name = as.character(name)) %>%
+#   mutate(perc = case_when(name == "SIP" ~ 100,
+#                           TRUE ~ perc))%>%
+#   mutate(name = reorder(as.factor(name), desc(perc)), order = (perc)) %>%
+#   pull(name)-> x_levels
+temp$name<- factor(temp$name, levels = c("SIP","HBCU Masters", "TCCU","AANAPISI", "PBI A", "ANNH","PBI F","PPOHA","AANAPISI F", "HBGI","HBCU" ,"HSI STEM","HSI"))
 
 MSIAffiliationPlot <- temp %>% 
   filter(#eligibility != "Ineligible" &
-    eligibility != "Undetermined", !is.na(name)) %>%
+    eligibility != "Undetermined", eligibility != "Ineligible", !is.na(name)) %>%
   ggplot(aes(x = name, y = perc, fill = eligibility)) +
   geom_col(position = position_stack(reverse = TRUE)) +
-  scale_y_continuous(labels = scales::percent) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
   coord_flip() +
+  facet_grid(rows = vars(titleIII), scales = "free", space = "free")+
   #theme_dark() +
   #scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
   #scale_fill_viridis(discrete = TRUE, option = "F") +
-  scale_fill_manual(values = c("#1d4f60", "#4da284", "lightblue")) +
+  scale_fill_manual(values = c("#1d4f60", "#4da284", "lightblue"
+                               )) +
  #scale_fill_carto_d(palette = "BluGrn", direction = -1) +
   
   #c4e6c3,#96d2a4,#6dbc90,#4da284,#36877a,#266b6e,#1d4f60
@@ -481,6 +518,7 @@ MSIAffiliationPlot <- temp %>%
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         axis.text.y = element_text(margin = margin(r = -0.5, l = 0.4, unit = "cm")),
+        strip.text.y =  element_blank()
        )
 
 MSIAffiliationPlot
@@ -490,6 +528,22 @@ ggsave("figures/MsiAffiliations.jpg",
        units = "in", limitsize = FALSE)
 
 #mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
+
+msiuniv %>%
+  mutate_if(is.numeric,as.factor)%>%
+  mutate_if(is.character,as.factor)%>%
+  select(`Institution Name`,`AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU) %>%
+  pivot_longer(cols = !`Institution Name`) %>%
+  mutate(eligibility = if_else(value == 1 | value == 2| value == 3, "Ineligible", "NA")) %>%
+  mutate(eligibility = if_else(value == 4 | value == '4R' |value == 5 | value == '5R', "Eligible or potentially eligible", eligibility))%>%
+  mutate(eligibility = if_else(value == 6, "Current grantee", eligibility)) %>%
+  mutate(eligibility = if_else(value == 0, "Undetermined", eligibility)) %>%
+  group_by(eligibility, `Institution Name`) %>%
+  #summarise(n = n(),sum = sum(n))%>%
+  unique()
+    #summarise(total = sum(sum))
+
+msiuniv%>% unique()
 ```
 
 ### What are the collaborative connections between institutions?
@@ -508,13 +562,15 @@ Affiliation <- as.data.frame(Affiliation) %>%
     ))
 
 #Author affiliations
-ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +  
+ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
   geom_col(aes(fill = color)) +
+  geom_col(aes(fill = "white", alpha = 0.8))+
+  geom_col(aes(y =5, fill = color)) +
   geom_text(
     aes(label = reorder(str_to_title(AFF), Freq), y=0.13),
-    hjust = 0, nudge_y = .5,
+    hjust = 0, nudge_y = 5.5,
     size = 3.5, fontface = "bold",
-    fill = "white", label.size = 0, color="white"
+    fill = "white", label.size = 0, color="black"
   ) +
   geom_text(
     aes(label = Freq),
