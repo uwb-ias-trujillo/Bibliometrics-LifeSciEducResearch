@@ -368,10 +368,15 @@ msitypeall <- msidata %>%
 
 types <- left_join(msitypeall,msitype, by = "Type & Control")
 colnames(types)<- c("SchoolType", "Number of Insitutions in US", "US", "Number of Institutes in LSE", "LSE")
+
 types$SchoolType <- recode(types$SchoolType, "Pri 2yr" = "Private 2-year", "Pri 4yr" = "Private 4-year","Pub 2yr" = "Public 2-year", "Pub 4yr" = "Public 4-year") 
+
 view(types)
 
 #We try to compare the percentage breakdown of institutions in the US according to the MSI eligibility matrix to amount in the LSE affiliations list.
+
+#Public
+
 types %>%
   pivot_longer(!SchoolType) %>%
   filter(name == "US" | name == "LSE") %>%
@@ -380,7 +385,12 @@ types %>%
       name == "US" ~ 0.9,
       name == "LSE" ~ 0.7)) %>%
   ggplot(aes(x = (name),value)) +
-  geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), 
+
+#  geom_col(aes(fill = SchoolType, 
+#               color = scale_fill_manual(values = c("LSE" = "darkblue", "US" = "red")))) +
+
+  
+    geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), 
            size = 4) +
   geom_text(aes(label = paste0(round(value*100, 0),"%")),
             vjust = 0.5, nudge_y = -.04,
@@ -403,6 +413,7 @@ types %>%
         strip.text.x = element_text(size = 11),
         strip.background = element_rect(fill = "white"),
         plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"))
+
 
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
@@ -488,11 +499,12 @@ Affiliation <- results$Affiliations[1:10]
 Affiliation <- as.data.frame(Affiliation) %>%
   mutate(
     color = case_when(
-      row_number() == 1 ~ "goldenrod1",
-      row_number() == 2 ~ "lightgreen",
-      row_number() == 3 ~ "coral2",
+      row_number() == 1 ~ "#CFB87C",
+      row_number() == 2 ~ "#18453B",
+      row_number() == 3 ~ "#C5050C",
+      #row_number() == 4 ~ "#BA0C2F",
       ## all others should be gray
-      TRUE ~ "gray75"
+      TRUE ~ "#6dbc90"
     ))
 
 #Author affiliations
@@ -500,14 +512,14 @@ ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
   geom_col(aes(fill = color)) +
   geom_text(
     aes(label = reorder(str_to_title(AFF), Freq), y=0.13),
-     hjust = 0, nudge_y = .5,
-     size = 3.5, fontface = "bold", #family = "Fira Sans",
-    fill = "white", label.size = 0
+    hjust = 0, nudge_y = .5,
+    size = 3.5, fontface = "bold",
+    fill = "white", label.size = 0, color="white"
   ) +
   geom_text(
     aes(label = Freq),
-     hjust = 0, nudge_y = .5,
-     size = 3.5, fontface = "bold", #family = "Fira Sans"
+    hjust = 0, nudge_y = .5,
+    size = 3.5, fontface = "bold"
   ) +
   coord_flip() +
   theme_default +
@@ -525,11 +537,11 @@ ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
         legend.position = 'none',
         )
 
-ggsave("figures/AffliationsTop10.jpg", 
+ggsave("figures/AffiliationsTopAuthors.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 4,
-       units = "in", limitsize = FALSE
-       )
+       units = "in", limitsize = FALSE)
+
 ```
 
 ### Most cited papers and journals
