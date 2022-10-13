@@ -533,8 +533,6 @@ ggsave("figures/AffliationsTop10.jpg",
 ```
 
 ### Most cited papers and journals
-
-Darcie Nelson
 ```{r citations, echo=FALSE}
 CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
@@ -568,11 +566,11 @@ CS30 <- bibliometrix::conceptualStructure(data,
                           documents=10
                           )
 
-CS15 <- bibliometrix::conceptualStructure(data, 
+CS19 <- bibliometrix::conceptualStructure(data, 
                           field ="ID", 
                           ngrams = 1, 
                           method = "MCA", 
-                          minDegree= 15,
+                          minDegree= 19,
                           clust= "3", 
                           k.max=5, 
                           stemming= FALSE, 
@@ -580,15 +578,14 @@ CS15 <- bibliometrix::conceptualStructure(data,
                           documents=10
                           )
 
-CS$res$eig
 
-ggsave("figures/ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
+ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
 
-ggsave("figures/ConceptualCluster.png", plot = CS30$graph_dendogram + coord_flip(), device = "png")
+ggsave("figures/CS30ConceptualCluster.png", plot = CS30$graph_dendogram + coord_flip(), device = "png")
 
-ggsave("figures/15ConceptualStructure.png", plot = CS15$graph_terms, device = "png")
+ggsave("figures/19ConceptualStructure.png", plot = CS19$graph_terms, device = "png")
 
-ggsave("figures/15ConceptualCluster.png", plot = CS15$graph_dendogram + coord_flip(), device = "png")
+ggsave("figures/19ConceptualCluster.png", plot = CS19$graph_dendogram + coord_flip(), device = "png")
 ```
 
 
