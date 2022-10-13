@@ -467,7 +467,10 @@ temp <- msiuniv %>%
   mutate(eligibility = if_else(value == 0, "Undetermined", eligibility)) %>%
   group_by(name,eligibility)%>%
   summarize(n=n())%>%
-  mutate(perc = round(n/sum(n),3))
+  mutate(perc = round(n/sum(n),3)) %>%
+  mutate(titleIII = case_when(
+    name == "SIP" ~ TRUE,
+    TRUE ~ FALSE))
 
 msisummary_n <- temp%>%
   select(!perc)%>%
