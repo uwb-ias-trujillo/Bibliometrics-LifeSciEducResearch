@@ -304,6 +304,8 @@ conceptualStructure <- function (M, field = "ID", ngrams = 1, method = "MCA", qu
 }
 
 
+
+
 authorProdOverTime <- function (M, k = 10, graph = TRUE)
 {
   if (!("DI" %in% names(M))) {
@@ -348,7 +350,7 @@ authorProdOverTime <- function (M, k = 10, graph = TRUE)
                                     "\nYear: ", .data$year,
                                     "\nN. of Articles: ", .data$freq, 
                                     "\nTotal Citations per Year: ", round(.data$TCpY, 2)))) + 
-    geom_point(aes(alpha = .data$TCpY, size = .data$freq), color = "dodgerblue4") + 
+    geom_point(aes(alpha = .data$TCpY, size = .data$freq), color = "#994E95") + 
     scale_size(range = c(2, 6)) + 
     scale_alpha(range = c(0.3, 1)) + 
     scale_y_continuous(breaks = seq(min(df2$year), max(df2$year), by = 2)) + 
@@ -363,12 +365,13 @@ authorProdOverTime <- function (M, k = 10, graph = TRUE)
           axis.title.y = element_text(vjust = 1, angle = 90), 
           axis.text.x = element_text(face = "bold", angle = 90), 
           axis.text.y = element_text(face = "bold"), 
-          axis.line.x = element_line(color = "grey50", size = 0.5), 
-          panel.grid.major.x = element_blank(), 
-          panel.grid.major.y = element_line(size = 0.2, color = "grey90")) + 
+          #axis.line.x = element_line(color = "grey50", size = 0.5), 
+          panel.grid.major.x = element_blank() 
+          #panel.grid.major.y = element_line(size = 0.2, color = "grey90")
+          ) + 
     labs(title = "Top-Authors' Production over Time", x = "Author", y = "Year") + 
     geom_line(data = df2, aes(x = .data$Author, y = .data$year, group = .data$Author), 
-              size = 1, color = "firebrick4", alpha = 0.3) + 
+              size = 1, color = "#994E95", alpha = 0.5) + 
     scale_x_discrete(limits = rev(levels(df2$Author))) + 
     coord_flip() #+ annotation_custom(logo, xmin = x[1], xmax = x[2], ymin = y[1], ymax = y[2])
   df$DOI = as.character(df$DOI)

@@ -142,16 +142,15 @@ authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by
 authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
   labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) + 
   theme_minimal() +
-  scale_color_carto_c(palette = "BluGrn", direction = 1)+
   theme(plot.title.position = "plot",
-        panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank(),
         legend.title = element_text(),
         axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
 
 authorprod
 ggsave("figures/AuthorProd.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
-       width = 7, height = 5, units = "in", limitsize = FALSE)
+       width = 7, height = 4.5, units = "in", limitsize = FALSE)
 
 
 authordata %>%
@@ -499,7 +498,9 @@ temp$name<- factor(temp$name, levels = c("SIP","HBCU Masters", "TCCU","AANAPISI"
 
 MSIAffiliationPlot <- temp %>% 
   filter(#eligibility != "Ineligible" &
-    eligibility != "Undetermined", eligibility != "Ineligible", !is.na(name)) %>%
+    eligibility != "Undetermined", 
+    #eligibility != "Ineligible", 
+    !is.na(name)) %>%
   ggplot(aes(x = name, y = perc, fill = eligibility)) +
   geom_col(position = position_stack(reverse = TRUE)) +
   scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
@@ -508,7 +509,7 @@ MSIAffiliationPlot <- temp %>%
   #theme_dark() +
   #scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
   #scale_fill_viridis(discrete = TRUE, option = "F") +
-  scale_fill_manual(values = c("#1d4f60", "#4da284", "lightblue"
+  scale_fill_manual(values = c("#266b6e", "#4da284", "#c4e6c3"
                                )) +
  #scale_fill_carto_d(palette = "BluGrn", direction = -1) +
   
@@ -563,7 +564,13 @@ Affiliation <- as.data.frame(Affiliation) %>%
       row_number() == 1 ~ "#CFB87C",
       row_number() == 2 ~ "#18453B",
       row_number() == 3 ~ "#C5050C",
-      #row_number() == 4 ~ "#BA0C2F",
+      row_number() == 4 ~ "#BA0C2F",
+      row_number() == 5 ~ "#4b2e83",
+      row_number() == 6 ~ "#8C1D40",
+      row_number() == 7 ~ "#231161",
+      row_number() == 8 ~ "#2774AE",
+      row_number() == 9 ~ "#7a0019",
+      row_number() == 10 ~ "#a51417",
       ## all others should be gray
       TRUE ~ "#6dbc90"
     ))
@@ -571,11 +578,11 @@ Affiliation <- as.data.frame(Affiliation) %>%
 #Author affiliations
 ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
   geom_col(aes(fill = color)) +
-  geom_col(aes(fill = "white", alpha = 0.8))+
+  geom_col(aes(fill = "white", alpha = 0.1)) +
   geom_col(aes(y =5, fill = color)) +
   geom_text(
     aes(label = reorder(str_to_title(AFF), Freq), y=0.13),
-    hjust = 0, nudge_y = 5.5,
+    hjust = 0, nudge_y = 6,
     size = 3.5, fontface = "bold",
     fill = "white", label.size = 0, color="black"
   ) +
