@@ -54,7 +54,8 @@ There has been tremendous growth in the area of undergraduate biology research o
 
 ```{r dataset}
 txt <- c("rawdata/CBE-LSE-2008-June2022/CBE-LSE-2008-June2022.txt")
-data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
+data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext") 
+
 results <- biblioAnalysis(data, sep = ";")
 
 theme_default <- theme(
@@ -136,7 +137,14 @@ indices$H %>%
 as_tibble(results$Authors)
 
 authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
-  filter("n" > 5) #only showing authors with at least 5 publications.
+  filter("n" > 5) %>% #only showing authors with at least 5 publications.
+  mutate(AU = str_replace(
+      str_to_title(AU),
+      "[a-zA-Z]+$",
+      str_to_upper(
+        str_extract(
+          AU,"[a-zA-Z]+$")
+        )))
 
 
 authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
@@ -144,6 +152,7 @@ authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph +
   theme_minimal() +
   theme(plot.title.position = "plot",
         panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
         legend.title = element_text(),
         axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
 
@@ -578,7 +587,7 @@ Affiliation <- as.data.frame(Affiliation) %>%
 #Author affiliations
 ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq), y = Freq)) +
   geom_col(aes(fill = color)) +
-  geom_col(aes(fill = "white", alpha = 0.1)) +
+  geom_col(aes(fill = "white"), alpha = 0.7) +
   geom_col(aes(y =5, fill = color)) +
   geom_text(
     aes(label = reorder(str_to_title(AFF), Freq), y=0.13),

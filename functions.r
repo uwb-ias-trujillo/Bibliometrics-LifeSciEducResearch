@@ -334,6 +334,10 @@ authorProdOverTime <- function (M, k = 10, graph = TRUE)
     rename(Author = .data$AU.x, year = .data$PY, DOI = .data$DI) %>% 
     arrange(desc(.data$n), desc(.data$year)) %>% 
     select(-.data$n)
+    
+    
+      
+  
 
   df2 <- dplyr::group_by(df, .data$Author, .data$year) %>% 
     dplyr::summarise(freq = length(.data$year), TC = sum(.data$TC), TCpY = sum(.data$TCpY)) %>% 
