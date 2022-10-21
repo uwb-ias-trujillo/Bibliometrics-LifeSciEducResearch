@@ -52,7 +52,7 @@ There has been tremendous growth in the area of undergraduate biology research o
 
 ### Summary of initial data set
 
-```{r dataset}
+```{r dataset, skip = TRUE}
 txt <- c("rawdata/CBE-LSE-2008-June2022/CBE-LSE-2008-June2022.txt")
 data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext") 
 
@@ -74,7 +74,7 @@ theme_default <- theme(
 
 After the results are processed, they are stored as data tables for information reporting. 
 
-```{r biblio}
+```{r biblio, skip = TRUE}
 options(width=100)
 
 S <- summary(object = results, pause = FALSE)
@@ -94,6 +94,10 @@ write.csv(file = "tables/MostCitedPapers.csv",S$MostCitedPapers)
 write.csv(file = "tables/MostProdAuthors.csv", S$MostProdAuthors)
 
 write.csv(file = "tables/Universities.csv", results$Affiliations)
+
+write.csv(file = "tables/Data.csv", data)
+
+write.csv(file = "tables/shortData.csv", data %>% select( PY, TI) %>% sample_n(200))
 ```
 ## Research Questions
 
@@ -137,19 +141,18 @@ indices$H %>%
 as_tibble(results$Authors)
 
 authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
-  filter("n" > 5) %>% #only showing authors with at least 5 publications.
-  mutate(AU = str_replace(
-      str_to_title(AU),
+  filter("n" > 5) #only showing authors with at least 5 publications.
+
+authorprod <- authorProdOverTime(data, k = 10, graph = FALSE)$graph + 
+  labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) + 
+  theme_minimal() +
+  scale_x_discrete(labels = str_replace(
+      str_to_title(data$Author),
       "[a-zA-Z]+$",
       str_to_upper(
         str_extract(
-          AU,"[a-zA-Z]+$")
-        )))
-
-
-authorprod <- authorProdOverTime(data, k = 10, graph = TRUE)$graph + 
-  labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) + 
-  theme_minimal() +
+          data$Author,"[a-zA-Z]+$")
+        ))) +
   theme(plot.title.position = "plot",
         panel.grid.minor = element_blank(),
         panel.grid.major.y = element_blank(),
@@ -642,7 +645,7 @@ write.csv(file = "Sources.csv",sourcestable)
 
 ### Multiple Correspondence Analysis
 
-```{r topics and keywords}
+```{r conceptual structure with keywords}
 # Show how key words appear together using Multiple Correspondence Analysis
 #Consider selecting only articles that have the keywords  associated 
 CS30 <- bibliometrix::conceptualStructure(data, 
@@ -763,7 +766,7 @@ ggsave("figures/TitleTrends.png", width = 4, height = 7, device = "png")
 ```
 
 
-```{r topics and keywords}
+```{r conceptual structure with titles, skip = TRUE, eval = FALSE, echo = FALSE}
 CS2 <- termExtraction(data, "TI",stemming = FALSE, keep.terms = compound) %>%
   conceptualStructure(field ="TI_TM", 
                           ngrams = 1, 
