@@ -344,6 +344,7 @@ authorProdOverTime <- function (M, k = 10, graph = TRUE)
     as.data.frame()
 
   df2$Author <- factor(df2$Author, levels = AU$AU[1:k])
+  df2$Author <- fct_reorder2(df2$Author,df2$year, min)
   x <- c(0.5, 1.5 * k/10)
   y <- c(min(df$year), min(df$year) + diff(range(df2$year)) * 0.125)
   data("logo", envir = environment())
