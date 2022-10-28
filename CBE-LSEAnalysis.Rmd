@@ -33,12 +33,11 @@ library(rcartocolor)
 library(rgexf)
 library(igraph)
 library(xtable)
-library(readxl)
+#library(readxl)
 library(scales)
 library(ggplot2)
 library("fiftystater")
 library(sf)
-library(readxl)
 library(ggthemes)
 library(ggpubr)
 library(RColorBrewer)
@@ -97,7 +96,7 @@ write.csv(file = "tables/Universities.csv", results$Affiliations)
 
 write.csv(file = "tables/Data.csv", data)
 
-write.csv(file = "tables/shortData.csv", data %>% select( PY, TI) %>% sample_n(200))
+# write.csv(file = "tables/shortData.csv", data %>% select( PY, TI) %>% dplyr::sample_n(200))
 ```
 ## Research Questions
 
@@ -106,7 +105,7 @@ write.csv(file = "tables/shortData.csv", data %>% select( PY, TI) %>% sample_n(2
 ```{r overview, skip = TRUE}
 colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
 
-ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
+prodplot<-ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
   geom_line(stat = "identity", color = "#266b6e", size = 1.5) + 
   geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "#1d4f60", size = 1, #alpha = 0.8
             ) + # added projected articles.
@@ -119,6 +118,7 @@ ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group
     x = NULL,
     y = NULL,
   )
+prodplot
 ggsave("figures/AnnualProductivity.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
        width = 7, height = 4, units = "in", limitsize = FALSE)
@@ -129,7 +129,6 @@ ggsave("figures/AnnualProductivity.jpg",
 ## Authoring
 
 ```{r author productivity}
-
 S$MostProdAuthors 
 
 authors=gsub(","," ",names(results$Authors))
@@ -141,30 +140,109 @@ indices$H %>%
 as_tibble(results$Authors)
 
 authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
-  filter("n" > 5) #only showing authors with at least 5 publications.
+  filter("n" > 5)# %>%
+  #only showing authors with at least 5 publications.
 
-authorprod <- authorProdOverTime(data, k = 10, graph = FALSE)$graph + 
-  labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) + 
-  theme_minimal() +
-  scale_x_discrete(labels = str_replace(
-      str_to_title(data$Author),
+M <- data
+  M$TC <- as.numeric(M$TC)
+  M$PY <- as.numeric(M$PY)
+  M <- M[!is.na(M$PY), ]
+  Y <- as.numeric(substr(Sys.time(), 1, 4))
+  listAU <- (strsplit(M$AU, ";"))
+  nAU <- lengths(listAU)
+
+  df <- data.frame(AU = trimws(unlist(listAU)), SR = rep(M$SR,nAU))
+  AU <- df %>% group_by(.data$AU) %>% count() %>% arrange(desc(.data$n)) %>% 
+    ungroup()
+  k <- min(10, nrow(AU))
+  AU <- AU %>% slice_head(n = k)
+  AU$case <- str_replace(
+      str_to_title(AU$AU),
       "[a-zA-Z]+$",
       str_to_upper(
         str_extract(
-          data$Author,"[a-zA-Z]+$")
-        ))) +
+          AU$AU,"[a-zA-Z]+$")
+        ))
+  
+  df <- df %>% right_join(AU, by = "AU") %>% left_join(M, by = "SR") %>% 
+    select(.data$AU.x, .data$PY, .data$TI, .data$SO, .data$DI, .data$TC) %>% 
+    mutate(TCpY = .data$TC/(Y - .data$PY + 1)) %>% 
+    group_by(.data$AU.x) %>% 
+    mutate(n = length(.data$AU.x)) %>% 
+    ungroup() %>% 
+    rename(Author = .data$AU.x, year = .data$PY, DOI = .data$DI) %>% 
+    arrange(desc(.data$n), desc(.data$year)) %>% 
+    select(-.data$n)
+
+df2 <- dplyr::group_by(df, .data$Author, .data$year) %>% 
+    dplyr::summarise(freq = length(.data$year), TC = sum(.data$TC), TCpY = sum(.data$TCpY)) %>% 
+    as.data.frame()
+
+AU2 <- df2 %>% group_by(Author) %>% summarise(medianY = median(year)) %>% full_join(AU, by = c("Author" = "AU")) %>% mutate(Author = fct_reorder(AU$Author,AU$medianY, .desc = TRUE))
+ mutate(name = fct_reorder(name, val))
+AU2$Author<-fct_reorder(AU2$Author,AU2$medianY, .desc = FALSE)
+  
+levels(df2$Author) <- levels(AU2$Author)
+  x <- c(0.5, 1.5 * k/10)
+  y <- c(min(df$year), min(df$year) + diff(range(df2$year)) * 0.125)
+  data("logo", envir = environment())
+  logo <- grid::rasterGrob(logo, interpolate = TRUE)
+
+authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
+                              text = paste("Author: ", .data$Author,
+                                    "\nYear: ", .data$year,
+                                    "\nN. of Articles: ", .data$freq, 
+                                    "\nTotal Citations per Year: ", round(.data$TCpY, 2)))) + 
+    geom_line(data = df2, aes(x = .data$Author, y = .data$year, group = .data$Author), 
+              size = 1, color = "#994E95", alpha = 0.5) + 
+  geom_point(aes(size = .data$freq), color = "#FFFFFF") +
+  geom_point(aes(alpha = .data$TCpY, size = .data$freq), color = "#994E95") +
+    scale_size(range = c(2, 6)) + 
+    scale_alpha(range = c(0.3, 1)) + 
+    scale_y_continuous(breaks = seq(min(df2$year), max(df2$year), by = 2)) + 
+    guides(size = guide_legend(order = 1, "Number of\nArticles"), 
+           alpha = guide_legend(order = 2, "Times Cited\nper Year")) + 
+    theme(legend.position = "right", 
+          text = element_text(color = "#444444"), 
+          panel.background = element_rect(fill = "#FFFFFF"), 
+          plot.title = element_text(size = 24), 
+          axis.title = element_text(size = 14, color = "#555555"), 
+          axis.title.x = element_text(hjust = 0.95), 
+          axis.title.y = element_text(vjust = 1, angle = 90), 
+          axis.text.x = element_text(face = "bold", angle = 90), 
+          axis.text.y = element_text(face = "bold"), 
+          #axis.line.x = element_line(color = "grey50", size = 0.5), 
+          panel.grid.major.x = element_blank() 
+          #panel.grid.major.y = element_line(size = 0.2, color = "grey90")
+          ) + 
+    labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) +
+    scale_x_discrete(limits = rev(levels(df2$Author))) + 
+    theme_minimal() +
+  #scale_x_discrete(labels = AU$case) +
   theme(plot.title.position = "plot",
         panel.grid.minor = element_blank(),
         panel.grid.major.y = element_blank(),
         legend.title = element_text(),
-        axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")))
+        axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")),
+        legend.position = "top") +
+  coord_flip()
 
 authorprod
+
 ggsave("figures/AuthorProd.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
        width = 7, height = 4.5, units = "in", limitsize = FALSE)
+```
 
 
+
+
+```{r combing journal and author figure}
+
+```
+
+
+```{r author other, eval=FALSE}
 authordata %>%
   filter(n > 8) %>%
 ggplot(aes( x = NP, y = h_index)) + 
@@ -200,6 +278,8 @@ ggplot(aes(x = reorder(AU, (NP)), y = NP)) +
 # Going to use full join between data on author productivity and their affiliation (university or institution). 
 ```
 
+
+## Institutions
 ### Affiliations around the world
 
 ```{r world affiliations, echo=FALSE}
