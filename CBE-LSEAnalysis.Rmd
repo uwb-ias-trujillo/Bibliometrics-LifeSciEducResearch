@@ -178,8 +178,7 @@ df2 <- dplyr::group_by(df, .data$Author, .data$year) %>%
     dplyr::summarise(freq = length(.data$year), TC = sum(.data$TC), TCpY = sum(.data$TCpY)) %>% 
     as.data.frame()
 
-AU2 <- df2 %>% group_by(Author) %>% summarise(medianY = median(year)) %>% full_join(AU, by = c("Author" = "AU")) %>% mutate(Author = fct_reorder(AU$Author,AU$medianY, .desc = TRUE))
- mutate(name = fct_reorder(name, val))
+AU2 <- df2 %>% group_by(Author) %>% summarise(medianY = median(year)) %>% full_join(AU, by = c("Author" = "AU")) 
 AU2$Author<-fct_reorder(AU2$Author,AU2$medianY, .desc = FALSE)
   
 levels(df2$Author) <- levels(AU2$Author)
@@ -194,9 +193,9 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
                                     "\nN. of Articles: ", .data$freq, 
                                     "\nTotal Citations per Year: ", round(.data$TCpY, 2)))) + 
     geom_line(data = df2, aes(x = .data$Author, y = .data$year, group = .data$Author), 
-              size = 1, color = "#994E95", alpha = 0.5) + 
+              size = 1, color =  "#266b6e", alpha = 0.5) + 
   geom_point(aes(size = .data$freq), color = "#FFFFFF") +
-  geom_point(aes(alpha = .data$TCpY, size = .data$freq), color = "#994E95") +
+  geom_point(aes(alpha = .data$TCpY, size = .data$freq), color =  "#266b6e") +
     scale_size(range = c(2, 6)) + 
     scale_alpha(range = c(0.3, 1)) + 
     scale_y_continuous(breaks = seq(min(df2$year), max(df2$year), by = 2)) + 
