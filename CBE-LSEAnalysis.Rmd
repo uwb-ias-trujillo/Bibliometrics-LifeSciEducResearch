@@ -9,38 +9,30 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-require("devtools")
-require("rgexf")
-require("bibliometrix")
-require("igraph")
-require("tidyverse")
-require("xtable")
-require("sf")
-require("ggrepel")
-require("ggraph")
-require("ggthemes")
-require("rcartocolor")
-require("ggpubr")
-devtools::install_github("massimoaria/bibliometrix")
 
+require("devtools")
+
+devtools::install_github("massimoaria/bibliometrix")
 devtools::install_github("wmurphyrd/fiftystater")
 devtools::install_github("UrbanInstitute/urbnmapr")
+
 library(urbnmapr)
 library(bibliometrix)
-library(tidyverse)
-library(networkD3)
-library(rcartocolor)
-library(rgexf)
-library(igraph)
-library(xtable)
-#library(readxl)
-library(scales)
-library(ggplot2)
 library("fiftystater")
-library(sf)
-library(ggthemes)
-library(ggpubr)
-library(RColorBrewer)
+
+pacman::p_load(tidyverse,
+networkD3,
+rcartocolor,
+rgexf,
+igraph,
+xtable,
+scales,
+ggplot2,
+sf,
+ggthemes,
+ggpubr,
+ggrepel,
+RColorBrewer)
 
 source('functions.r')
 ```
@@ -62,7 +54,7 @@ theme_default <- theme(
     plot.title.position = "plot",
     plot.caption.position = "plot",
     panel.background = element_rect(fill = "white"),
-    panel.grid = element_line(size = .25, color = "#99CCCC"),
+    panel.grid = element_line(size = .25, color = "grey60"),
     axis.ticks = element_blank(),
     legend.key = element_rect(color = "#F2F2F2"),
     legend.background = element_rect(fill = "white"),
@@ -77,9 +69,7 @@ After the results are processed, they are stored as data tables for information 
 options(width=100)
 
 S <- summary(object = results, pause = FALSE)
-S
-#plot(x=results, k=10, pause=F)
-S$MainInformationDF
+xtable(S$MainInformationDF)
 
 dir.create("tables")
 write.csv(file = "tables/keywords.csv",as.data.frame(results$ID[1:20]))
@@ -95,27 +85,29 @@ write.csv(file = "tables/MostProdAuthors.csv", S$MostProdAuthors)
 write.csv(file = "tables/Universities.csv", results$Affiliations)
 
 write.csv(file = "tables/Data.csv", data)
-
-# write.csv(file = "tables/shortData.csv", data %>% select( PY, TI) %>% dplyr::sample_n(200))
 ```
-## Research Questions
+#
+# Research Questions
 
 ### Basic overview of the field
 
 ```{r overview, skip = TRUE}
-colnames(S$AnnualProduction) <- make.names(colnames(S$AnnualProduction))
+colnames(S$AnnualProduction) <- c("Year","Articles")
 
-prodplot<-ggplot(data = S$AnnualProduction, mapping = aes(x = Year..., y = Articles, group = 1)) +
-  geom_line(stat = "identity", color = "#994E95", size = 1.5) + 
-  geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "#1d4f60", size = 1, #alpha = 0.8
-            ) + # added projected articles.
+prodplot<-ggplot(data = S$AnnualProduction, mapping = aes(x = Year, y = Articles, group = 1)) +
+  geom_line(stat = "identity", color = "#266b6e", size = 1.5) + 
+  #geom_point(aes(x= as.factor(2022), y=  40 + 25 + 20), color = "#266b6e", shape = "star", size = 1.5) +
+  geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60",
+            size = 1, alpha = 0.8) + # added projected articles.
   #theme_dark() +
-  scale_x_discrete(breaks = function(x){x[c(TRUE, FALSE)]})  +
+  #theme_minimal() +
+ # scale_x_discrete(breaks = function(x){x[c(TRUE, FALSE)]})  +
+  scale_x_discrete(breaks = function(x){x[if_else(x == 2010 | x == 2020, TRUE,FALSE,)]})+
   theme_default +
-  theme(panel.grid.major.x = element_blank(),
+  theme(#panel.grid.major.x = element_blank(),
         panel.grid.minor = element_blank(),
         panel.grid.major.y = element_line(size = 0.2),
-        axis.text.x = element_blank())+
+        axis.text.x = element_text(hjust = 0))+
   labs(
     title = "Articles published per year",
     x = NULL,
@@ -125,6 +117,7 @@ prodplot
 ggsave("figures/AnnualProductivity.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
        width = 7, height = 4, units = "in", limitsize = FALSE)
+
 
 ```
 
@@ -219,7 +212,8 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
           ) + 
     labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) +
     scale_x_discrete(limits = rev(levels(df2$Author))) + 
-    theme_minimal() +
+    theme_default+
+  #theme_minimal() +
   #scale_x_discrete(labels = AU$case) +
   theme(plot.title.position = "plot",
         panel.grid.minor = element_blank(),
