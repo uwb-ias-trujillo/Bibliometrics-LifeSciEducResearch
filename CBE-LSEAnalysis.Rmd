@@ -105,7 +105,7 @@ prodplot<-ggplot(data = S$AnnualProduction, mapping = aes(x = Year, y = Articles
   scale_x_discrete(breaks = function(x){x[if_else(x == 2010 | x == 2020, TRUE,FALSE,)]})+
   theme_default +
   theme(#panel.grid.major.x = element_blank(),
-        panel.grid.minor = element_blank(),
+        panel.grid.minor.y =  element_blank(),
         panel.grid.major.y = element_line(size = 0.2),
         axis.text.x = element_text(hjust = 0))+
   labs(
@@ -113,6 +113,8 @@ prodplot<-ggplot(data = S$AnnualProduction, mapping = aes(x = Year, y = Articles
     x = NULL,
     y = NULL,
   )
+
+
 prodplot
 ggsave("figures/AnnualProductivity.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
