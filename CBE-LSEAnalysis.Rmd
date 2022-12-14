@@ -124,15 +124,36 @@ prodplot <- ggplot(data = AnnualProduction,
              aes(x = Year, y= 113),
              color = "Black") +
   geom_text(data = AnnualProduction %>% filter(Year %in% c(2015)), 
-            aes(x = Year, y= 114, label = "Dolan"), color = "Black", hjust = 0, vjust = 0) +
+            aes(x = Year, y= 114, label = "Dolan"), 
+            color = "Black", 
+            hjust = 0, vjust = 0) +
   geom_text(data = AnnualProduction %>% filter(Year %in% c(2020)), 
-            aes(x = Year, y= 113, label = " Schinske &\n Tanner"), color = "Black", hjust = 0, vjust = 1, nudge_y = 0) +
-  geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2013, 2016)), 
-                  aes(x = Year, y= Articles, label = c(Articles)), min.segment.length = 1, vjust = "middle", hjust =1, box.padding = 0.1) +
+            aes(x = Year, y= 113, label = " Schinske &\n Tanner"), 
+            color = "Black", hjust = 0, 
+            vjust = 1, nudge_y = 0) +
+  geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2016)), 
+                  aes(x = Year, y= Articles, label = c(Articles)), 
+                  min.segment.length = 1, vjust = "middle", 
+                  hjust =1, box.padding = 0.1) +
   geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2011, 2015)), 
-                  aes(x = Year, y= Articles, label = c(Articles)), min.segment.length = 1, vjust = "top", hjust = "right", box.padding = 0, nudge_x = 0, nudge_y = 0) +
-  geom_text(data = AnnualProduction %>% filter(Year %in% c(2022), Indexed == "Projected"), 
-            aes(x = Year, y= Articles, label = "Projected\n 85"), vjust = 0, hjust = 1) +
+                  aes(x = Year, y= Articles, label = c(Articles)), 
+                  min.segment.length = 1, vjust = "top", 
+                  hjust = "right", box.padding = 0, 
+                  nudge_x = 0, nudge_y = 0) +
+    geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2013)), 
+                  aes(x = Year, y= Articles, label = c(Articles)), 
+                  min.segment.length = 1, vjust = "top", 
+                  hjust = "right", box.padding = 0.4, 
+                  #nudge_x = 0, 
+                  nudge_y = 4
+                  #vjust = "middle", 
+                  #hjust =1
+                  ) +
+  geom_text(data = AnnualProduction %>% filter(Year %in% c(2022), 
+                                               Indexed == "Projected"), 
+            aes(x = Year, y= Articles, 
+                label = "Projected\n 85"), 
+            vjust = 0, hjust = 1, nudge_y = 2) +
   #geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60", size = 1, alpha = 0.8) + # added projected articles.
   scale_x_discrete(breaks = function(x){x[if_else(x == 2010 | x == 2020, TRUE,FALSE,)]})+
   theme_default +
@@ -216,12 +237,12 @@ df2 <- dplyr::group_by(df, .data$Author, .data$year) %>%
     as.data.frame()
 
 AU2 <- df2 %>% group_by(Author) %>% summarise(medianY = median(year)) %>% full_join(AU, by = c("Author" = "AU"))
-AU2$Author<-fct_reorder(AU2$Author,
+AU2$case<-fct_reorder(AU2$case,
                         AU2$medianY,
                         #AU2$h_index,
                         .desc = FALSE)
   
-levels(df2$Author) <- levels(AU2$Author)
+levels(df2$Author) <- levels(AU2$case)
 x <- c(0.5, 1.5 * k/10)
 y <- c(min(df$year), min(df$year) + diff(range(df2$year)) * 0.125)
 data("logo", envir = environment())
@@ -294,7 +315,8 @@ ggarrange(prodplot +
 
 ggsave("figures/Prodcommon.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
-       width = 7, height = 5, units = "in", limitsize = FALSE)
+       #width = 4, height = 6, units = "in", 
+       limitsize = FALSE)
 ```
 
 
