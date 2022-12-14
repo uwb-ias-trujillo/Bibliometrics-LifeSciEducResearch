@@ -313,13 +313,14 @@ ggarrange(prodplot +
           authorprod +
             ggtitle("B. Top-Author Productivity"), 
           ncol	=1,
-          heights = c(1,1.4),
+          heights = c(1.3,1.8),
+          widths = 1,
           align = "v"
           )
 
 ggsave("figures/Prodcommon.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
-       #width = 7, units = "in", 
+       width = 7, height = 7, units = "in", 
        limitsize = FALSE)
 ```
 
