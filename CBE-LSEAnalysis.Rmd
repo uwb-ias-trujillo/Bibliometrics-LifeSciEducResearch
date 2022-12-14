@@ -21,6 +21,7 @@ library(bibliometrix)
 library("fiftystater")
 
 pacman::p_load(tidyverse,
+readxl,
 networkD3,
 rcartocolor,
 rgexf,
@@ -86,7 +87,7 @@ write.csv(file = "tables/Universities.csv", results$Affiliations)
 
 write.csv(file = "tables/Data.csv", data)
 ```
-#
+
 # Research Questions
 
 ### Basic overview of the field
@@ -94,26 +95,59 @@ write.csv(file = "tables/Data.csv", data)
 ```{r overview, skip = TRUE}
 colnames(S$AnnualProduction) <- c("Year","Articles")
 
-prodplot<-ggplot(data = S$AnnualProduction, mapping = aes(x = Year, y = Articles, group = 1)) +
-  geom_line(stat = "identity", color = "#266b6e", size = 1.5) + 
-  #geom_point(aes(x= as.factor(2022), y=  40 + 25 + 20), color = "#266b6e", shape = "star", size = 1.5) +
-  geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60",
-            size = 1, alpha = 0.8) + # added projected articles.
-  #theme_dark() +
-  #theme_minimal() +
- # scale_x_discrete(breaks = function(x){x[c(TRUE, FALSE)]})  +
+AnnualProduction <- S$AnnualProduction %>%
+  mutate(Indexed = "Indexed") %>%
+  filter(Year != 2022) %>%
+  rbind( data.frame(Year = c(2021,2022), 
+                    Indexed = "Projected", 
+                    Articles = c(74,40 + 25 + 20))
+         ) %>%
+  mutate(col = case_when(Indexed == "Indexed" ~ "#266b6e",
+                         Indexed == "Projected" ~ "#1d4f60",))
+
+prodplot <- ggplot(data = AnnualProduction, 
+                 mapping = aes(x = Year, 
+                               y = Articles, 
+                               group = Indexed, 
+                               color = Indexed, linetype = Indexed)) +
+  geom_line(stat = "identity", 
+            size = 1.5) +
+  geom_text(data = AnnualProduction %>% filter(Year %in% c(2010)), 
+            aes(x = Year, y= 115, label = "Wood "), 
+            color = "Black", 
+            hjust = 1, 
+            vjust = 1) +
+  geom_line(data = AnnualProduction %>% filter(Year %in% c(2010:2020)), 
+            aes(x = Year, y= 113),
+            color = "Black") +
+  geom_point(data = AnnualProduction %>% filter(Year %in% c(2010,2020)), 
+             aes(x = Year, y= 113),
+             color = "Black") +
+  geom_text(data = AnnualProduction %>% filter(Year %in% c(2015)), 
+            aes(x = Year, y= 114, label = "Dolan"), color = "Black", hjust = 0, vjust = 0) +
+  geom_text(data = AnnualProduction %>% filter(Year %in% c(2020)), 
+            aes(x = Year, y= 113, label = " Schinske &\n Tanner"), color = "Black", hjust = 0, vjust = 1, nudge_y = 0) +
+  geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2013, 2016)), 
+                  aes(x = Year, y= Articles, label = c(Articles)), min.segment.length = 1, vjust = "middle", hjust =1, box.padding = 0.1) +
+  geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2011, 2015)), 
+                  aes(x = Year, y= Articles, label = c(Articles)), min.segment.length = 1, vjust = "top", hjust = "right", box.padding = 0, nudge_x = 0, nudge_y = 0) +
+  geom_text(data = AnnualProduction %>% filter(Year %in% c(2022), Indexed == "Projected"), 
+            aes(x = Year, y= Articles, label = "Projected\n 85"), vjust = 0, hjust = 1) +
+  #geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60", size = 1, alpha = 0.8) + # added projected articles.
   scale_x_discrete(breaks = function(x){x[if_else(x == 2010 | x == 2020, TRUE,FALSE,)]})+
   theme_default +
+  scale_color_manual(values= c("#5881b7","#29456B")) +
+   guides(Indexed = guide_legend("Published articles"))+
   theme(#panel.grid.major.x = element_blank(),
         panel.grid.minor.y =  element_blank(),
         panel.grid.major.y = element_line(size = 0.2),
-        axis.text.x = element_text(hjust = 0))+
+        axis.text.x = element_text(hjust = 0),
+         legend.position = "none")+
   labs(
     title = "Articles published per year",
     x = NULL,
     y = NULL,
   )
-
 
 prodplot
 ggsave("figures/AnnualProductivity.jpg", 
@@ -132,8 +166,10 @@ S$MostProdAuthors
 authors=gsub(","," ",names(results$Authors))
 indices <- Hindex(data, field = "author", elements = authors, sep = ";", years = Inf)
 
-indices$H %>%
-  dplyr::arrange(desc(NP))
+authortopH<- indices$H %>%
+  dplyr::arrange(desc(h_index)) %>%
+  select(Element,h_index) %>%
+  top_n(10)
 
 as_tibble(results$Authors)
 
@@ -142,27 +178,30 @@ authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by
   #only showing authors with at least 5 publications.
 
 M <- data
-  M$TC <- as.numeric(M$TC)
-  M$PY <- as.numeric(M$PY)
-  M <- M[!is.na(M$PY), ]
-  Y <- as.numeric(substr(Sys.time(), 1, 4))
-  listAU <- (strsplit(M$AU, ";"))
-  nAU <- lengths(listAU)
+M$TC <- as.numeric(M$TC)
+M$PY <- as.numeric(M$PY)
+M <- M[!is.na(M$PY), ]
+Y <- as.numeric(substr(Sys.time(), 1, 4))
+listAU <- (strsplit(M$AU, ";"))
+nAU <- lengths(listAU)
 
-  df <- data.frame(AU = trimws(unlist(listAU)), SR = rep(M$SR,nAU))
-  AU <- df %>% group_by(.data$AU) %>% count() %>% arrange(desc(.data$n)) %>% 
-    ungroup()
-  k <- min(10, nrow(AU))
-  AU <- AU %>% slice_head(n = k)
-  AU$case <- str_replace(
-      str_to_title(AU$AU),
-      "[a-zA-Z]+$",
-      str_to_upper(
-        str_extract(
-          AU$AU,"[a-zA-Z]+$")
-        ))
+df <- data.frame(AU = trimws(unlist(listAU)), SR = rep(M$SR,nAU))
+AU <- df %>% group_by(.data$AU) %>% 
+  count() %>% 
+  full_join(authortopH, by = c("AU" = "Element")) %>%
+  arrange(desc(.data$h_index)) %>% 
+  ungroup()
+k <- min(10, nrow(AU))
+AU <- AU %>% slice_head(n = k)
+AU$case <- str_replace(
+  str_to_title(AU$AU),
+  "[a-zA-Z]+$",
+  str_to_upper(
+    str_extract(
+      AU$AU,"[a-zA-Z]+$")
+    ))
   
-  df <- df %>% right_join(AU, by = "AU") %>% left_join(M, by = "SR") %>% 
+df <- df %>% right_join(AU, by = "AU") %>% left_join(M, by = "SR") %>% 
     select(.data$AU.x, .data$PY, .data$TI, .data$SO, .data$DI, .data$TC) %>% 
     mutate(TCpY = .data$TC/(Y - .data$PY + 1)) %>% 
     group_by(.data$AU.x) %>% 
@@ -177,13 +216,17 @@ df2 <- dplyr::group_by(df, .data$Author, .data$year) %>%
     as.data.frame()
 
 AU2 <- df2 %>% group_by(Author) %>% summarise(medianY = median(year)) %>% full_join(AU, by = c("Author" = "AU"))
-AU2$Author<-fct_reorder(AU2$Author,AU2$medianY, .desc = FALSE)
+AU2$Author<-fct_reorder(AU2$Author,
+                        AU2$medianY,
+                        #AU2$h_index,
+                        .desc = FALSE)
   
 levels(df2$Author) <- levels(AU2$Author)
-  x <- c(0.5, 1.5 * k/10)
-  y <- c(min(df$year), min(df$year) + diff(range(df2$year)) * 0.125)
-  data("logo", envir = environment())
-  logo <- grid::rasterGrob(logo, interpolate = TRUE)
+x <- c(0.5, 1.5 * k/10)
+y <- c(min(df$year), min(df$year) + diff(range(df2$year)) * 0.125)
+data("logo", envir = environment())
+logo <- grid::rasterGrob(logo, interpolate = TRUE)
+
 
 authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
                               text = paste("Author: ", .data$Author,
@@ -191,39 +234,41 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
                                     "\nN. of Articles: ", .data$freq, 
                                     "\nTotal Citations per Year: ", round(.data$TCpY, 2)))) + 
     geom_line(data = df2, aes(x = .data$Author, y = .data$year, group = .data$Author), 
-              size = 1, color =  "#994E95", alpha = 0.5) + 
+              size = 0.7, color =  "#994E95", alpha = 0.9) + 
   geom_point(aes(size = .data$freq), color = "#FFFFFF") +
   geom_point(aes(alpha = .data$TCpY, size = .data$freq), color = "#994E95") +
-    scale_size(range = c(2, 6)) + 
-    scale_alpha(range = c(0.3, 1)) + 
-    scale_y_continuous(breaks = seq(min(df2$year), max(df2$year), by = 2)) + 
-    guides(size = guide_legend(order = 1, "Number of\nArticles"), 
-           alpha = guide_legend(order = 2, "Times Cited\nper Year")) + 
-    theme(legend.position = "right", 
-          text = element_text(color = "#444444"), 
-          panel.background = element_rect(fill = "#FFFFFF"), 
-          plot.title = element_text(size = 24), 
-          axis.title = element_text(size = 14, color = "#555555"), 
-          axis.title.x = element_text(hjust = 0.95), 
-          axis.title.y = element_text(vjust = 1, angle = 90), 
-          axis.text.x = element_text(face = "bold", angle = 90), 
-          axis.text.y = element_text(face = "bold"), 
-          #axis.line.x = element_line(color = "grey50", size = 0.5), 
-          panel.grid.major.x = element_blank() 
-          #panel.grid.major.y = element_line(size = 0.2, color = "grey90")
-          ) + 
-    labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) +
-    scale_x_discrete(limits = rev(levels(df2$Author))) + 
-    theme_default+
-  #theme_minimal() +
-  #scale_x_discrete(labels = AU$case) +
-  theme(plot.title.position = "plot",
-        panel.grid.minor = element_blank(),
-        panel.grid.major.y = element_blank(),
+    scale_size(range = c(2, 6), 
+               breaks = c(1,3,5,7)) + 
+    scale_alpha(range = c(0.3, 1), 
+                breaks =  c(0,20,40,60)) + 
+    scale_y_continuous(breaks = c(2010,2020)) +
+    guides(size = guide_legend(order = 1, "Number of\n Articles"), 
+           alpha = guide_legend(order = 2, "Times Cited\n per Year")) + 
+  theme_default+
+    theme(legend.position = "bottom",
         legend.title = element_text(),
-        axis.text.y = element_text(margin = margin(r = -0.05, l = 0.3, unit = "in")),
-        legend.position = "right") +
-  coord_flip()
+        legend.box="vertical",
+          text = element_text(color = "#444444"), 
+          panel.background = element_rect(fill = "#FFFFFF"),
+          axis.title = element_text(size = 14, color = "#555555"), 
+          axis.title.y = element_text(vjust = 1, angle = 0, hjust = 0), 
+          axis.text.x = element_text(
+                                     hjust = 0
+                                     ),
+          axis.text.y = element_text(
+                                   margin = margin(r = -0.05, l = 0.3, unit = "in"),
+                                   hjust = 1),
+          panel.grid.minor.x = element_blank(),
+          panel.grid.minor.y = element_blank(),
+          panel.grid.major.y = element_line(size = 0.2),
+        panel.grid.major.x = element_line(size = 0.2),
+        plot.title.position = "plot", legend.margin=margin())+
+            guides(fill=guide_legend(ncol = 1 ,bycol = TRUE)) + 
+    labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) +
+    scale_x_discrete(labels = rev(levels(df2$Author))) + 
+  #theme_minimal() +
+  #scale_x_discrete(labels = AU$case)+
+  coord_flip() 
 
 authorprod
 
@@ -241,9 +286,11 @@ ggarrange(prodplot +
             #theme(plot.margin = margin(0.1,0.1,2,0.1, "cm")) 
             ,
                   authorprod +
-                    ggtitle("B. Top-Author Productivity")#+ 
+                    ggtitle("B. Top-Author Productivity") #+
                     #theme(plot.margin = margin(0.1,0.1,2,0.1, "cm")) 
-            , ncol	=1, align = "hv", common.legend = TRUE, legend = "bottom")
+            , ncol	=1, align = "hv", common.legend = TRUE, legend = "right") +
+            #guides(fill=guide_legend(nrow = 1,byrow = TRUE)) +
+            guides(fill=guide_legend(ncol = 1,bycol = TRUE)) #+ theme(legend = element_rect(hjust = 0))
 
 ggsave("figures/Prodcommon.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
@@ -325,7 +372,7 @@ AffiliationWorldMap <- countries %>%
         # plot.title.position = "plot",
         # plot.caption.position =  "plot",
         legend.title = element_blank(),
-        panel.background = element_rect(fill = "lightblue", color = "lightblue"),
+        panel.background = element_rect(fill = "aliceblue", color = "aliceblue"),
         legend.position = c(0.03, 0.06),
         legend.background = element_rect(fill = NA),
         legend.direction = "vertical",
