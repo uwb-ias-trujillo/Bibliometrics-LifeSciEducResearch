@@ -221,6 +221,8 @@ AU$case <- str_replace(
     str_extract(
       AU$AU,"[a-zA-Z]+$")
     ))
+
+AU$case <- str_c(AU$case, ", ",AU$h_index)
   
 df <- df %>% right_join(AU, by = "AU") %>% left_join(M, by = "SR") %>% 
     select(.data$AU.x, .data$PY, .data$TI, .data$SO, .data$DI, .data$TC) %>% 
@@ -238,9 +240,9 @@ df2 <- dplyr::group_by(df, .data$Author, .data$year) %>%
 
 AU2 <- df2 %>% group_by(Author) %>% summarise(medianY = median(year)) %>% full_join(AU, by = c("Author" = "AU"))
 AU2$case<-fct_reorder(AU2$case,
-                        AU2$medianY,
-                        #AU2$h_index,
-                        .desc = FALSE)
+                        #AU2$medianY,
+                        AU2$h_index,
+                        .desc = TRUE)
   
 levels(df2$Author) <- levels(AU2$case)
 x <- c(0.5, 1.5 * k/10)
@@ -253,8 +255,8 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
                               text = paste("Author: ", .data$Author,
                                     "\nYear: ", .data$year,
                                     "\nN. of Articles: ", .data$freq, 
-                                    "\nTotal Citations per Year: ", round(.data$TCpY, 2)))) + 
-    geom_line(data = df2, aes(x = .data$Author, y = .data$year, group = .data$Author), 
+                                    "\nTotal Citations per Year: ", round(.data$TCpY, 2)))) +
+  geom_line(data = df2, aes(x = .data$Author, y = .data$year, group = .data$Author), 
               size = 0.7, color =  "#994E95", alpha = 0.9) + 
   geom_point(aes(size = .data$freq), color = "#FFFFFF") +
   geom_point(aes(alpha = .data$TCpY, size = .data$freq), color = "#994E95") +
@@ -268,7 +270,7 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
   theme_default+
     theme(legend.position = "bottom",
         legend.title = element_text(),
-        legend.box="vertical",
+        legend.box="horizontal",
           text = element_text(color = "#444444"), 
           panel.background = element_rect(fill = "#FFFFFF"),
           axis.title = element_text(size = 14, color = "#555555"), 
@@ -284,8 +286,8 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
           panel.grid.major.y = element_line(size = 0.2),
         panel.grid.major.x = element_line(size = 0.2),
         plot.title.position = "plot", legend.margin=margin())+
-            guides(fill=guide_legend(ncol = 1 ,bycol = TRUE)) + 
-    labs(title = "Author productivity from 2008 - 2022", x = NULL, y = NULL) +
+            guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
+    labs(title = "Author productivity from 2008 - 2022", subtitle = "Author name by H-index", x = NULL, y = NULL) +
     scale_x_discrete(labels = rev(levels(df2$Author))) + 
   #theme_minimal() +
   #scale_x_discrete(labels = AU$case)+
@@ -303,19 +305,20 @@ ggsave("figures/AuthorProd.jpg",
 
 ```{r combing journal and author figure}
 ggarrange(prodplot + 
-            ggtitle("A. Journal Productivity")#+ 
-            #theme(plot.margin = margin(0.1,0.1,2,0.1, "cm")) 
-            ,
-                  authorprod +
-                    ggtitle("B. Top-Author Productivity") #+
+            ggtitle("A. Journal Productivity")#+
+            #theme(legend.position = "none")
+          ,
+          authorprod +
+            ggtitle("B. Top-Author Productivity") #+
                     #theme(plot.margin = margin(0.1,0.1,2,0.1, "cm")) 
-            , ncol	=1, align = "hv", common.legend = TRUE, legend = "right") +
+            , ncol	=1, align = "v",
+          #heights = c(1, 1.7)) #+
             #guides(fill=guide_legend(nrow = 1,byrow = TRUE)) +
-            guides(fill=guide_legend(ncol = 1,bycol = TRUE)) #+ theme(legend = element_rect(hjust = 0))
+            #guides(fill=guide_legend(ncol = 1,bycol = TRUE)) #+ theme(legend = element_rect(hjust = 0))
 
 ggsave("figures/Prodcommon.jpg", 
        device = "jpeg", dpi = 400, bg = "white",
-       #width = 4, height = 6, units = "in", 
+       #width = 7, units = "in", 
        limitsize = FALSE)
 ```
 
