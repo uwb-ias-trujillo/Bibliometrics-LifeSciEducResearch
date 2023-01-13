@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 require("devtools")
 
@@ -111,29 +111,29 @@ prodplot <- ggplot(data = AnnualProduction,
                                group = Indexed, 
                                color = Indexed, linetype = Indexed)) +
   geom_line(data = AnnualProduction,
-            aes(x = Year, y= 116),
+            aes(x = Year, y= 113),
             color = "white", size = 13) +  
   geom_line(stat = "identity", 
             size = 1.5) +
-  geom_text(data = AnnualProduction %>% filter(Year %in% c(2010)), 
-            aes(x = Year, y= 115, label = "Wood "), 
-            color = "Black", 
-            hjust = 1, 
-            vjust = 1) +
   geom_line(data = AnnualProduction %>% filter(Year %in% c(2010:2020)), 
             aes(x = Year, y= 113),
             color = "Black") +
   geom_point(data = AnnualProduction %>% filter(Year %in% c(2010,2020)), 
              aes(x = Year, y= 113),
              color = "Black") +
-  geom_text(data = AnnualProduction %>% filter(Year %in% c(2015)), 
-            aes(x = Year, y= 114, label = "Dolan"), 
+   geom_text(data = AnnualProduction %>% filter(Year %in% c(2010)), 
+            aes(x = Year, y= 112, label = "Wood "), 
             color = "Black", 
-            hjust = 0, vjust = 0) +
+            hjust = 1, 
+            vjust = 1) +
+  geom_text(data = AnnualProduction %>% filter(Year %in% c(2015)), 
+            aes(x = Year, y= 112, label = "Dolan"), 
+            color = "Black", 
+            hjust = "center", vjust = 1) +
   geom_text(data = AnnualProduction %>% filter(Year %in% c(2020)), 
-            aes(x = Year, y= 113, label = " Schinske-\n Tanner"), 
+            aes(x = Year, y= 112, label = " Schinske-\n Tanner"), 
             color = "Black", hjust = 0, 
-            vjust = "middle", nudge_y = 0) +
+            vjust = 1, nudge_y = 0) +
   geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2016)), 
                   aes(x = Year, y= Articles, label = c(Articles)), 
                   min.segment.length = 1, vjust = "middle", 
@@ -159,7 +159,7 @@ prodplot <- ggplot(data = AnnualProduction,
             vjust = 0, hjust = 1, nudge_y = 2) +
   #geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60", size = 1, alpha = 0.8) + # added projected articles.
   scale_x_discrete(breaks = function(x){x[if_else(x == 2010 |x == 2015 | x == 2020, TRUE,FALSE,)]})+
-  scale_y_continuous(limits = c(40,116)) +
+  scale_y_continuous(limits = c(40,114)) +
   theme_default +
   scale_color_manual(values= c("#5881b7","#29456B")) +
    guides(Indexed = guide_legend("Published articles"))+
@@ -326,19 +326,6 @@ ggsave("figures/Prodcommon.jpg",
 
 
 ```{r author other, eval=FALSE}
-authordata %>%
-  filter(n > 8) %>%
-ggplot(aes( x = NP, y = h_index)) + 
-  geom_point(alpha = 0.6) +
-  geom_label_repel(aes(label = AU), size = 2,  box.padding = 0.001, min.segment.length = 0.01) +
-  #theme_dark() +
-  theme_default +
-  labs(y = "h—index",
-       x = "Publications",
-       caption = "CBE — Life Science Education") +
-  coord_flip() +
-  ggtitle("Author productivity", subtitle = "Number of publications and h-index for LSE authors between 2010 and 2021")
-
 authordata %>%
   filter(n > 8) %>%
 ggplot(aes(x = reorder(AU, (NP)), y = NP)) + 
@@ -594,47 +581,11 @@ types %>%
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
   units = "in", limitsize = FALSE)
-
-
-#SECOND ATTEMPT AT COLOR SCHEME
-
-types %>%
-  pivot_longer(!SchoolType) %>%
-  filter(name == "US" | name == "LSE") %>%
-  filter(SchoolType != FALSE) %>%
-  ggplot(aes(x = (name),value)) +
-    geom_col(aes(fill = value))+
-    #geom_col(aes(fill = c("red",carto_pal(n = 7, "BluGrn")),
-                  # c("red","#c4e6c3", "#96d2a4", "#6dbc90", "#4da284", "#36877a", "#266b6e", "#1d4f60")), 
-    #       size = 4)) +
-  geom_text(aes(label = paste0(round(value*100, 0),"%")),
-            vjust = 0.5, nudge_y = -.04,
-            size = 3, fontface = "bold") +
-  theme_default +
-  theme(legend.position="none", 
-        strip.background = element_rect(fill = "#F2F2F2"),
-        #panel.grid.major.x = element_blank(),
-        axis.text = element_text(size = 10)
-        ) +
-  #scale_color_identity(guide = "none") +
-  scale_fill_carto_c(type = "quatitative", palette = "BluGrn")+
-  scale_y_continuous(minor_breaks = NULL,
-                     labels = scales::percent) +
-  labs(x = NULL, y = NULL,
-       title = "What types of institutions are represented in LSE?"
-       ) +
-  facet_wrap(~SchoolType, nrow = 2) +
-  theme(panel.spacing.y = unit(1, "lines"),
-        axis.text.y = element_text(margin = margin(l = 0.2, unit = "in")),
-        strip.text.x = element_text(size = 11),
-        strip.background = element_rect(fill = "white"),
-        plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"))
-
 ```
 
 
 ```{r MSI cont}
-temp <- msiuniv %>%
+msiuniv2 <- msiuniv %>%
   mutate_if(is.numeric,as.factor)%>%
   mutate_if(is.character,as.factor)%>%
   select(`Institution Name`,`AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU) %>%
@@ -642,7 +593,9 @@ temp <- msiuniv %>%
   mutate(eligibility = if_else(value == 1 | value == 2| value == 3, "Ineligible", "NA")) %>%
   mutate(eligibility = if_else(value == 4 | value == '4R' |value == 5 | value == '5R', "Eligible or potentially eligible", eligibility))%>%
   mutate(eligibility = if_else(value == 6, "Current grantee", eligibility)) %>%
-  mutate(eligibility = if_else(value == 0, "Undetermined", eligibility)) %>%
+  mutate(eligibility = if_else(value == 0, "Undetermined", eligibility)) 
+
+temp <- msiuniv2 %>% 
   group_by(name,eligibility)%>%
   summarize(n=n())%>%
   mutate(perc = round(n/sum(n),3)) %>%
@@ -661,35 +614,56 @@ msisummary_perc <- temp%>%
   pivot_wider(names_from = name, values_from = c(perc))
 view(msisummary_perc)
 
-# temp %>%
-#   filter(eligibility == "Current grantee") %>%
-#   arrange(perc, "desc") %>% 
-#   mutate(name = as.character(name)) %>%
-#   mutate(perc = case_when(name == "SIP" ~ 100,
-#                           TRUE ~ perc))%>%
-#   mutate(name = reorder(as.factor(name), desc(perc)), order = (perc)) %>%
-#   pull(name)-> x_levels
 temp$name<- factor(temp$name, levels = c("SIP","HBCU Masters", "TCCU","AANAPISI", "PBI A", "ANNH","PBI F","PPOHA","AANAPISI F", "HBGI","HBCU" ,"HSI STEM","HSI"))
 
 MSIAffiliationPlot <- temp %>% 
-  filter(#eligibility != "Ineligible" &
+  filter(eligibility != "Ineligible",
     eligibility != "Undetermined", 
+    name %in% c("TCCU", "ANNH","PBI F","PPOHA","AANAPISI F", "HBGI","HBCU","HSI"),
+    name %in% c("SIP","HBCU Masters","PBI A", "AANAPISI","HSI STEM")
     #eligibility != "Ineligible", 
     !is.na(name)) %>%
   ggplot(aes(x = name, y = perc, fill = eligibility)) +
   geom_col(position = position_stack(reverse = TRUE)) +
-  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
+  scale_y_continuous(labels = scales::percent, 
+                     #limits = c(0,1)
+                     ) +
   coord_flip() +
   facet_grid(rows = vars(titleIII), scales = "free", space = "free")+
-  #theme_dark() +
-  #scale_fill_manual(values = c("#F26E50", "#F2A679", "#F2D6B9")) +
-  #scale_fill_viridis(discrete = TRUE, option = "F") +
   scale_fill_manual(values = c("#266b6e", "#4da284", "#c4e6c3"
                                )) +
- #scale_fill_carto_d(palette = "BluGrn", direction = -1) +
-  
-  #c4e6c3,#96d2a4,#6dbc90,#4da284,#36877a,#266b6e,#1d4f60
-  
+  theme_default + 
+  labs(
+    title = "US Author affiliations by Minority Serving Institution status",
+    y = NULL, 
+    x = NULL
+  )  +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text.y = element_text(margin = margin(r = -0.5, l = 0.4, unit = "cm")),
+        strip.text.y =  element_blank()
+       )
+
+MSIAffiliationPlot
+ggsave("figures/MsiAffiliations.jpg",
+       device = "jpeg", dpi = 400,
+       width = 7, height = 4,
+       units = "in", limitsize = FALSE)
+
+MSIAffiliationPlotSupp <- temp %>% 
+  filter(eligibility != "Undetermined",
+    !is.na(name)) %>%
+  ggplot(aes(x = name, y = perc, fill = eligibility)) +
+  geom_col(position = position_stack(reverse = TRUE)) +
+  scale_y_continuous(labels = scales::percent, 
+                     limits = c(0,1)
+                     ) +
+  coord_flip() +
+  facet_grid(rows = vars(titleIII), scales = "free", space = "free")+
+  scale_fill_manual(values = c("#266b6e", "#4da284", "#c4e6c3"
+                               )) +
   theme_default + 
   labs(
     title = "US Author affiliations by Minority Serving Institution status",
@@ -704,13 +678,11 @@ MSIAffiliationPlot <- temp %>%
         strip.text.y =  element_blank()
        )
 
-MSIAffiliationPlot
-ggsave("figures/MsiAffiliations.jpg",
+MSIAffiliationPlotSupp
+ggsave("figures/MsiAffiliationsSupp.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 4,
        units = "in", limitsize = FALSE)
-
-#mutate(status = if_else(value == TRUE, "Eligible or current grantee",  NA, status ==                     if_else(value == FALSE,"Not eligible or potentially eligible", NA)))
 
 msiuniv %>%
   mutate_if(is.numeric,as.factor)%>%
@@ -726,7 +698,38 @@ msiuniv %>%
   unique()
     #summarise(total = sum(sum))
 
-msiuniv%>% unique()
+msiuniv2 %>% 
+  group_by(`Institution Name`,eligibility)
+
+eligibilitysummary <- msiuniv2 %>%
+  filter(name != 'SIP') %>%
+  select(`Institution Name`,eligibility) %>%
+  group_by(`Institution Name`,eligibility) %>%
+  summarise(n = n()) 
+
+USinstEligibleCount<- eligibilitysummary%>%
+  filter(eligibility != 'Ineligible' & eligibility != 'Undetermined') %>%
+  select(`Institution Name`) %>%
+  unique() %>% 
+  nrow()
+
+USinstGranteeCount<- eligibilitysummary%>%
+  filter(eligibility != 'Ineligible' & eligibility != 'Undetermined'  & eligibility != 'Eligible or potentially eligible') %>%
+  select(`Institution Name`) %>%
+  unique() %>% 
+  nrow()
+
+USinstCount<-eligibilitysummary %>%
+  select(`Institution Name`) %>%
+  unique() %>% nrow()
+
+PercentEligible <- USinstEligibleCount / USinstCount
+GranteeEligible <- USinstGranteeCount / USinstCount
+
+PercentEligible
+GranteeEligible
+
+table(msidata$`Eligible/ Current Grant`)
 ```
 
 ### What are the collaborative connections between institutions?
