@@ -327,22 +327,38 @@ ggsave("figures/Prodcommon.jpg",
 
 ```{r author other, eval=FALSE}
 authordata %>%
+  mutate(AU = str_replace(
+    str_to_title(AU),
+    "[a-zA-Z]+$",
+    str_to_upper(
+      str_extract(
+        AU,"[a-zA-Z]+$")
+      ))) %>%
   filter(n > 8) %>%
-ggplot(aes(x = reorder(AU, (NP)), y = NP)) + 
-  geom_col(alpha = 1) +
-  #geom_label_repel(aes(label = AU), size = 2, box.padding = 0.001, min.segment.length = 0.01)  +
-  #theme_minimal()+
-  theme_default +
-  labs(y = NULL,
-       x = NULL,
-       caption = "CBE — Life Science Education between 2010 and 2021") +
-  coord_flip() +
-  theme(axis.text.y = element_text(size = 8),
-        panel.grid.major.y = element_blank(),
-        #panel.grid.major.x = element_blank(),
-        #panel.grid.minor.x = element_blank(),
-        legend.position = 'none') +
-  ggtitle("Author productivity", subtitle = "Number of publications by LSE authors")
+  ggplot(aes(x = reorder(AU, (NP)), y = NP)) +
+    geom_col(fill =  "#994E95", alpha = 0.9) +
+    #geom_label_repel(aes(label = AU), size = 2, box.padding = 0.001, min.segment.length = 0.01)  +
+    #theme_minimal()+
+    theme_default +
+    labs(y = NULL,
+         x = NULL,
+         caption = "CBE — Life Science Education between 2010 and 2021") +
+    coord_flip() +
+    theme(#axis.text.y = element_text(size = 8),
+          panel.grid.major.y = element_blank(),
+          #panel.grid.major.x = element_blank(),
+          #panel.grid.minor.x = element_blank(),
+          panel.background = element_rect(fill = "#FFFFFF"),
+          axis.title = element_text(size = 14, color = "#555555"), 
+          axis.title.y = element_text(vjust = 1, angle = 0, hjust = 0), 
+          axis.text.x = element_text(
+                                     hjust = 0
+                                     ),
+          axis.text.y = element_text(size = 8,
+                                    margin = margin(r = -0.05, l = 0.1, unit = "in"),
+                                    hjust = 1,),
+          legend.position = 'none') +
+    ggtitle("Author productivity", subtitle = "Number of publications by LSE authors")
 
 # Add color for school type using the other graph to depict these. 
 # Going to use full join between data on author productivity and their affiliation (university or institution). 
@@ -370,12 +386,19 @@ countryfreq <- results$Countries %>%
     TRUE ~ Tab
   )) 
 
+world_map_short <- world_map %>%
+  full_join(countryfreq, by = c("region" = "Tab")) %>%
+  filter(Freq >= 1 & (subregion != "Alaska" | region != "New Zealand"))#%>%
+  #mutate(case_when(region == "USA", ))
+
+
 AffiliationWorldMap <- countries %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>% 
   ggplot(aes(fill = Freq, map_id = region), color = 1) +
   #geom_hline(yintercept=0, color = "light grey") +
-  geom_map(map = world_map, colour = "white", lwd = 0.2) +
-  expand_limits(x = world_map$long, y = world_map$lat) +
+  geom_map(map = world_map_short, colour = "white", lwd = 0.2) +
+  geom_map(map = world_map, colour = "light grey", lwd = 0.2)+
+  expand_limits(x = world_map_short$long, y = world_map_short$lat) +
   coord_map("moll") +
   #coord_quickmap()+
   theme_map()+
@@ -386,10 +409,10 @@ AffiliationWorldMap <- countries %>%
         # plot.title.position = "plot",
         # plot.caption.position =  "plot",
         legend.title = element_blank(),
-        panel.background = element_rect(fill = "aliceblue", color = "aliceblue"),
-        legend.position = c(0.03, 0.06),
+        #panel.background = element_rect(fill = "aliceblue", color = "aliceblue"),
+        legend.position = c(0.5, 0.01),
         legend.background = element_rect(fill = NA),
-        legend.direction = "vertical",
+        legend.direction = "horizontal",
         #legend.key.size = unit(0.4, "cm"),
         legend.key.height= unit(.5, 'cm'),
         legend.key.width= unit(.5, 'cm'),
@@ -411,7 +434,7 @@ AffiliationWorldMap <- countries %>%
     ) 
 
 AffiliationWorldMap
-ggsave("figures/AffiliationWorldMap.jpg", device = "jpeg", dpi = 400,  width = 7,
+ggsave("figures/AffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 3,
   units = "in", limitsize = FALSE)
 ```
@@ -493,7 +516,8 @@ ArticlesUSMap <- ggplot() +
         legend.key.height= unit(.5, 'cm'),
         legend.key.width= unit(.5, 'cm'),
         plot.caption.position = "plot",
-        plot.caption = element_text(hjust = 0)
+        plot.caption = element_text(hjust = 0),
+        legend.position = c(.8, 0.01)
         #legend.position = "top"
         )
 
