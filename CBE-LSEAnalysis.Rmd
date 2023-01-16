@@ -590,13 +590,16 @@ types %>%
   mutate(colorlevel = case_when(
       name == "US" ~ 0.9,
       name == "LSE" ~ 0.7)) %>%
-  ggplot(aes(x = (name),value)) +
+  ggplot(aes(x = (SchoolType),fill = name,value)) +
 #  geom_col(aes(fill = SchoolType, 
 #               color = scale_fill_manual(values = c("LSE" = "darkblue", "US" = "red")))) +
-    geom_col(aes(fill = SchoolType, color = as.numeric(colorlevel)), 
-           size = 4) +
+    geom_col(aes(color = as.numeric(colorlevel)),
+             position = "dodge",
+             size = 4) +
   geom_text(aes(label = paste0(round(value*100, 0),"%")),
-            vjust = 0.5, nudge_y = -.04,
+            vjust = 0.5,
+            position = "dodge", 
+            #nudge_y = -.04,
             size = 3, fontface = "bold") +
   theme_default +
   theme(legend.position="none", 
@@ -610,12 +613,15 @@ types %>%
   labs(x = NULL, y = NULL,
        title = "What types of institutions are represented in LSE?"
        ) +
-  facet_wrap(~SchoolType, nrow = 2) +
+  coord_flip()+
+  #facet_grid(rows = vars(name), cols = NULL, switch="both")+
   theme(panel.spacing.y = unit(1, "lines"),
         axis.text.y = element_text(margin = margin(l = 0.2, unit = "in")),
         strip.text.x = element_text(size = 11),
-        strip.background = element_rect(fill = "white"),
-        plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"))
+        #strip.background = element_rect(fill = "white"),
+        #plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"),
+        strip.background = element_blank(),
+    strip.placement = "outside")
 
 
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
