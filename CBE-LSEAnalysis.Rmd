@@ -391,6 +391,11 @@ world_map_short <- world_map %>%
   filter(Freq >= 1 & (subregion != "Alaska" | region != "New Zealand"))#%>%
   #mutate(case_when(region == "USA", ))
 
+worldcentroids <- world_map_short %>%
+  group_by(region, Freq) %>%
+  filter(subregion != "Alaska" & subregion != "Pitt Island" & subregion != "Chatham Island" & subregion != "12"& subregion != "13") %>%
+  summarise(latitude = sign(lat) * exp(mean(log(abs(lat)))), longitude = sign(long) * exp(mean(log(abs(long)))))
+
 
 AffiliationWorldMap <- countries %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>% 
@@ -398,6 +403,8 @@ AffiliationWorldMap <- countries %>%
   #geom_hline(yintercept=0, color = "light grey") +
   geom_map(map = world_map_short, colour = "white", lwd = 0.2) +
   geom_map(map = world_map, colour = "light grey", lwd = 0.2)+
+  geom_point(data = worldcentroids, aes(x = longitude, y = latitude, size = Freq, group = region)) +
+    geom_text(data = worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq/8, group = region), color = "white") +
   expand_limits(x = world_map_short$long, y = world_map_short$lat) +
   coord_map("moll") +
   #coord_quickmap()+
@@ -422,10 +429,10 @@ AffiliationWorldMap <- countries %>%
         #legend.position = "left"
         ) +
   scale_fill_carto_c(palette = "BluGrn", direction = 1,
-                       trans = scales::pseudo_log_trans(sigma = 0.01),
-                       breaks = c(1,10, 100, 1000),
-                       labels = c(1,10, 100, 1000),
-                       limits = c(1,1000)
+                       # trans = scales::pseudo_log_trans(sigma = 0.01),
+                       # breaks = c(1,10, 100, 1000),
+                       # labels = c(1,10, 100, 1000),
+                       # limits = c(1,1000)
   ) +
   labs(fill = "Count of article",
        title = "Articles by author's country affiliation",
@@ -492,13 +499,16 @@ ggsave("figures/AffiliationUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
 
 centroids <- spatial_data %>%
   group_by(state_name, articles) %>%
-  summarise(latitude = exp(mean(log(lat))), longitude = exp(mean(log(long))))
+  summarise(latitude = exp(mean(log(lat))), longitude = -exp(mean(log(abs(long))))) %>%
+  inner_join(msistates)
 
 #Article Map 
 ArticlesUSMap <- ggplot() +
   geom_map(data  =  spatial_data, map = us,
            aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
              color = "white", size = 0.25) +
+  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles)) +
+    geom_text(data = centroids, aes(x = longitude, y = latitude, label = articles, size = articles/8), color = "white") +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
@@ -519,7 +529,13 @@ ArticlesUSMap <- ggplot() +
         plot.caption = element_text(hjust = 0),
         legend.position = c(.8, 0.01)
         #legend.position = "top"
-        )
+        )+
+  scale_fill_carto_c(palette = "BluGrn", direction = 1,
+                       # trans = scales::pseudo_log_trans(sigma = 0.01),
+                       # breaks = c(1,10, 100, 1000),
+                       # labels = c(1,10, 100, 1000),
+                       # limits = c(1,1000)
+                     )
 
 ArticlesUSMap
 ggsave("figures/ArticlesUSMap.jpg",
@@ -529,7 +545,7 @@ ggsave("figures/ArticlesUSMap.jpg",
 ```
 
 ```{r combining maps}
-ggarrange(AffiliationWorldMap, ArticlesUSMap, legend = "right", ncol = 1, nrow = 2, align = c("hv"))
+ggarrange(AffiliationWorldMap, ArticlesUSMap,common.legend = TRUE, legend = "bottom", ncol = 1, align = c("hv"))
 ggsave("figures/WorldUSMap.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
