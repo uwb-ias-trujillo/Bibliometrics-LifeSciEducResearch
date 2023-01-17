@@ -574,7 +574,6 @@ msitypeall <- msidata %>%
 
 types <- left_join(msitypeall,msitype, by = "Type & Control")
 colnames(types)<- c("SchoolType", "Number of Insitutions in US", "US", "Number of Institutes in LSE", "LSE")
-
 types$SchoolType <- recode(types$SchoolType, "Pri 2yr" = "Private 2-year", "Pri 4yr" = "Private 4-year","Pub 2yr" = "Public 2-year", "Pub 4yr" = "Public 4-year") 
 
 view(types)
@@ -588,19 +587,28 @@ types %>%
   filter(name == "US" | name == "LSE") %>%
   filter(SchoolType != FALSE) %>%
   mutate(colorlevel = case_when(
-      name == "US" ~ 0.9,
-      name == "LSE" ~ 0.7)) %>%
-  ggplot(aes(x = (SchoolType),fill = name,value)) +
-#  geom_col(aes(fill = SchoolType, 
-#               color = scale_fill_manual(values = c("LSE" = "darkblue", "US" = "red")))) +
-    geom_col(aes(color = as.numeric(colorlevel)),
-             position = "dodge",
-             size = 4) +
-  geom_text(aes(label = paste0(round(value*100, 0),"%")),
-            vjust = 0.5,
-            position = "dodge", 
-            #nudge_y = -.04,
-            size = 3, fontface = "bold") +
+      name == "US" ~ 1,
+      name == "LSE" ~ 0.96)) %>%
+  mutate(Control = case_when( 
+    str_detect(SchoolType, "Private") ~ "Private",
+    str_detect(SchoolType, "Public") ~ "Public"
+    ),
+    Control = as.factor(Control),
+    Type = case_when( 
+    str_detect(SchoolType, "2") ~ "2-Year",
+    str_detect(SchoolType, "4") ~ "4-Year"),
+    Type = as.factor(Type)) %>%
+  ggplot(aes(x = (name), value,fill = SchoolType)) +
+    geom_col(fill = "white",
+               position = "dodge",
+               size = 4) +
+    geom_col(aes(alpha = as.numeric(colorlevel)),
+               position = "dodge",
+               size = 4) +
+    geom_text(aes(label = paste0(round(value*100, 0),"%")),
+              vjust = 0.5,
+              nudge_y = -.015,
+              size = 3, fontface = "bold") +
   theme_default +
   theme(legend.position="none", 
         strip.background = element_rect(fill = "#F2F2F2"),
@@ -608,21 +616,26 @@ types %>%
         axis.text = element_text(size = 10)
         ) +
   scale_color_identity(guide = "none") +
+  scale_alpha_binned(range = c(1.5,0.5)) +
   scale_y_continuous(minor_breaks = NULL,
                      labels = scales::percent) +
   labs(x = NULL, y = NULL,
        title = "What types of institutions are represented in LSE?"
        ) +
   coord_flip()+
-  #facet_grid(rows = vars(name), cols = NULL, switch="both")+
+  facet_grid(rows =vars(SchoolType), scales = "free_y", as.table = TRUE, #nrow = 4, ncol = 1, 
+             #strip.position = "left", #dir = "h"
+             switch = "x"
+             )+
   theme(panel.spacing.y = unit(1, "lines"),
         axis.text.y = element_text(margin = margin(l = 0.2, unit = "in")),
-        strip.text.x = element_text(size = 11),
+        strip.text.x = element_text(size = 11, angle = 0),
+        strip.text.y = element_text(angle = 0),
         #strip.background = element_rect(fill = "white"),
         #plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"),
         strip.background = element_blank(),
-    strip.placement = "outside")
-
+    strip.placement = "outside",
+    legend.position = "none")
 
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
