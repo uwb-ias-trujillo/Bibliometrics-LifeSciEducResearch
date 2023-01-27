@@ -546,7 +546,7 @@ ggsave("figures/ArticlesUSMap.jpg",
 
 ```{r combining maps}
 ggarrange(AffiliationWorldMap, ArticlesUSMap,common.legend = TRUE, legend = "bottom", ncol = 1, align = c("hv"))
-ggsave("figures/WorldUSMap.jpg",
+ggsave("figures/MapCombo.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
        units = "in", bg = "white", limitsize = FALSE)
