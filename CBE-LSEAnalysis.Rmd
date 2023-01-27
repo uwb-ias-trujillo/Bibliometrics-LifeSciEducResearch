@@ -404,8 +404,8 @@ AffiliationWorldMap <- countries %>%
   #geom_hline(yintercept=0, color = "light grey") +
   geom_map(map = world_map_short, colour = "white", lwd = 0.2) +
   geom_map(map = world_map, colour = "light grey", lwd = 0.2)+
-  geom_point(data = worldcentroids, aes(x = longitude, y = latitude, size = Freq *8, group = region)) +
-    geom_text(data = worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq*2, group = region), color = "white") +
+  geom_point(data = worldcentroids, aes(x = longitude, y = latitude, size = Freq, group = region)) +
+    geom_text(data = worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq/6, group = region), color = "white") +
   expand_limits(x = world_map_short$long, y = world_map_short$lat) +
   coord_map("moll") +
   #coord_quickmap()+
@@ -414,6 +414,7 @@ AffiliationWorldMap <- countries %>%
   #labs(caption = "") +
   theme(#plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
         # plot.caption = element_text(hjust = 0, face= "italic"),
+        axis.title = element_text(size = 14, color = "#555555"),
         # plot.title.position = "plot",
         # plot.caption.position =  "plot",
         legend.title = element_blank(),
@@ -435,6 +436,7 @@ AffiliationWorldMap <- countries %>%
                        # labels = c(1,10, 100, 1000),
                        # limits = c(1,1000)
   ) +
+  scale_size(range = c(3,14))+
   labs(fill = "Count of article",
        title = "A. Articles by author's country affiliation",
     x = NULL,
@@ -507,7 +509,7 @@ ArticlesUSMap <- ggplot() +
   geom_map(data  =  spatial_data, map = us,
            aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
              color = "white", size = 0.25) +
-  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles*4)) +
+  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles*100)) +
     geom_text(data = centroids, aes(x = longitude, y = latitude, label = articles, size = articles), color = "white") +
   coord_map("moll") +
   theme_map() +
@@ -518,6 +520,7 @@ ArticlesUSMap <- ggplot() +
     y = NULL
     ) +
   scale_fill_carto_c(palette = "BluGrn", direction = 1) +
+  scale_size(range = c(3,14))+
   theme(#plot.margin = unit(c(-2,0,0,0), "cm"),
         panel.background = element_blank(),
         legend.background = element_blank(),
