@@ -17,7 +17,7 @@ devtools::install_github("wmurphyrd/fiftystater")
 devtools::install_github("UrbanInstitute/urbnmapr")
 
 library(urbnmapr)
-library(bibliometrix)
+#library(bibliometrix)
 library("fiftystater")
 
 pacman::p_load(tidyverse,
@@ -33,7 +33,9 @@ sf,
 ggthemes,
 ggpubr,
 ggrepel,
-RColorBrewer)
+RColorBrewer,
+bibliometrix
+)
 
 source('functions.r')
 ```
@@ -51,18 +53,19 @@ data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
 results <- biblioAnalysis(data, sep = ";")
 
 theme_default <- theme(
-    axis.title = element_text(size = 14, color = "#555555"),
-    plot.caption = element_text(hjust = 0, face= "italic"),
-    plot.title.position = "plot",
-    plot.caption.position = "plot",
-    panel.background = element_rect(fill = "white"),
-    panel.grid = element_line(size = .25, color = "grey60"),
-    axis.ticks = element_blank(),
-    legend.key = element_rect(color = "#F2F2F2"),
-    legend.background = element_rect(fill = "white"),
-    legend.position = "top",
-    plot.background = element_rect(fill = "white")
-    )
+  text = element_text(color = "#444444"),
+  axis.title = element_text(size = 14, color = "#555555"),
+  plot.caption = element_text(hjust = 0, face= "italic"),
+  plot.title.position = "plot",
+  plot.caption.position = "plot",
+  panel.background = element_rect(fill = "white"),
+  panel.grid = element_line(size = .25, color = "grey60"),
+  axis.ticks = element_blank(),
+  legend.key = element_rect(color = "#F2F2F2"),
+  legend.background = element_rect(fill = "white"),
+  legend.position = "top",
+  plot.background = element_rect(fill = "white")
+  )
 ```
 
 After the results are processed, they are stored as data tables for information reporting. 
@@ -281,15 +284,16 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
           panel.background = element_rect(fill = "#FFFFFF"), 
           axis.title.y = element_text(vjust = 1, angle = 0, hjust = 0), 
           axis.text.x = element_text(
-                                     hjust = 0
+                                     hjust = 0, #x_nudge = -0.5
                                      ),
           axis.text.y = element_text(
                                    margin = margin(r = -0.05, l = 0.3, unit = "in"),
                                    hjust = 1),
           panel.grid.minor.x = element_blank(),
           panel.grid.minor.y = element_blank(),
-          panel.grid.major.y = element_line(size = 0.2),
-        panel.grid.major.x = element_line(size = 0.2),
+          #panel.grid.major.y = element_line(size = 0.2),
+          panel.grid.major.y = element_blank(),
+        #panel.grid.major.x = element_line(size = 0.2),
         plot.title.position = "plot", legend.margin=margin())+
             guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
     labs(title = "Author productivity from 2008 - 2022", subtitle = "Author name by H-index", x = NULL, y = NULL) +
@@ -309,10 +313,8 @@ ggsave("figures/AuthorProd.jpg",
 
 
 ```{r combing journal and author figure}
-ggarrange(prodplot + 
-            ggtitle("A. Journal Productivity"),
-          authorprod +
-            ggtitle("B. Top-Author Productivity"), 
+ggarrange(prodplot,
+          authorprod,
           ncol	=1,
           heights = c(1.3,1.8),
           widths = 1,
@@ -404,8 +406,8 @@ AffiliationWorldMap <- countries %>%
   #geom_hline(yintercept=0, color = "light grey") +
   geom_map(map = world_map_short, colour = "white", lwd = 0.2) +
   geom_map(map = world_map, colour = "light grey", lwd = 0.2)+
-  geom_point(data = worldcentroids, aes(x = longitude, y = latitude, size = Freq, group = region)) +
-    geom_text(data = worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq/6, group = region), color = "white") +
+  geom_point(data = worldcentroids, aes(x = longitude, y = latitude, size = Freq*100, group = region)) +
+    geom_text(data = worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq, group = region), color = "white") +
   expand_limits(x = world_map_short$long, y = world_map_short$lat) +
   coord_map("moll") +
   #coord_quickmap()+
@@ -444,8 +446,8 @@ AffiliationWorldMap <- countries %>%
     ) 
 
 AffiliationWorldMap
-ggsave("figures/AffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 3,
+ggsave("figures/AffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  #width = 7,
+  #height = 3,
   units = "in", limitsize = FALSE)
 ```
 
@@ -462,6 +464,7 @@ affiliations <- read_excel("tables/UnivIndex.xlsx")
 msiuniv <- left_join(affiliations, msidata) %>%
   filter(OPEID != "NA")
 
+dplyr::anti_join(affiliations, msidata)
 #Tables
 msistates <- msiuniv %>%
   group_by(St) %>%
@@ -494,8 +497,8 @@ affiliationMap <- ggplot() +
   theme(plot.margin = unit(c(1,1,1,1), "cm"),
         panel.background = element_blank())
 
-ggsave("figures/AffiliationUSMap.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 5,
+ggsave("figures/AffiliationUSMap.jpg", device = "jpeg", dpi = 400,  #width = 7,
+  #height = 5,
   units = "in", limitsize = FALSE)
 
 
@@ -521,6 +524,7 @@ ArticlesUSMap <- ggplot() +
     ) +
   scale_fill_carto_c(palette = "BluGrn", direction = 1) +
   scale_size(range = c(3,14))+
+  theme_default+
   theme(#plot.margin = unit(c(-2,0,0,0), "cm"),
         panel.background = element_blank(),
         legend.background = element_blank(),
@@ -548,7 +552,7 @@ ggsave("figures/ArticlesUSMap.jpg",
 ```
 
 ```{r combining maps}
-ggarrange(AffiliationWorldMap, ArticlesUSMap,common.legend = TRUE, legend = "bottom", ncol = 1, align = c("hv"))
+ggarrange(AffiliationWorldMap, ArticlesUSMap,common.legend = TRUE, legend = "none", ncol = 1, align = c("hv"))
 ggsave("figures/MapCombo.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
@@ -891,13 +895,13 @@ write.csv(file = "Sources.csv",sourcestable)
 # Show how key words appear together using Multiple Correspondence Analysis
 #Consider selecting only articles that have the keywords  associated 
 CS30 <- bibliometrix::conceptualStructure(data, 
-                          field ="ID", 
+                          field ="TI", 
                           ngrams = 1, 
                           method = "MCA", 
                           minDegree= 30,
                           clust= "3", 
                           k.max=5, 
-                          stemming= FALSE, 
+                          stemming= TRUE, 
                           labelsize=10, 
                           documents=10
                           )
@@ -909,7 +913,7 @@ CS19 <- bibliometrix::conceptualStructure(data,
                           minDegree= 19,
                           clust= "3", 
                           k.max=5, 
-                          stemming= FALSE, 
+                          stemming= TRUE, 
                           labelsize=10, 
                           documents=10
                           )
@@ -938,7 +942,7 @@ compound<-results$ID[results$ID>10][hypened|spaced]%>%
 compound <- compound[!compound %in% "UNDERGRADUATE RESEARCH EXPERIENCES"]
   
 TitleTerms <- termExtraction(data, "TI",stemming = TRUE, keep.terms = compound) %>%
-KeywordGrowth(Tag= "TI_TM", top = 1000) %>%
+  KeywordGrowth(Tag= "TI_TM", top = 1000) %>%
   pivot_longer(cols = !c('Year')) %>%
   group_by(Year) %>%
   mutate(sum = sum(value), perc = value / sum) %>%
@@ -962,27 +966,33 @@ TitleText <- TitleTerms %>%
   top_n(1, Year) %>%
   filter(name %in% SharedTerms$name)
 
+clustername <- as.data.frame(CS30[["km.res"]]$cluster)
+colnames(clustername) <-c("cluster")
+clustername$name <- row.names(clustername)
+
 TitleTerms %>% 
   filter(name %in% TopTerms$name) %>%
-  ggplot(aes(Year, perc, group = name, color=name, fill=name, label = name))+
-  geom_line() + 
+  anti_join(clustername)%>%
+  ggplot(aes(Year, perc, group = name, color=cluster, fill=name, label = name))+
+  geom_smooth(n = 3, se = FALSE) + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
                   size = 2, 
                   color = "black",
                   arrow = arrow(length = unit(0.02, "npc")),
                   box.padding = 0.5
-                  )# + 
-  #scale_y_log10(labels = label_percent()) + 
-  
-  #theme_default +
+                  ) +
+  scale_y_log10(labels = label_percent()) + 
+  theme_default +
   labs(title = "Conceptual trends based on article titles")+
   theme(legend.position="none")
 
 ggsave("figures/TitleLineTrends.png", device = "png", dpi = 400,
        width = 7, height = 7,
        units = "in")
+```
 
 
+```{r title topics horizontal plot}
 TitleTerms %>% 
   filter(name %in% TopTerms$name) %>%
   ggplot(aes(x=reorder(as.factor(str_to_sentence(name)),cumsum(value)),y = Year, group = name, color=name, fill=name, label = name, size = perc), alpha = 0.3)+
