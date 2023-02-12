@@ -10,9 +10,9 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
-require("devtools")
+#require("devtools")
 
-devtools::install_github("massimoaria/bibliometrix")
+#devtools::install_github("massimoaria/bibliometrix")
 devtools::install_github("wmurphyrd/fiftystater")
 devtools::install_github("UrbanInstitute/urbnmapr")
 
@@ -98,7 +98,7 @@ write.csv(file = "tables/Data.csv", data)
 
 ```{r overview, skip = TRUE}
 colnames(S$AnnualProduction) <- c("Year","Articles")
-
+edrline<-114
 AnnualProduction <- S$AnnualProduction %>%
   mutate(Indexed = "Indexed") %>%
   filter(Year != 2022) %>%
@@ -115,28 +115,28 @@ prodplot <- ggplot(data = AnnualProduction,
                                group = Indexed, 
                                color = Indexed, linetype = Indexed)) +
   geom_line(data = AnnualProduction,
-            aes(x = Year, y= 113),
+            aes(x = Year, y= edrline),
             color = "white", size = 13) +  
   geom_line(stat = "identity", 
             size = 1.5) +
   geom_line(data = AnnualProduction %>% filter(Year %in% c(2010:2020)), 
-            aes(x = Year, y= 113),
-            color = "Black") +
-  geom_point(data = AnnualProduction %>% filter(Year %in% c(2010,2020)), 
-             aes(x = Year, y= 113),
-             color = "Black") +
+            aes(x = Year, y= edrline),
+            color = "#444444") +
+  geom_text(data = AnnualProduction %>% filter(Year %in% c(2010,2020)), 
+             aes(x = Year, y= edrline),
+             color = "#444444", label = "▶", family = "HiraKakuPro-W3", size = 3) +
    geom_text(data = AnnualProduction %>% filter(Year %in% c(2010)), 
-            aes(x = Year, y= 112, label = "Wood "), 
-            color = "Black", 
+            aes(x = Year, y= edrline+1, label = "Eds: Wood  "), 
+            color = "#444444", 
             hjust = 1, 
             vjust = 1) +
-  geom_text(data = AnnualProduction %>% filter(Year %in% c(2015)), 
-            aes(x = Year, y= 112, label = "Dolan"), 
-            color = "Black", 
-            hjust = "center", vjust = 1) +
+  geom_text(data = AnnualProduction %>% filter(Year %in% c(2010)), 
+            aes(x = Year, y= edrline+1, label = " Dolan"), 
+            color = "#444444", 
+            hjust = "left", vjust = 1) +
   geom_text(data = AnnualProduction %>% filter(Year %in% c(2020)), 
-            aes(x = Year, y= 112, label = " Schinske-\n Tanner"), 
-            color = "Black", hjust = 0, 
+            aes(x = Year, y= edrline +1, label = " Schinske-\n Tanner", color = "#444444"), 
+            color = "#444444", hjust = 0, 
             vjust = 1, nudge_y = 0) +
   geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2016)), 
                   aes(x = Year, y= Articles, label = c(Articles)), 
@@ -159,7 +159,7 @@ prodplot <- ggplot(data = AnnualProduction,
   geom_text(data = AnnualProduction %>% filter(Year %in% c(2022), 
                                                Indexed == "Projected"), 
             aes(x = Year, y= Articles, 
-                label = "Projected\n 85"), 
+                label = "85"), 
             vjust = 0, hjust = 1, nudge_y = 2) +
   #geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60", size = 1, alpha = 0.8) + # added projected articles.
   scale_x_discrete(breaks = function(x){x[if_else(x == 2010 |x == 2015 | x == 2020, TRUE,FALSE,)]})+
@@ -173,7 +173,7 @@ prodplot <- ggplot(data = AnnualProduction,
         axis.text.x = element_text(hjust = 0),
          legend.position = "none")+
   labs(
-    title = "Articles published per year",
+    title = "Journal productivity",
     x = NULL,
     y = NULL,
   )
@@ -296,7 +296,8 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
         #panel.grid.major.x = element_line(size = 0.2),
         plot.title.position = "plot", legend.margin=margin())+
             guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
-    labs(title = "Author productivity from 2008 - 2022", subtitle = "Author name by H-index", x = NULL, y = NULL) +
+    labs(title = "Author productivity", #subtitle = "Author name by H-index", 
+         x = NULL, y = NULL) +
     scale_x_discrete(labels = rev(levels(df2$Author))) + 
   #theme_minimal() +
   #scale_x_discrete(labels = AU$case)+
@@ -328,7 +329,7 @@ ggsave("figures/Prodcommon.jpg",
 ```
 
 
-```{r author other, eval=FALSE}
+```{r author other, eval=FALSE, skip = TRUE}
 authordata %>%
   mutate(AU = str_replace(
     str_to_title(AU),
