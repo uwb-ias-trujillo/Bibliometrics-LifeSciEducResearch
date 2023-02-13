@@ -135,10 +135,10 @@ prodplot <- ggplot(data = AnnualProduction,
    #          hjust = "left",
    #          vjust = "middle",
    #          nudge_x = -0.2) +
-  geom_label(data = AnnualProduction %>% filter(Year %in% c(2010)), 
+  geom_label(data = AnnualProduction %>% filter(Year %in% c(2008)), 
             aes(x = Year, y= edrline, label = "Wood"), 
             color = "#444444", 
-            hjust = 1, 
+            hjust = "left", 
             vjust = "middle",
             nudge_x = -0.2) +
   geom_label(data = AnnualProduction %>% filter(Year %in% c(2010)), 
@@ -148,7 +148,7 @@ prodplot <- ggplot(data = AnnualProduction,
             nudge_x = 0.2) +
   geom_label(data = AnnualProduction %>% filter(Year %in% c(2020)), 
             aes(x = Year, y= edrline , label = "Schinske-\nTanner", color = "#444444"), 
-            color = "#444444", hjust = 0, 
+            color = "#444444", hjust = "left", 
             vjust = "middle", nudge_x = 0.2, nudge_y = -3) +
   geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2016)), 
                   aes(x = Year, y= Articles, label = c(Articles)), 
@@ -297,7 +297,6 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
           text = element_text(color = "#444444"), 
           panel.background = element_rect(fill = "#FFFFFF"), 
           axis.title.y = ggtext::element_markdown(vjust = 1, angle = 0, hjust = 0),
-        title = ggtext::element_markdown(),
           axis.text.x = element_text(
                                      hjust = 0, #x_nudge = -0.5
                                      ),
@@ -309,7 +308,8 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
           #panel.grid.major.y = element_line(size = 0.2),
           panel.grid.major.y = element_blank(),
         #panel.grid.major.x = element_line(size = 0.2),
-        plot.title.position = "plot", legend.margin=margin())+
+        plot.title.position = "plot", legend.margin=margin(),
+        plot.subtitle = ggtext::element_markdown(),)+
             guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
     labs(title = "B. Author productivity", 
          subtitle = "Articles authored per year ordered by *h*",
