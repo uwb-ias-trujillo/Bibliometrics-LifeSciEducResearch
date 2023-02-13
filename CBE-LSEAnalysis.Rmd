@@ -34,7 +34,8 @@ ggthemes,
 ggpubr,
 ggrepel,
 RColorBrewer,
-bibliometrix
+bibliometrix,
+ggtext
 )
 
 source('functions.r')
@@ -98,7 +99,7 @@ write.csv(file = "tables/Data.csv", data)
 
 ```{r overview, skip = TRUE}
 colnames(S$AnnualProduction) <- c("Year","Articles")
-edrline<-114
+edrline<-112
 AnnualProduction <- S$AnnualProduction %>%
   mutate(Indexed = "Indexed") %>%
   filter(Year != 2022) %>%
@@ -115,29 +116,40 @@ prodplot <- ggplot(data = AnnualProduction,
                                group = Indexed, 
                                color = Indexed, linetype = Indexed)) +
   geom_line(data = AnnualProduction,
-            aes(x = Year, y= edrline),
+            aes(x = Year, y= edrline+2),
             color = "white", size = 13) +  
   geom_line(stat = "identity", 
             size = 1.5) +
+  geom_line(data = AnnualProduction,
+            aes(x = Year, y= edrline),
+            color = "#444444", alpha = 0.2) +
   geom_line(data = AnnualProduction %>% filter(Year %in% c(2010:2020)), 
             aes(x = Year, y= edrline),
             color = "#444444") +
   geom_text(data = AnnualProduction %>% filter(Year %in% c(2010,2020)), 
              aes(x = Year, y= edrline),
              color = "#444444", label = "▶", family = "HiraKakuPro-W3", size = 3) +
-   geom_text(data = AnnualProduction %>% filter(Year %in% c(2010)), 
-            aes(x = Year, y= edrline+1, label = "Eds: Wood  "), 
+   # geom_text(data = AnnualProduction %>% filter(Year %in% c(2008)),
+   #          aes(x = Year, y= edrline, label = "Eds:"),
+   #          color = "#444444",
+   #          hjust = "left",
+   #          vjust = "middle",
+   #          nudge_x = -0.2) +
+  geom_label(data = AnnualProduction %>% filter(Year %in% c(2010)), 
+            aes(x = Year, y= edrline, label = "Wood"), 
             color = "#444444", 
             hjust = 1, 
-            vjust = 1) +
-  geom_text(data = AnnualProduction %>% filter(Year %in% c(2010)), 
-            aes(x = Year, y= edrline+1, label = " Dolan"), 
+            vjust = "middle",
+            nudge_x = -0.2) +
+  geom_label(data = AnnualProduction %>% filter(Year %in% c(2010)), 
+            aes(x = Year, y= edrline, label = "Dolan"), 
             color = "#444444", 
-            hjust = "left", vjust = 1) +
-  geom_text(data = AnnualProduction %>% filter(Year %in% c(2020)), 
-            aes(x = Year, y= edrline +1, label = " Schinske-\n Tanner", color = "#444444"), 
+            hjust = "left", vjust = "middle",
+            nudge_x = 0.2) +
+  geom_label(data = AnnualProduction %>% filter(Year %in% c(2020)), 
+            aes(x = Year, y= edrline , label = "Schinske-\nTanner", color = "#444444"), 
             color = "#444444", hjust = 0, 
-            vjust = 1, nudge_y = 0) +
+            vjust = "middle", nudge_x = 0.2, nudge_y = -3) +
   geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2016)), 
                   aes(x = Year, y= Articles, label = c(Articles)), 
                   min.segment.length = 1, vjust = "middle", 
@@ -163,7 +175,7 @@ prodplot <- ggplot(data = AnnualProduction,
             vjust = 0, hjust = 1, nudge_y = 2) +
   #geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60", size = 1, alpha = 0.8) + # added projected articles.
   scale_x_discrete(breaks = function(x){x[if_else(x == 2010 |x == 2015 | x == 2020, TRUE,FALSE,)]})+
-  scale_y_continuous(limits = c(40,114)) +
+  scale_y_continuous(limits = c(40,116)) +
   theme_default +
   scale_color_manual(values= c("#5881b7","#29456B")) +
    guides(Indexed = guide_legend("Published articles"))+
@@ -173,7 +185,8 @@ prodplot <- ggplot(data = AnnualProduction,
         axis.text.x = element_text(hjust = 0),
          legend.position = "none")+
   labs(
-    title = "Journal productivity",
+    title = "A. Journal productivity",
+    subtitle = "Articles published per year",
     x = NULL,
     y = NULL,
   )
@@ -265,7 +278,8 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
                                     "\nN. of Articles: ", .data$freq, 
                                     "\nTotal Citations per Year: ", round(.data$TCpY, 2)))) +
   geom_line(data = df2, aes(x = .data$Author, y = .data$year, group = .data$Author), 
-              size = 0.7, color =  "#994E95", alpha = 0.9) + 
+              size = 0.7, color =  "#994E95", alpha = 0.9) +
+  #geom_label()+
   geom_point(aes(size = .data$freq), color = "#FFFFFF") +
   geom_point(aes(alpha = .data$TCpY, size = .data$freq), color = "#994E95") +
   #geom_rect(data = df2, aes(x = .data$Author, y = 2008, width = 2, color =  "#FFFFFF", alpha = 0.9)) + 
@@ -282,7 +296,8 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
         legend.box="horizontal",
           text = element_text(color = "#444444"), 
           panel.background = element_rect(fill = "#FFFFFF"), 
-          axis.title.y = element_text(vjust = 1, angle = 0, hjust = 0), 
+          axis.title.y = ggtext::element_markdown(vjust = 1, angle = 0, hjust = 0),
+        title = ggtext::element_markdown(),
           axis.text.x = element_text(
                                      hjust = 0, #x_nudge = -0.5
                                      ),
@@ -296,7 +311,8 @@ authorprod <- ggplot(df2, aes(x = .data$Author, y = .data$year,
         #panel.grid.major.x = element_line(size = 0.2),
         plot.title.position = "plot", legend.margin=margin())+
             guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
-    labs(title = "Author productivity", #subtitle = "Author name by H-index", 
+    labs(title = "B. Author productivity", 
+         subtitle = "Articles authored per year ordered by *h*",
          x = NULL, y = NULL) +
     scale_x_discrete(labels = rev(levels(df2$Author))) + 
   #theme_minimal() +
