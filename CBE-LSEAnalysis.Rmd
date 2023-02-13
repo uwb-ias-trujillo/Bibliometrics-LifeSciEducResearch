@@ -391,7 +391,7 @@ authordata %>%
 ```{r world affiliations, echo=FALSE}
 
 world_map = map_data("world") %>% 
-  filter(! long > 180)
+  filter(long < 180)
 
 countries <- world_map %>% 
   distinct(region) %>% 
@@ -423,19 +423,19 @@ AffiliationWorldMap <- countries %>%
   #geom_hline(yintercept=0, color = "light grey") +
   geom_map(map = world_map_short, colour = "white", lwd = 0.2) +
   geom_map(map = world_map, colour = "light grey", lwd = 0.2)+
-  geom_point(data = worldcentroids, aes(x = longitude, y = latitude, size = Freq*100, group = region)) +
+  geom_point(data = worldcentroids, aes(x = longitude, y = latitude, size = Freq*100, group = region),color = "#333333") +
     geom_text(data = worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq, group = region), color = "white") +
   expand_limits(x = world_map_short$long, y = world_map_short$lat) +
   coord_map("moll") +
   #coord_quickmap()+
-  theme_map()+
-  #theme_default +
+  #theme_map()+
+  theme_default +
   #labs(caption = "") +
   theme(#plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
         # plot.caption = element_text(hjust = 0, face= "italic"),
         axis.title = element_text(size = 14, color = "#555555"),
-        # plot.title.position = "plot",
-        # plot.caption.position =  "plot",
+         plot.title.position = "plot",
+         plot.caption.position =  "plot",
         legend.title = element_blank(),
         #panel.background = element_rect(fill = "aliceblue", color = "aliceblue"),
         legend.position = c(0.5, 0.01),
@@ -447,7 +447,7 @@ AffiliationWorldMap <- countries %>%
         #plot.caption.position = "plot",
         #plot.caption = element_text(hjust = 0)
         #legend.margin = margin(6, 12, 4, 1)
-        #legend.position = "left"
+        #legend.position = "none"
         ) +
   scale_fill_carto_c(palette = "BluGrn", direction = 1,
                        # trans = scales::pseudo_log_trans(sigma = 0.01),
@@ -457,14 +457,14 @@ AffiliationWorldMap <- countries %>%
   ) +
   scale_size(range = c(3,14))+
   labs(fill = "Count of article",
-       title = "A. Articles by author's country affiliation",
+       title = "A. Articles by country",
     x = NULL,
     y = NULL
     ) 
 
 AffiliationWorldMap
-ggsave("figures/AffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  #width = 7,
-  #height = 3,
+ggsave("figures/AffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 3,
   units = "in", limitsize = FALSE)
 ```
 
@@ -501,7 +501,7 @@ spatial_data <- right_join(msistates,
 affiliationMap <- ggplot() +
   geom_map(data  =  spatial_data, map = us,
              aes(x = long, y = lat, map_id = state_name, group = group, fill = affiliations, label = states),
-             color = "black", size = 0.25) +
+             color = "#444444", size = 0.25) +
   coord_map("albers", lat0 = 39, lat1 = 45) +
   theme_map() +
   theme_default +
@@ -529,7 +529,7 @@ ArticlesUSMap <- ggplot() +
   geom_map(data  =  spatial_data, map = us,
            aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
              color = "white", size = 0.25) +
-  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles*100)) +
+  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles*100), color = "#333333") +
     geom_text(data = centroids, aes(x = longitude, y = latitude, label = articles, size = articles), color = "white") +
   coord_map("moll") +
   theme_map() +
