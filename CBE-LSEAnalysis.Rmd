@@ -291,22 +291,36 @@ authordatacheck%>%
 
 
 ```{r author productivity figure}
-authorprod <- ggplot(df, aes(x = .data$Author, y = .data$year, group =  .data$Author),
-                               text = paste("Author: ", .data$Author,
-                                     "\nYear: ", .data$year,
-                                     "\nN. of Articles: ", .data$freq, 
-                                     "\nTotal Citations per Year: ", round(.data$TCpY, 2)
-                                     )
-                              ) +
-  geom_flat_violin(fill =  "#994E95", color ="#994E95", adjust = .2, scale = "count", alpha = 0.3, width = 3)+ 
-    scale_size(range = c(2, 6), 
-               breaks = c(1,3,5,7)) + 
-    scale_alpha(range = c(0.3, 1), 
-                breaks =  c(0,20,40,60)) + 
+table(df$Author,df$year)
+articlesbyyear <- as.data.frame(table(df$Author,df$year))
+colnames(articlesbyyear) <- c("Author","year","freq")
+
+sumauthor<- df %>%
+  left_join(authortopH, by = c("Author" = "Element")) %>%
+  group_by(h_index,Author,year) %>%
+  summarize(freq = n(), totalTCpY = sum(TCpY)) %>%
+  arrange(h_index) %>%
+  #mutate(Author = as.factor(Author)) %>%
+  mutate(Author = fct_reorder(Author, h_index)) %>%
+  mutate(label = str_c(Author,h_index,sep = " "))
+
+sumauthor$Author
+view(sumauthor)
+
+authorprod <- sumauthor %>%
+  ggplot(aes(x = Author, y = year, size = freq, alpha = totalTCpY)) +
+  geom_line(color ="#994E95", size = 1, alpha = 0.4) +
+  geom_point(fill =  "#FFFFFF", color ="#FFFFFF", alpha = 1)+ 
+  geom_point(fill =  "#994E95", color ="#994E95")+ 
+     scale_size(range = c(2, 6), 
+                breaks = c(1,3,5,7)) + 
+     scale_alpha(range = c(0.3, 1), 
+                 breaks =  c(0,20,40,60)) + 
     scale_y_continuous(breaks = c(2010,2015,2020)) +
     guides(size = guide_legend(order = 1, "Number of\n Articles"),
-           #alpha = guide_legend(order = 2, "Times Cited\n per Year")
+           alpha = guide_legend(order = 2, "Times Cited\n per Year")
            ) + 
+  #geom_text(df, mapping = aes(x = .data$Author, y = .data$year, group =  .data$Author)) +
   theme_default+
     theme(legend.position = "bottom",
         legend.title = element_text(),
@@ -331,12 +345,8 @@ authorprod <- ggplot(df, aes(x = .data$Author, y = .data$year, group =  .data$Au
     labs(title = "B. Author productivity", 
          subtitle = "Articles authored per year ordered by *h*",
          x = NULL, y = NULL) +
-    scale_x_discrete(labels = rev(levels(df2$Author))) + 
-  #theme_minimal() +
-  #scale_x_discrete(labels = AU$case)+
-  coord_flip() 
-
-  #geom_label()+
+    #scale_x_discrete(label) + 
+  coord_flip()
 
 authorprod
 
@@ -344,9 +354,6 @@ ggsave("figures/AuthorProd.jpg",
        device = "jpeg", dpi = 400, bg = "white",
        width = 7, height = 4.5, units = "in", limitsize = FALSE)
 ```
-
-
-
 
 ```{r combing journal and author figure}
 ggarrange(prodplot,
@@ -482,6 +489,7 @@ AffiliationWorldMap <- countries %>%
     ) 
 
 AffiliationWorldMap
+
 ggsave("figures/AffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 3,
   units = "in", limitsize = FALSE)
