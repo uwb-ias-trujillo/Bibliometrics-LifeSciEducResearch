@@ -414,8 +414,7 @@ authordata %>%
 ## Institutions
 ### Affiliations around the world
 
-```{r world affiliations, echo=FALSE}
-
+```{r world corresponding author affiliations, echo=FALSE}
 world_map = map_data("world") %>% 
   filter(long < 180)
 
@@ -443,7 +442,7 @@ worldcentroids <- world_map_short %>%
   summarise(latitude = sign(lat) * exp(mean(log(abs(lat)))), longitude = sign(long) * exp(mean(log(abs(long)))))
 
 
-AffiliationWorldMap <- countries %>%
+COAffiliationWorldMap <- countries %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>% 
   ggplot(aes(fill = Freq, map_id = region), color = 1) +
   #geom_hline(yintercept=0, color = "light grey") +
@@ -488,9 +487,86 @@ AffiliationWorldMap <- countries %>%
     y = NULL
     ) 
 
-AffiliationWorldMap
+COAffiliationWorldMap
 
-ggsave("figures/AffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
+ggsave("figures/COAffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
+  height = 3,
+  units = "in", limitsize = FALSE)
+```
+
+
+```{r world all author affiliations, echo=FALSE}
+allcountries <- data.frame(countries = countries$region, count = NA)
+
+for (country in countries$region) {
+  allcountries[countries == country] <- sum(str_count(data$C1,str_to_upper(country)),na.rm = TRUE)
+}
+
+allcountries <- allcountries %>%
+  mutate(region = countries, Freq = count)
+
+All_world_map_short <- world_map %>%
+  full_join(allcountries, by = c("region" = "region")) %>%
+  filter(Freq >= 1 & (subregion != "Alaska" | region != "New Zealand"))#%>%
+  #mutate(case_when(region == "USA", ))
+
+All_worldcentroids <- All_world_map_short %>%
+  group_by(region, Freq) %>%
+  filter(subregion != "Alaska" & subregion != "Pitt Island" & subregion != "Chatham Island" & subregion != "12"& subregion != "13") %>%
+  summarise(latitude = sign(lat) * exp(mean(log(abs(lat)))), longitude = sign(long) * exp(mean(log(abs(long)))))
+
+AllAffiliationWorldMap <- countries %>%
+  full_join(allcountries, by = c("region" = "region")) %>%
+  ggplot(aes(fill = Freq, map_id = region), color = 1) +
+  #geom_hline(yintercept=0, color = "light grey") +
+  geom_map(map = All_world_map_short, colour = "white", lwd = 0.2) +
+  geom_map(map = world_map, colour = "light grey", lwd = 0.2)+
+  geom_point(data = All_worldcentroids, aes(x = longitude, y = latitude, size = Freq*100, group = region),color = "#333333") +
+    geom_text(data = All_worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq, group = region), color = "white") +
+  expand_limits(x = All_world_map_short$long, y = All_world_map_short$lat) +
+  coord_map("moll") +
+  #coord_quickmap()+
+  #theme_map()+
+  theme_default +
+  #labs(caption = "") +
+  theme(#plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        # plot.caption = element_text(hjust = 0, face= "italic"),
+        axis.title = element_text(size = 14, color = "#555555"),
+         plot.title.position = "plot",
+         plot.caption.position =  "plot",
+        legend.title = element_blank(),
+        #panel.background = element_rect(fill = "aliceblue", color = "aliceblue"),
+        legend.position = c(0.5, 0.01),
+        legend.background = element_rect(fill = NA),
+        legend.direction = "horizontal",
+        #legend.key.size = unit(0.4, "cm"),
+        legend.key.height= unit(.5, 'cm'),
+        legend.key.width= unit(.5, 'cm'),
+        #plot.caption.position = "plot",
+        #plot.caption = element_text(hjust = 0)
+        #legend.margin = margin(6, 12, 4, 1)
+        #legend.position = "none",
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        plot.background = element_blank()
+        #legend.position = "top"
+        ) +
+  scale_fill_carto_c(palette = "BluGrn", direction = 1,
+                       # trans = scales::pseudo_log_trans(sigma = 0.01),
+                       # breaks = c(1,10, 100, 1000),
+                       # labels = c(1,10, 100, 1000),
+                       # limits = c(1,1000)
+  ) +
+  scale_size(range = c(3,14))+
+  labs(fill = "Count of article",
+       title = "A. Articles by country",
+    x = NULL,
+    y = NULL
+    ) 
+
+AllAffiliationWorldMap
+
+ggsave("figures/AllAffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 3,
   units = "in", limitsize = FALSE)
 ```
@@ -561,7 +637,7 @@ ArticlesUSMap <- ggplot() +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
-       title = "B. Articles by author's state affiliation",
+       title = "B. Number of articles by state of corresponding authors",
        caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
     x = NULL,
     y = NULL
@@ -578,7 +654,10 @@ ArticlesUSMap <- ggplot() +
         legend.key.width= unit(.5, 'cm'),
         plot.caption.position = "plot",
         plot.caption = element_text(hjust = 0),
-        legend.position = c(.8, 0.01)
+        legend.position = c(.8, 0.01),
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        plot.background = element_blank()
         #legend.position = "top"
         )+
   scale_fill_carto_c(palette = "BluGrn", direction = 1,
