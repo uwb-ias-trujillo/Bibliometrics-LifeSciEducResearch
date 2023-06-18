@@ -431,6 +431,19 @@ countryfreq <- results$Countries %>%
     TRUE ~ Tab
   )) 
 
+allcountries <- data.frame(countries = countries$region, count = NA)
+
+for (country in countries$region) {
+  allcountries[countries == country] <- sum(str_count(data$C1,str_to_upper(country)),na.rm = TRUE)
+}
+
+  
+countryfreq <- allcountries %>% 
+  filter(count > 0) %>%
+  mutate(region = countries) %>%
+   full_join(countryfreq,by = c("region" = "Tab")) %>%
+  mutate(coor_author_freq = Freq, Freq = count, Tab = region)
+
 world_map_short <- world_map %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>%
   filter(Freq >= 1 & (subregion != "Alaska" | region != "New Zealand"))#%>%
@@ -442,8 +455,8 @@ worldcentroids <- world_map_short %>%
   summarise(latitude = sign(lat) * exp(mean(log(abs(lat)))), longitude = sign(long) * exp(mean(log(abs(long)))))
 
 
-COAffiliationWorldMap <- countries %>%
-  full_join(countryfreq, by = c("region" = "Tab")) %>% 
+AffiliationWorldMap <- countries %>%
+  full_join(countryfreq, by = c("region" = "region")) %>% 
   ggplot(aes(fill = Freq, map_id = region), color = 1) +
   #geom_hline(yintercept=0, color = "light grey") +
   geom_map(map = world_map_short, colour = "white", lwd = 0.2) +
@@ -469,6 +482,9 @@ COAffiliationWorldMap <- countries %>%
         #legend.key.size = unit(0.4, "cm"),
         legend.key.height= unit(.5, 'cm'),
         legend.key.width= unit(.5, 'cm'),
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        plot.background = element_blank()
         #plot.caption.position = "plot",
         #plot.caption = element_text(hjust = 0)
         #legend.margin = margin(6, 12, 4, 1)
@@ -487,9 +503,9 @@ COAffiliationWorldMap <- countries %>%
     y = NULL
     ) 
 
-COAffiliationWorldMap
+AffiliationWorldMap
 
-ggsave("figures/COAffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
+ggsave("figures/AffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 3,
   units = "in", limitsize = FALSE)
 ```
