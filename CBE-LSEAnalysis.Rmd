@@ -747,47 +747,70 @@ SchoolTypePlot<- types %>%
     ),
     Control = as.factor(Control),
     Type = case_when( 
-    str_detect(SchoolType, "2") ~ "2-Year",
-    str_detect(SchoolType, "4") ~ "4-Year"),
-    Type = as.factor(Type)) %>%
-  ggplot(aes(x = (name), value,fill = SchoolType)) +
+      str_detect(SchoolType, "2") ~ "2-Yr",
+      str_detect(SchoolType, "4") ~ "4-Yr"),
+    Sign = case_when( 
+      str_detect(SchoolType, "2") ~ -1,
+      str_detect(SchoolType, "4") ~ 1),
+      Type = as.factor(Type)) %>%
+  ggplot(aes(x = (name), value * Sign ,fill = SchoolType)) +
     geom_col(fill = "white",
-               position = "dodge",
+               #position = "stack",
+               size = 4,
+             label = vars(SchoolType)) +
+  geom_hline(yintercept = 0)+
+    geom_col(aes(label = Type, alpha = as.numeric(colorlevel)),
+               #position = "stack",
                size = 4) +
-    geom_col(aes(alpha = as.numeric(colorlevel)),
-               position = "dodge",
-               size = 4) +
-    geom_text(aes(label = paste0(round(value*100, 0),"%")),
-              vjust = 0.5,
-              nudge_y = -.015,
+    # geom_text(aes(label = Type, y =0 ),
+    #           #vjust = 0.5,
+    #           #nudge_x = .4,
+    #           position = position_stack(vjust = 0.),
+    #           size = 3, fontface = "bold") +a
+    geom_label_repel(aes(label = SchoolType),
+              #vjust = 0.5,
+              box.padding = 0.5,
+              point.padding = 0.8,
+              direction = "y",
+              position = position_stack(vjust = 0.5),
+              #nudge_y = -.015,
               size = 3, fontface = "bold") +
-  theme_default +
-  theme(legend.position="none", 
-        strip.background = element_rect(fill = "#F2F2F2"),
-        #panel.grid.major.x = element_blank(),
-        axis.text = element_text(size = 10)
-        ) +
+  geom_text(aes(label = paste0(round(value*100, 0),"%")),
+              #vjust = 0.5,
+              position = position_stack(vjust = 0.5),
+              #nudge_y = -.015,
+              size = 3, fontface = "bold") +
   scale_color_identity(guide = "none") +
+  scale_fill_brewer(palette = "Paired")+
   scale_alpha_binned(range = c(1.5,0.5)) +
-  scale_y_continuous(minor_breaks = NULL,
-                     labels = scales::percent) +
+  scale_y_continuous(breaks = NULL,
+    # minor_breaks = NULL,
+    #                  labels = scales::percent,
+    #                  breaks = c(0,0.4,.8)
+                     ) +
   labs(x = NULL, y = NULL,
-       title = "A. Types of US institutions represented in LSE"
+       title = "A. School types of authors compared to all U.S."
        ) +
   coord_flip()+
-  facet_grid(rows =vars(SchoolType), scales = "free_y", as.table = TRUE, #nrow = 4, ncol = 1, 
-             #strip.position = "left", #dir = "h"
-             switch = "x"
-             )+
+  # facet_grid(cols =vars(Type), scales = "free", as.table = TRUE, #nrow = 4, ncol = 1,
+  #            #strip.position = "left", 
+  #            #dir = "h",
+  #            switch = "x"
+  #            )+
+  theme_default +
   theme(panel.spacing.y = unit(1, "lines"),
-        axis.text.y = element_text(margin = margin(l = 0.2, unit = "in")),
-        strip.text.x = element_text(size = 11, angle = 0),
+        axis.title.x = element_text(face = c("italic")),
+        axis.text.y = element_text(size = 10,
+                                   margin = margin(l = 0.2, unit = "in")
+                                   ),
+        strip.text.x = element_text(size = 11, 
+                                    angle = 0),
         strip.text.y = element_text(angle = 0),
-        #strip.background = element_rect(fill = "white"),
+        strip.background = element_rect(fill = "#F2F2F2"),
+        panel.grid = element_blank(),
         #plot.margin = margin(t = .25, r = .25, b = .25, l = .1, unit = "in"),
-        strip.background = element_blank(),
-    strip.placement = "outside",
-    legend.position = "none")
+        strip.placement = "outside",
+        legend.position = "none")
 SchoolTypePlot
 ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
   height = 5,
@@ -986,7 +1009,7 @@ AuAffiliationPlot<- ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq),
   labs(
     x = NULL,
     y = NULL,
-    title = "C. Top affiliations of authors",
+    title = "A. Top affiliations of authors",
   )+
   scale_fill_identity(guide = "none") +
   scale_x_discrete(labels = NULL)+ 
