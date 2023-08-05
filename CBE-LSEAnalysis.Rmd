@@ -73,12 +73,10 @@ theme_default <- theme(
 
 After the results are processed, they are stored as data tables for information reporting. 
 
-```{r biblio, skip = TRUE}
+```{r biblio, include = FALSE, skip = TRUE}
 options(width=100)
 
 S <- summary(object = results, pause = FALSE)
-xtable(S$MainInformationDF)
-
 dir.create("tables")
 write.csv(file = "tables/keywords.csv",as.data.frame(results$ID[1:20]))
 
@@ -95,9 +93,14 @@ write.csv(file = "tables/Universities.csv", results$Affiliations)
 write.csv(file = "tables/Data.csv", data)
 ```
 
+```{r main information summary, echo=FALSE}
+as.data.frame(S$MainInformationDF)
+```
 # Research Questions
 
 ### Basic overview of the field
+
+A timeline of the publication productivity is included for the journal.
 
 ```{r overview, skip = TRUE}
 colnames(S$AnnualProduction) <- c("Year","Articles")
@@ -188,13 +191,13 @@ prodplot <- ggplot(data = AnnualProduction,
          legend.position = "none")+
   labs(
     title = "A. Journal productivity",
-    subtitle = "Editors and the number of articles published per year",
+    subtitle = "Editors-in-Chief and the documents published per year",
     x = NULL,
     y = NULL,
   )
-
 prodplot
-ggsave("figures/AnnualProductivity.jpg", 
+
+ggsave("figures/AnnualProductivity.jpg", plot = prodplot,
        device = "jpeg", dpi = 400, bg = "white",
        width = 7, height = 4, units = "in", limitsize = FALSE)
 
@@ -204,6 +207,7 @@ ggsave("figures/AnnualProductivity.jpg",
 
 ## Authoring
 
+We focused on the most productive authors within the data set by H-index. 
 ```{r author productivity}
 S$MostProdAuthors 
 
@@ -213,9 +217,9 @@ indices <- Hindex(data, field = "author", elements = authors, sep = ";", years =
 authortopH<- indices$H %>%
   dplyr::arrange(desc(h_index)) %>%
   select(Element,h_index) %>%
-  top_n(10)
+  top_n(20)
 
-as_tibble(results$Authors)
+#as_tibble(results$Authors)
 
 authordata <- dplyr::inner_join(tibble::as_tibble(results$Authors),indices$H, by = c("AU" = "Element")) %>%
   filter("n" > 5)# %>%
@@ -235,7 +239,7 @@ AU <- df %>% group_by(.data$AU) %>%
   full_join(authortopH, by = c("AU" = "Element")) %>%
   arrange(desc(.data$h_index)) %>% 
   ungroup()
-k <- min(10, nrow(AU))
+k <- min(20, nrow(AU))
 AU <- AU %>% slice_head(n = k)
 AU$case <- str_replace(
   str_to_title(AU$AU),
@@ -277,17 +281,19 @@ logo <- grid::rasterGrob(logo, interpolate = TRUE)
 
 authordatacheck<-df2%>%group_by(Author)%>%summarise(n = sum(freq))
 
-df2
+#df2
 
 hindexcheck<- df %>% 
   group_by(Author) %>%
   arrange(desc(TC)) %>%
   summarise(h_index = sum(TC >= seq_along(TC)))
 
-authordatacheck%>%
-  left_join(hindexcheck)%>%
-  view()
+# authordatacheck%>%
+#   left_join(hindexcheck)%>%
+#   view()
 ```
+
+We display a timeline of the productive authors.
 
 
 ```{r author productivity figure}
@@ -344,7 +350,7 @@ authorprod <- sumauthor %>%
         plot.subtitle = ggtext::element_markdown(),)+
             guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
     labs(title = "B. Author productivity", 
-         subtitle =expression("Articles authored per year ordered by ","h"),
+         subtitle =paste("Documents authored per year and ordered by Hirch (h) index"),
          x = NULL, y = NULL) +
     #scale_x_discrete(label) + 
   coord_flip()
