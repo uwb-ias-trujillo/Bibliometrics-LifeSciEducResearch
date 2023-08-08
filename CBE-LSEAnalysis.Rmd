@@ -217,14 +217,14 @@ ggsave("figures/AnnualProductivity.jpg", plot = prodplot,
 We focused on the most productive authors within the data set by H-index. 
 ```{r author productivity}
 S$MostProdAuthors 
-
-authors=gsub(","," ",names(results$Authors))
+k_authors <- 13
+authors <- gsub(","," ",names(results$Authors))
 indices <- Hindex(data, field = "author", elements = authors, sep = ";", years = Inf)
 
 authortopH<- indices$H %>%
   dplyr::arrange(desc(h_index)) %>%
   select(Element,h_index) %>%
-  top_n(20)
+  top_n(k_authors)
 
 #as_tibble(results$Authors)
 
@@ -246,7 +246,7 @@ AU <- df %>% group_by(.data$AU) %>%
   full_join(authortopH, by = c("AU" = "Element")) %>%
   arrange(desc(.data$h_index)) %>% 
   ungroup()
-k <- min(20, nrow(AU))
+k <- min(k_authors, nrow(AU))
 AU <- AU %>% slice_head(n = k)
 AU$case <- str_replace(
   str_to_title(AU$AU),
