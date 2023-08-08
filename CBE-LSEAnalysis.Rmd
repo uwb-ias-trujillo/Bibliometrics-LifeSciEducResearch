@@ -185,12 +185,12 @@ prodplot <- ggplot(data = AnnualProduction,
             aes(x = Year, y= Articles, 
                 label = "85"), 
             vjust = 0, hjust = 1, nudge_y = 2) +
-  #geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60", size = 1, alpha = 0.8) + # added projected articles.
+  #geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60", size = 1, alpha = 0.8) + # added projected Documents.
   scale_x_discrete(breaks = function(x){x[if_else(x == 2010 |x == 2015 | x == 2020, TRUE,FALSE,)]})+
   scale_y_continuous(limits = c(40,116)) +
   theme_default +
   scale_color_manual(values= c("#5881b7","#29456B")) +
-   guides(Indexed = guide_legend("Published articles"))+
+   guides(Indexed = guide_legend("Published documents"))+
   theme(#panel.grid.major.x = element_blank(),
         panel.grid.minor.y =  element_blank(),
         panel.grid.major.y = element_line(size = 0.2),
@@ -331,7 +331,7 @@ authorprod <- sumauthor %>%
      scale_alpha(range = c(0.3, 1), 
                  breaks =  c(0,20,40,60)) + 
     scale_y_continuous(breaks = c(2010,2015,2020), limits = c(2008, 2022)) +
-    guides(size = guide_legend(order = 1, "Number of\n Articles"),
+    guides(size = guide_legend(order = 1, "Number of\n Documents"),
            alpha = guide_legend(order = 2, "Times Cited\n per Year")
            ) + 
   #geom_text(df, mapping = aes(x = .data$Author, y = .data$year, group =  .data$Author)) +
@@ -527,7 +527,8 @@ AffiliationWorldMap <- countries %>%
   ) +
   scale_size(range = c(3,14))+
   labs(fill = "Count of article",
-       title = "A. Articles by country",
+       title = "A. Published  by country",
+       
     x = NULL,
     y = NULL
     ) 
@@ -604,7 +605,7 @@ AllAffiliationWorldMap <- countries %>%
   ) +
   scale_size(range = c(3,14))+
   labs(fill = "Count of article",
-       title = "A. Articles by country",
+       title = "A. Documents by country",
     x = NULL,
     y = NULL
     ) 
@@ -682,7 +683,7 @@ ArticlesUSMap <- ggplot() +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
-       title = "B. Number of articles by state of corresponding authors",
+       title = "B. Number of Documents by state of corresponding authors",
        caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
     x = NULL,
     y = NULL
