@@ -772,7 +772,7 @@ view(types)
 
 #Public
 
-SchoolTypePlot<- types %>%
+SchoolTypeTable <- types %>%
   pivot_longer(!SchoolType) %>%
   filter(name == "US" | name == "LSE") %>%
   filter(SchoolType != FALSE) %>%
@@ -788,36 +788,44 @@ SchoolTypePlot<- types %>%
       str_detect(SchoolType, "2") ~ "2-Yr",
       str_detect(SchoolType, "4") ~ "4-Yr"),
     Sign = case_when( 
-      str_detect(SchoolType, "2") ~ -1,
-      str_detect(SchoolType, "4") ~ 1),
-      Type = as.factor(Type)) %>%
-  ggplot(aes(x = (name), value * Sign ,fill = SchoolType)) +
-    geom_col(fill = "white",
-               #position = "stack",
-               size = 4,
-             label = vars(SchoolType)) +
-  geom_hline(yintercept = 0)+
-    geom_col(aes(label = Type, alpha = as.numeric(colorlevel)),
+      str_detect(name, "US") ~ -1,
+      str_detect(name, "LSE") ~ 1),
+    name = case_when( 
+      str_detect(name, "US") ~ "U.S.",
+      TRUE ~ name),
+      Type = as.factor(Type))
+  
+SchoolTypePlot <- ggplot(SchoolTypeTable,aes(x = SchoolType, value * Sign ,fill = SchoolType
+             )) +
+    # geom_col(fill = "white",
+    #            #position = "stack",
+    #            size = 4,
+    #          label = vars(SchoolType)) +
+  geom_col(aes(label = Type, #alpha = as.numeric(colorlevel)
+               ),
                #position = "stack",
                size = 4) +
+  geom_hline(yintercept = 0, color = "#444444")+
     # geom_text(aes(label = Type, y =0 ),
     #           #vjust = 0.5,
     #           #nudge_x = .4,
     #           position = position_stack(vjust = 0.),
     #           size = 3, fontface = "bold") +a
-    geom_label_repel(aes(label = SchoolType),
-              #vjust = 0.5,
-              box.padding = 0.5,
-              point.padding = 0.8,
-              direction = "y",
-              position = position_stack(vjust = 0.5),
+    # geom_label_repel(aes(label = SchoolType),
+    #           #vjust = 0.5,
+    #           box.padding = 0.5,
+    #           point.padding = 0.8,
+    #           direction = "y",
+    #           #position = position_stack(vjust = 0.5),
+    #           #nudge_y = -.015,
+    #           size = 3, fontface = "bold") +
+  geom_text_repel(aes(y = value * Sign ,label = paste0(round(value*100,0),"%")),
+              #position = position_fill(vjust = Sign),
               #nudge_y = -.015,
-              size = 3, fontface = "bold") +
-  geom_text(aes(label = paste0(round(value*100, 0),"%")),
-              #vjust = 0.5,
-              position = position_stack(vjust = 0.5),
-              #nudge_y = -.015,
-              size = 3, fontface = "bold") +
+              #hjust = 0.5,
+            size = 3, fontface = "bold", 
+            direction = "x"
+            ) +
   scale_color_identity(guide = "none") +
   scale_fill_brewer(palette = "Paired")+
   scale_alpha_binned(range = c(1.5,0.5)) +
@@ -827,11 +835,12 @@ SchoolTypePlot<- types %>%
     #                  breaks = c(0,0.4,.8)
                      ) +
   labs(x = NULL, y = NULL,
-       title = "C. School types of authors compared to all U.S."
+       title = "B. Author-affiliated school types compared to U.S. distribution"
        ) +
   coord_flip()+
-   facet_grid(cols =vars(Type), scales = "free", as.table = TRUE, nrow = 4, ncol = 1,
-  #            #strip.position = "left", 
+   facet_grid(cols =vars(name), scales = "free", as.table = TRUE, 
+              #nrow = 4, ncol = 1,
+  #            #strip.position = "left",
   #            #dir = "h",
   #            switch = "x"
               )+
@@ -897,8 +906,8 @@ MSIAffiliationPlot <- temp %>%
   ggplot(aes(x = name, y = perc)) +
   geom_col(position = position_stack(reverse = TRUE),  fill = "#266b6e") +
   geom_text(
-    aes(label =n),
-    hjust = 0, nudge_y = .0005,
+    aes(label =perc * 100,),
+    hjust = 0 , nudge_y = .0005,
     size = 3.5, fontface = "bold"
   ) +
   scale_y_continuous(labels = scales::percent, 
