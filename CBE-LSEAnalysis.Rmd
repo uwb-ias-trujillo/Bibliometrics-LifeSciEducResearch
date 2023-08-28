@@ -551,30 +551,44 @@ for (country in countries$region) {
   allcountries[countries == country] <- sum(str_count(data$C1,str_to_upper(country)),na.rm = TRUE)
 }
 
+countryfreq <- results$Countries %>%
+  as.data.frame() %>%
+  mutate(Tab = str_to_title(Tab)) %>%
+  mutate(Tab = case_when(
+    Tab == "Usa" ~ "USA",
+    Tab == "United Kingdom" ~"UK",
+    TRUE ~ Tab
+  ))
+
 allcountries <- allcountries %>%
-  mutate(region = countries, Freq = count) %>%
+  mutate(region = countries) %>%
   filter(region != "Georgia")
 
 All_world_map_short <- world_map %>%
+  full_join(countryfreq, by = c("region" = "Tab")) %>%
   full_join(allcountries, by = c("region" = "region")) %>%
   filter(Freq >= 1 & (subregion != "Alaska" | region != "New Zealand"))#%>%
   #mutate(case_when(region == "USA", ))
 
 
 All_worldcentroids <- All_world_map_short %>%
-  group_by(region, Freq) %>%
+  group_by(region, count, Freq) %>%
   filter(subregion != "Alaska" & subregion != "Pitt Island" ) %>%
 #& subregion != "Chatham Island" & subregion != "12"& subregion != "13") %>%
   summarise(latitude = sign(lat) * exp(mean(log(abs(lat)))), longitude = sign(long) * exp(mean(log(abs(long))))) %>%
-  group_by(region, Freq, latitude, longitude)%>%summarise()
+  group_by(region, count,Freq, latitude, longitude)%>%
+  summarise() %>%
+  group_by(region, count, Freq) %>% 
+  slice_head(n = 1) %>%
+  filter(count >0 )
 
-AllAffiliationWorldMap <- countries %>%
-  full_join(allcountries, by = c("region" = "region")) %>%
-  ggplot(aes(fill = Freq, map_id = region), color = 1) +
+AllAffiliationWorldMap <- allcountries %>%
+  full_join(countryfreq, by = c("region" = "Tab")) %>%
+  ggplot(aes(fill = count, map_id = region), color = 1) +
   #geom_hline(yintercept=0, color = "light grey") +
   geom_map(map = All_world_map_short, colour = "white", lwd = 0.2) +
   geom_map(map = world_map, colour = "light grey", lwd = 0.2)+
-  geom_autopoint(data = All_worldcentroids %>% group_by(region, Freq), aes(x = longitude, y = latitude, size = Freq*100, group = region,),color = "#333333") +
+  geom_autopoint(data = All_worldcentroids %>% group_by(region, Freq), aes(x = longitude, y = latitude, size = Freq*150, group = region,),color = "#333333") +
     geom_text(data = All_worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq, group = region), color = "white") +
   expand_limits(x = All_world_map_short$long, y = All_world_map_short$lat) +
   coord_map("moll") +
@@ -611,8 +625,8 @@ AllAffiliationWorldMap <- countries %>%
                         limits = c(1, 5000)
   ) +
   scale_size(range = c(3,14))+
-  labs(fill = "Count of article",
-       title = "A. Documents by country",
+  labs(fill = "Count of co-authors",
+       title = "A. Documents by country of corresponding authors",
        caption = "Source: Web of Science",
     x = NULL,
     y = NULL
@@ -645,10 +659,19 @@ msistates <- msiuniv %>%
   summarize(n = n(), articles = sum(Freq) ) %>%
   #filter(!(St %in% c("MH", "PR", "VI", "GU"))) %>% 
   rename(states = St, affiliations = n) %>%
-  group_by(affiliations, articles)
+  group_by(affiliations, articles) %>%
+  drop_na()
 
 msistates$state_name <- state.name[match(msistates$states,state.abb)]
 
+#corrstates <- data.frame(states = msistates$states, count = NA)
+# for (istates in msistates$states) {
+#   corrstates[states == istates] <- sum(str_count(data$RP,istates),na.rm = TRUE)
+# }
+# 
+# corrstates <- msistates %>% 
+#   right_join()
+#   
 us <- fortify(map_data("state"), region = "region") %>%
   mutate(region = str_to_title(region))
 spatial_data <- right_join(msistates,
@@ -691,7 +714,7 @@ ArticlesUSMap <- ggplot() +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
-       title = "B. Number of Documents by state of corresponding authors",
+       title = "B. Documents by state of co-authors",
        caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
     x = NULL,
     y = NULL
