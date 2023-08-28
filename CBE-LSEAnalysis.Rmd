@@ -591,8 +591,7 @@ AllAffiliationWorldMap <- allcountries %>%
   geom_autopoint(data = All_worldcentroids %>% group_by(region, Freq), aes(x = longitude, y = latitude, size = Freq*150, group = region,),color = "#333333") +
     geom_text(data = All_worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq, group = region), color = "white") +
   expand_limits(x = All_world_map_short$long, y = All_world_map_short$lat) +
-  coord_map("moll") +
-  coord_quickmap()+
+  #coord_quickmap()+
   theme_map()+
   #theme_default +
   labs(caption = "") +
@@ -624,19 +623,39 @@ AllAffiliationWorldMap <- allcountries %>%
                         labels = c(1,10, 100, 1000, 5000),
                         limits = c(1, 5000)
   ) +
-  scale_size(range = c(3,14))+
+  scale_size(range = c(3,14))
+
+AllAffiliationWorldMapWest <- AllAffiliationWorldMap +
+  coord_map("ortho", orientation = c(10, -90, 0)) +
   labs(fill = "Count of co-authors",
-       title = "A. Documents by country of corresponding authors",
-       caption = "Source: Web of Science",
+       title = "A.",
     x = NULL,
     y = NULL
     ) 
 
-AllAffiliationWorldMap
+AllAffiliationWorldMapCenter<- AllAffiliationWorldMap+
+  coord_map("ortho", orientation = c(10, 10, 0)) +
+  labs(#caption = "NE: 2. Source: Web of Science",
+    title = "B.",
+    x = NULL,
+    y = NULL
+    ) 
 
-ggsave("figures/AllAffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 3,
-  units = "in", limitsize = FALSE)
+AllAffiliationWorldMapEast <- AllAffiliationWorldMap+
+  coord_map("ortho", orientation = c(10, 110, 0)) +
+  labs(caption = "NE: 2. Source: Web of Science",
+    title = "C.",
+    x = NULL,
+    y = NULL
+    ) 
+
+AllAffiliationWorldMapWest
+AllAffiliationWorldMapCenter
+AllAffiliationWorldMapEast
+
+# ggsave("figures/AllAffiliationWorldMapshort.jpg", device = "jpeg", dpi = 400,  width = 7,
+#   height = 3,
+#   units = "in", limitsize = FALSE)
 ```
 
 ### Affiliations in the US
@@ -714,7 +733,7 @@ ArticlesUSMap <- ggplot() +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
-       title = "B. Documents by state of co-authors",
+       title = "D.",
        caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
     x = NULL,
     y = NULL
@@ -752,7 +771,10 @@ ggsave("figures/ArticlesUSMap.jpg",
 ```
 
 ```{r combining maps}
-ggarrange(AffiliationWorldMap, ArticlesUSMap,common.legend = TRUE, legend = "none", ncol = 1, align = c("hv"))
+ggarrange(AllAffiliationWorldMapWest,
+AllAffiliationWorldMapCenter,
+AllAffiliationWorldMapEast, ArticlesUSMap,common.legend = TRUE, legend = "none", ncol = 2, nrow =2, align = c("h")
+)
 ggsave("figures/MapCombo.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
