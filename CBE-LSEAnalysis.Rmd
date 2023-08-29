@@ -1190,37 +1190,47 @@ write.csv(file = "Sources.csv",sourcestable)
 #                           documents=10
 #                           )
 
-CS5 <- bibliometrix::conceptualStructure(data,
-                          field = "AB",
-                          ngrams = c(1),
-                          method = "MCA",
-                          minDegree= 5,
-                          #clust= "3",
-                          #k.max=5,
-                          stemming= TRUE,
-                          labelsize=10,
-                          documents=10
-                          )
+# CS5 <- bibliometrix::conceptualStructure(data,
+#                           field = "AB",
+#                           ngrams = c(1),
+#                           method = "MCA",
+#                           minDegree= 5,
+#                           #clust= "3",
+#                           #k.max=5,
+#                           stemming= TRUE,
+#                           labelsize=10,
+#                           documents=10
+#                           )
 
-CS19 <- bibliometrix::conceptualStructure(data, 
+
+CS20 <- bibliometrix::conceptualStructure(data, 
                           field ="ID", 
                           ngrams = c(1,2,3), 
                           method = "MCA", 
-                          minDegree= 19,
+                          minDegree= 20,
                           #clust= "3", 
                           k.max=5, 
-                          stemming= TRUE, 
+                          #quali.supp = "PY",
+                          #stemming= TRUE, 
                           labelsize=10, 
-                          documents=10
+                          documents=3
                           )
+
+CS20$graph_terms+
+  theme_default + 
+  labs(title = "") +
+  theme(legend.position = "none", axis.text = element_text(size = 14))
+ggsave("figures/20ConceptualStructure.png", device = "png")
+
+CS20$graph_dendogram +
+  theme_default+ 
+    labs(title = "") +
+  theme(legend.position = "none", axis.text = element_text(size = 14))
+ggsave("figures/20ConceptualCluster.png", device = "png")
 
 # ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
 # 
 # ggsave("figures/CS30ConceptualCluster.png", plot = CS30$graph_dendogram + coord_flip(), device = "png")
-
-ggsave("figures/19ConceptualStructure.png", plot = CS19$graph_terms, device = "png")
-
-ggsave("figures/19ConceptualCluster.png", plot = CS19$graph_dendogram + coord_flip(), device = "png")
 
 # ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
 # 
@@ -1229,22 +1239,22 @@ ggsave("figures/19ConceptualCluster.png", plot = CS19$graph_dendogram + coord_fl
 
 
 ```{r conceptual structure with keywords at 15}
-
-CS15 <- #termExtraction(data, "TI",stemming = TRUE, keep.terms = compound) %>%
-  bibliometrix::conceptualStructure(data,
-                          field = c("ID"), 
-                          ngrams = c(1,2,3), 
-                          method = "MCA", 
-                          minDegree= 15,
-                          #clust= "3", 
-                          k.max=5, 
-                          stemming= TRUE, 
-                          labelsize=10, 
-                          documents=10
-                          )
-ggsave("figures/15ConceptualStructure.png", plot = CS15$graph_terms, device = "png")
-
-ggsave("figures/15ConceptualCluster.png", plot = CS15$graph_dendogram + coord_flip(), device = "png")
+# 
+# CS15 <- #termExtraction(data, "TI",stemming = TRUE, keep.terms = compound) %>%
+#   bibliometrix::conceptualStructure(data,
+#                           field = c("ID"), 
+#                           ngrams = c(1,2,3), 
+#                           method = "MCA", 
+#                           minDegree= 15,
+#                           #clust= "3", 
+#                           k.max=5, 
+#                           stemming= TRUE, 
+#                           labelsize=10, 
+#                           documents=10
+#                           )
+# ggsave("figures/15ConceptualStructure.png", plot = CS15$graph_terms, device = "png")
+# 
+# ggsave("figures/15ConceptualCluster.png", plot = CS15$graph_dendogram + coord_flip(), device = "png")
 ```
 
 
@@ -1297,7 +1307,7 @@ TitleTerms %>%
   arrange(value, .by_group = TRUE) %>%
   top_n(5) %>%
   ggplot(aes(Year, perc, group = name, color=cluster, group = cluster, fill=name, label = name))+
-  geom_area() + 
+  geom_line() + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
                   size = 2, 
                   color = "black",
