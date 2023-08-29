@@ -634,7 +634,7 @@ AllAffiliationWorldMapWest <- AllAffiliationWorldMap +
     ) 
 
 AllAffiliationWorldMapCenter<- AllAffiliationWorldMap+
-  coord_map("ortho", orientation = c(10, 10, 0)) +
+  coord_map("ortho", orientation = c(10, 20, 0)) +
   labs(#caption = "NE: 2. Source: Web of Science",
     title = "B.",
     x = NULL,
@@ -642,8 +642,8 @@ AllAffiliationWorldMapCenter<- AllAffiliationWorldMap+
     ) 
 
 AllAffiliationWorldMapEast <- AllAffiliationWorldMap+
-  coord_map("ortho", orientation = c(10, 110, 0)) +
-  labs(caption = "NE: 2. Source: Web of Science",
+  coord_map("ortho", orientation = c(-10, 110, 0)) +
+  labs(#caption = "NE: 2. Source: Web of Science",
     title = "C.",
     x = NULL,
     y = NULL
@@ -728,13 +728,14 @@ ArticlesUSMap <- ggplot() +
   geom_map(data  =  spatial_data, map = us,
            aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
              color = "white", size = 0.25) +
-  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles*100), color = "#333333") +
+  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles*150), color = "#333333") +
     geom_text(data = centroids, aes(x = longitude, y = latitude, label = articles, size = articles), color = "white") +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
        title = "D.",
-       caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
+       #caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
+       caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1",
     x = NULL,
     y = NULL
     ) +
@@ -771,9 +772,14 @@ ggsave("figures/ArticlesUSMap.jpg",
 ```
 
 ```{r combining maps}
-ggarrange(AllAffiliationWorldMapWest,
+world<- ggarrange(AllAffiliationWorldMapWest,
 AllAffiliationWorldMapCenter,
-AllAffiliationWorldMapEast, ArticlesUSMap,common.legend = TRUE, legend = "none", ncol = 2, nrow =2, align = c("h")
+AllAffiliationWorldMapEast, legend = "none", ncol = 3, nrow =1)
+
+ggarrange(world,ArticlesUSMap,common.legend = TRUE, 
+          legend = "none", 
+          #legend = "bottom",
+          ncol = 1, nrow =2, heights =  c(1,1.1)#, #align = c("hv")
 )
 ggsave("figures/MapCombo.jpg",
        device = "jpeg", dpi = 400,
