@@ -329,18 +329,12 @@ authorprod <- sumauthor %>%
   #geom_text(aes(label = h_index, size = 2),color = "#444444",alpha = 1, check_overlap = TRUE, group = 1, y = 2007)+
   geom_point(fill =  "#994E95", color ="#994E95")+ 
      scale_size(range = c(2, 6), 
-                breaks = c(1,3,5,7),
-                guide = guide_legend(#nrows = 2 ,
-                                     bycol = TRUE,
-                                     title = element_text(size = 5))) + 
+                breaks = c(1,3,5,7)) + 
      scale_alpha(range = c(0.3, 1), 
-                 breaks =  c(0,20,40,60),
-                 guide = guide_legend(#nrows = 2 ,
-                                     bycol = TRUE,
-                                     title = element_text(size = 5))) + 
+                 breaks =  c(0,20,40,60)) + 
     scale_y_continuous(breaks = c(2010,2015,2020), limits = c(2008, 2022)) +
-    guides(size = guide_legend(order = 1, "Number of\n documents"),
-           alpha = guide_legend(order = 2, "Times cited")
+    guides(size = guide_legend(order = 1, "Number of\n Documents"),
+           alpha = guide_legend(order = 2, "Times Cited\n per Year")
            ) + 
   #geom_text(df, mapping = aes(x = .data$Author, y = .data$year, group =  .data$Author)) +
   theme_default+
@@ -363,24 +357,17 @@ authorprod <- sumauthor %>%
           panel.grid.major.y = element_blank(),
           panel.spacing = unit(0.01, "cm"),
         #panel.grid.major.x = element_line(size = 0.2),
-        plot.title.position = "plot",
+        plot.title.position = "plot", legend.margin=margin(),
          #plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"),
         plot.subtitle = ggtext::element_markdown(),
         strip.text.y.left = element_text(angle = 00, vjust = 1, size =  10, color = "#444444"),
         strip.background = element_blank(),
         strip.switch.pad.grid = unit(0.01, "cm"),
         strip.placement = "outside",
-        legend.box.just = "left",
-        legend.margin=margin(0),
         #strip.clip = "on",
         
         )+
-            # guides(fill=guide_legend(nrows = 2 ,
-            #                          bycol = TRUE,
-            #                          title = element_text(size = 5)),
-            #        alpha=guide_legend(nrows = 2 ,
-            #                          bycol = TRUE,
-            #                          title = element_text(size = 5))) + 
+            guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
     labs(#title = "B. Author productivity", 
          title = "B.", 
          #subtitle =paste("Documents authored per year and ordered by Hirch (h) index"),
