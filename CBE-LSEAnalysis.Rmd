@@ -1142,13 +1142,13 @@ AuAffiliationPlot<- ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq),
         legend.position = 'none',
         )
 
-ggsave("figures/AffiliationsTopAuthors.jpg",
-       device = "jpeg", dpi = 400,
-       width = 7, height = 4,
-       units = "in", limitsize = FALSE)
+# ggsave("figures/AffiliationsTopAuthors.jpg",
+#        device = "jpeg", dpi = 400,
+#        width = 7, height = 4,
+#        units = "in", limitsize = FALSE)
 
 
-ggarrange(AuAffiliationPlot, SchoolTypePlot, MSIAffiliationPlot, ncol = 1, common.legend = FALSE, align = c("hv"))
+ggarrange(AuAffiliationPlot, SchoolTypePlot, MSIAffiliationPlot, ncol = 1, nrow = 3, common.legend = FALSE, align = c("v"))
 
 ggsave("figures/AffiliationsCombo.jpg",
        device = "jpeg", dpi = 400,
@@ -1160,7 +1160,7 @@ ggsave("figures/AffiliationsCombo.jpg",
 ```{r citations, echo=FALSE}
 CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
-CRtable
+#CRtable
 
 write.csv(file = "Citations.csv",CRtable)
 
@@ -1190,18 +1190,29 @@ write.csv(file = "Sources.csv",sourcestable)
 #                           documents=10
 #                           )
 
+CS5 <- bibliometrix::conceptualStructure(data,
+                          field = "AB",
+                          ngrams = c(1),
+                          method = "MCA",
+                          minDegree= 5,
+                          #clust= "3",
+                          #k.max=5,
+                          stemming= TRUE,
+                          labelsize=10,
+                          documents=10
+                          )
+
 CS19 <- bibliometrix::conceptualStructure(data, 
                           field ="ID", 
-                          ngrams = c(1,2), 
+                          ngrams = c(1,2,3), 
                           method = "MCA", 
                           minDegree= 19,
-                          clust= "3", 
+                          #clust= "3", 
                           k.max=5, 
                           stemming= TRUE, 
                           labelsize=10, 
                           documents=10
                           )
-
 
 # ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
 # 
@@ -1219,20 +1230,21 @@ ggsave("figures/19ConceptualCluster.png", plot = CS19$graph_dendogram + coord_fl
 
 ```{r conceptual structure with keywords at 15}
 
-CS15 <- bibliometrix::conceptualStructure(data, 
-                          field ="ID", 
-                          ngrams = c(1,2), 
+CS15 <- #termExtraction(data, "TI",stemming = TRUE, keep.terms = compound) %>%
+  bibliometrix::conceptualStructure(data,
+                          field = c("ID"), 
+                          ngrams = c(1,2,3), 
                           method = "MCA", 
                           minDegree= 15,
-                          clust= "3", 
+                          #clust= "3", 
                           k.max=5, 
                           stemming= TRUE, 
                           labelsize=10, 
                           documents=10
                           )
-ggsave("figures/15ConceptualStructure.png", plot = CS19$graph_terms, device = "png")
+ggsave("figures/15ConceptualStructure.png", plot = CS15$graph_terms, device = "png")
 
-ggsave("figures/15ConceptualCluster.png", plot = CS19$graph_dendogram + coord_flip(), device = "png")
+ggsave("figures/15ConceptualCluster.png", plot = CS15$graph_dendogram + coord_flip(), device = "png")
 ```
 
 
@@ -1273,7 +1285,7 @@ TitleText <- TitleTerms %>%
   top_n(1, Year) %>%
   filter(name %in% SharedTerms$name)
 
-clustername <- as.data.frame(CS30[["km.res"]]$cluster)
+clustername <- as.data.frame(CS15[["km.res"]]$cluster)
 colnames(clustername) <-c("cluster")
 clustername$name <- row.names(clustername)
 clustername$name <- str_to_upper(clustername$name)
@@ -1284,8 +1296,27 @@ TitleTerms %>%
   group_by(cluster) %>%
   arrange(value, .by_group = TRUE) %>%
   top_n(5) %>%
-  ggplot(aes(Year, perc, group = name, color=cluster, fill=name, label = name))+
-  geom_smooth(n = 3, se = FALSE) + 
+  ggplot(aes(Year, perc, group = name, color=cluster, group = cluster, fill=name, label = name))+
+  geom_area() + 
+  geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  size = 2, 
+                  color = "black",
+                  arrow = arrow(length = unit(0.02, "npc")),
+                  box.padding = 0.5
+                  ) +
+  scale_y_log10(labels = label_percent()) + 
+  theme_default +
+  labs(title = "Conceptual trends based on article titles")+
+  theme(legend.position="none")
+
+TitleTerms %>% 
+  filter(name %in% TopTerms$name) %>%
+  left_join(clustername)%>%
+  group_by(cluster) %>%
+  arrange(value, .by_group = TRUE) %>%
+  top_n(5) %>%
+  ggplot(aes(Year, perc, group = name, color=name, fill=cluster, label = name))+
+  geom_area() + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
                   size = 2, 
                   color = "black",
