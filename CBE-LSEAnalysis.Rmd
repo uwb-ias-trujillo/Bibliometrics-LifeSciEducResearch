@@ -66,6 +66,7 @@ theme_default <- theme(
   text = element_text(color = "#444444", size = 12),
   axis.title = element_text(size = 16, color = "#555555"),
   plot.caption = element_text(hjust = 0, face= "italic"),
+  #major.grid.y = element_line(color = "#BBBBBB", size = 0.2),
   plot.title.position = "plot",
   plot.caption.position = "plot",
   panel.background = element_rect(fill = "white"),
@@ -193,13 +194,13 @@ prodplot <- ggplot(data = AnnualProduction,
    guides(Indexed = guide_legend("Published documents"))+
   theme(#panel.grid.major.x = element_blank(),
         panel.grid.minor.y =  element_blank(),
-        panel.grid.major.y = element_line(size = 0.2),
+        panel.grid.major.y = element_line(size = 0.2, color = "#BBBBBB"),
         axis.text.x = element_text(hjust = 0),
          legend.position = "none")+
   labs(
     #title = "A. Journal productivity",
     title = "A.",
-    subtitle = "Editors-in-Chief and the documents published per year",
+    # subtitle = "Editors-in-Chief and the documents published per year",
     x = NULL,
     y = NULL,
   )
@@ -339,7 +340,7 @@ authorprod <- sumauthor %>%
   theme_default+
     theme(legend.position = "bottom",
         legend.title = element_text(),
-        legend.box="horizontal",
+        #legend.box="horizontal",
           text = element_text(color = "#444444"), 
           panel.background = element_rect(fill = "#FFFFFF"), 
         
@@ -369,7 +370,7 @@ authorprod <- sumauthor %>%
             guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
     labs(#title = "B. Author productivity", 
          title = "B.", 
-         subtitle =paste("Documents authored per year and ordered by Hirch (h) index"),
+         #subtitle =paste("Documents authored per year and ordered by Hirch (h) index"),
          x = NULL, y = NULL) +
   facet_grid(rows = vars(h_index), 
              shrink = TRUE,
@@ -546,6 +547,13 @@ ggsave("figures/Prodcommon.jpg",
 
 
 ```{r world all author affiliations, echo=FALSE}
+world_map = map_data("world") %>%
+  filter(long < 180)
+
+countries <- world_map %>%
+  distinct(region) %>%
+  rowid_to_column()
+
 allcountries <- data.frame(countries = countries$region, count = NA)
 #countries <- countries %>% mutate(region = str_c(region,"."))
 
@@ -860,7 +868,7 @@ SchoolTypePlot <- ggplot(SchoolTypeTable,aes(x = SchoolType, value * Sign ,fill 
                ),
                #position = "stack",
                size = 4) +
-  geom_hline(yintercept = 0, color = "#444444")+
+  geom_hline(yintercept = 0, color = "#BBBBBB")+
     # geom_text(aes(label = Type, y =0 ),
     #           #vjust = 0.5,
     #           #nudge_x = .4,
@@ -984,6 +992,7 @@ MSIAffiliationPlot <- temp %>%
   theme(legend.title = element_blank(),
         legend.position = "bottom",
         panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_line(size = 0.1),
         panel.grid.minor = element_blank(),
         axis.text.y = element_text(margin = margin(r = -0.5, l = 0.4, unit = "cm")),
         strip.text.y =  element_blank()
