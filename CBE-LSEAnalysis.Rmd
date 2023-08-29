@@ -1366,7 +1366,7 @@ TitleTerms %>%
   theme(legend.position="none",
         axis.text.y = element_blank())
 
-ggsave("figures/TitleTrends.png", width = 4, height = 7, device = "png")
+# ggsave("figures/TitleTrends.png", width = 4, height = 7, device = "png")
 ```
 
 
