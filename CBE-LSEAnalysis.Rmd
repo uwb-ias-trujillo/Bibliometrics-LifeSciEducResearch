@@ -197,7 +197,8 @@ prodplot <- ggplot(data = AnnualProduction,
         axis.text.x = element_text(hjust = 0),
          legend.position = "none")+
   labs(
-    title = "A. Journal productivity",
+    #title = "A. Journal productivity",
+    title = "A.",
     subtitle = "Editors-in-Chief and the documents published per year",
     x = NULL,
     y = NULL,
@@ -317,8 +318,8 @@ sumauthor<- df %>%
   mutate(Author = fct_reorder(Author, h_index)) %>%
   mutate(label = str_c(Author,h_index,sep = " "))
 
-sumauthor$Author
-view(sumauthor)
+# sumauthor$Author
+# view(sumauthor)
 
 authorprod <- sumauthor %>%
   ggplot(aes(x = Author, y = year, size = freq, alpha = totalTCpY)) +
@@ -366,7 +367,8 @@ authorprod <- sumauthor %>%
         
         )+
             guides(fill=guide_legend(nrows = 2 ,bycol = TRUE)) + 
-    labs(title = "B. Author productivity", 
+    labs(#title = "B. Author productivity", 
+         title = "B.", 
          subtitle =paste("Documents authored per year and ordered by Hirch (h) index"),
          x = NULL, y = NULL) +
   facet_grid(rows = vars(h_index), 
@@ -402,39 +404,39 @@ ggsave("figures/Prodcommon.jpg",
 
 
 ```{r author other, eval=FALSE, skip = TRUE}
-authordata %>%
-  mutate(AU = str_replace(
-    str_to_title(AU),
-    "[a-zA-Z]+$",
-    str_to_upper(
-      str_extract(
-        AU,"[a-zA-Z]+$")
-      ))) %>%
-  filter(n > 8) %>%
-  ggplot(aes(x = reorder(AU, (NP)), y = NP)) +
-    geom_col(fill =  "#994E95", alpha = 0.9) +
-    #geom_label_repel(aes(label = AU), size = 2, box.padding = 0.001, min.segment.length = 0.01)  +
-    #theme_minimal()+
-    theme_default +
-    labs(y = NULL,
-         x = NULL,
-         caption = "CBE — Life Science Education between 2010 and 2021") +
-    coord_flip() +
-    theme(#axis.text.y = element_text(size = 8),
-          panel.grid.major.y = element_blank(),
-          #panel.grid.major.x = element_blank(),
-          #panel.grid.minor.x = element_blank(),
-          panel.background = element_rect(fill = "#FFFFFF"),
-          axis.title = element_text(size = 14, color = "#555555"), 
-          axis.title.y = element_text(vjust = 1, angle = 0, hjust = 0), 
-          axis.text.x = element_text(
-                                     hjust = 0
-                                     ),
-          axis.text.y = element_text(size = 8,
-                                    margin = margin(r = -0.05, l = 0.1, unit = "in"),
-                                    hjust = 1,),
-          legend.position = 'none') +
-    ggtitle("Author productivity", subtitle = "Number of publications by LSE authors")
+# authordata %>%
+#   mutate(AU = str_replace(
+#     str_to_title(AU),
+#     "[a-zA-Z]+$",
+#     str_to_upper(
+#       str_extract(
+#         AU,"[a-zA-Z]+$")
+#       ))) %>%
+#   filter(n > 8) %>%
+#   ggplot(aes(x = reorder(AU, (NP)), y = NP)) +
+#     geom_col(fill =  "#994E95", alpha = 0.9) +
+#     #geom_label_repel(aes(label = AU), size = 2, box.padding = 0.001, min.segment.length = 0.01)  +
+#     #theme_minimal()+
+#     theme_default +
+#     labs(y = NULL,
+#          x = NULL,
+#          caption = "CBE — Life Science Education between 2010 and 2021") +
+#     coord_flip() +
+#     theme(#axis.text.y = element_text(size = 8),
+#           panel.grid.major.y = element_blank(),
+#           #panel.grid.major.x = element_blank(),
+#           #panel.grid.minor.x = element_blank(),
+#           panel.background = element_rect(fill = "#FFFFFF"),
+#           axis.title = element_text(size = 14, color = "#555555"), 
+#           axis.title.y = element_text(vjust = 1, angle = 0, hjust = 0), 
+#           axis.text.x = element_text(
+#                                      hjust = 0
+#                                      ),
+#           axis.text.y = element_text(size = 8,
+#                                     margin = margin(r = -0.05, l = 0.1, unit = "in"),
+#                                     hjust = 1,),
+#           legend.position = 'none') +
+#     ggtitle("Author productivity", subtitle = "Number of publications by LSE authors")
 
 # Add color for school type using the other graph to depict these. 
 # Going to use full join between data on author productivity and their affiliation (university or institution). 
@@ -594,7 +596,7 @@ AllAffiliationWorldMap <- allcountries %>%
   #coord_quickmap()+
   theme_map()+
   #theme_default +
-  labs(caption = "") +
+  #labs(caption = "") +
   theme(#plot.margin= unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
         # plot.caption = element_text(hjust = 0, face= "italic"),
         axis.title = element_text(size = 14, color = "#555555"),
@@ -728,8 +730,8 @@ ArticlesUSMap <- ggplot() +
   geom_map(data  =  spatial_data, map = us,
            aes(x = long, y = lat, map_id = state_name, group = group, fill = articles, label = states),
              color = "white", size = 0.25) +
-  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles*150), color = "#333333") +
-    geom_text(data = centroids, aes(x = longitude, y = latitude, label = articles, size = articles), color = "white") +
+  geom_point(data = centroids, aes(x = longitude, y = latitude, size = articles*130), color = "#333333") +
+    geom_text(data = centroids, aes(x = longitude, y = latitude, label = articles, size = articles*0.8), color = "white") +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
@@ -779,7 +781,7 @@ AllAffiliationWorldMapEast, legend = "none", ncol = 3, nrow =1)
 ggarrange(world,ArticlesUSMap,common.legend = TRUE, 
           legend = "none", 
           #legend = "bottom",
-          ncol = 1, nrow =2, heights =  c(1,1.1)#, #align = c("hv")
+          ncol = 1, nrow =2#, heights =  c(1,1.1), align = c("hv")
 )
 ggsave("figures/MapCombo.jpg",
        device = "jpeg", dpi = 400,
@@ -817,7 +819,7 @@ types$SchoolType <- factor(types$SchoolType,
                                     "Private 2-year"))
 
 
-view(types)
+#view(types)
 
 #We try to compare the percentage breakdown of institutions in the US according to the MSI eligibility matrix to amount in the LSE affiliations list.
 
@@ -839,7 +841,7 @@ SchoolTypeTable <- types %>%
       str_detect(SchoolType, "2") ~ "2-Yr",
       str_detect(SchoolType, "4") ~ "4-Yr"),
     Sign = case_when( 
-      str_detect(name, "US") ~ -1,
+      str_detect(name, "US") ~ 1,
       str_detect(name, "LSE") ~ 1),
     name = case_when( 
       str_detect(name, "US") ~ "U.S.",
@@ -886,7 +888,8 @@ SchoolTypePlot <- ggplot(SchoolTypeTable,aes(x = SchoolType, value * Sign ,fill 
     #                  breaks = c(0,0.4,.8)
                      ) +
   labs(x = NULL, y = NULL,
-       title = "B. Author-affiliated school types compared to U.S. distribution"
+       #title = "B. Author-affiliated school types compared to U.S. distribution",
+       title = "B."
        ) +
   coord_flip()+
    facet_grid(cols =vars(name), scales = "free", as.table = TRUE, 
@@ -943,7 +946,7 @@ msisummary_perc <- temp%>%
   #select(!n)%>%
   mutate(perc = label_percent()(perc)) %>% 
   pivot_wider(names_from = name, values_from = c(perc))
-view(msisummary_perc)
+#view(msisummary_perc)
 
 temp$name<- factor(temp$name, levels = c("SIP","HBCU Masters", "TCCU","AANAPISI", "PBI A", "ANNH","PBI F","PPOHA","AANAPISI F", "HBGI","HBCU" ,"HSI STEM","HSI"))
 
@@ -968,10 +971,11 @@ MSIAffiliationPlot <- temp %>%
   #facet_grid(rows = vars(titleIII), scales = "free", space = "free")+
   theme_default + 
   labs(
-    title = "C. US author affiliations by Minority Serving Institution status",
+    #title = "C. US author affiliations by Minority Serving Institution status",
+    title = "C.",
     y = NULL, 
     x = NULL,
-    caption = "Current grantee status in 2020 U.S. Dept. of Ed."
+    #caption = "Current grantee status in 2020 U.S. Dept. of Ed."
   )  +
   theme(legend.title = element_blank(),
         legend.position = "bottom",
@@ -1112,8 +1116,9 @@ AuAffiliationPlot<- ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq),
   labs(
     x = NULL,
     y = NULL,
-    title = "A. Top affiliations of authors",
-    caption = "Source: Web of Science"
+    #title = "A. Top affiliations of authors",
+    title = "A.",
+    # caption = "Source: Web of Science"
   )+
   scale_fill_identity(guide = "none") +
   scale_x_discrete(labels = NULL)+ 
