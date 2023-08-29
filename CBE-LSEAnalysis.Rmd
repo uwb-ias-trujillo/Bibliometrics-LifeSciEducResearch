@@ -205,9 +205,9 @@ prodplot <- ggplot(data = AnnualProduction,
   )
 prodplot
 
-ggsave("figures/AnnualProductivity.jpg", plot = prodplot,
-       device = "jpeg", dpi = 400, bg = "white",
-       width = 7, height = 4, units = "in", limitsize = FALSE)
+# ggsave("figures/AnnualProductivity.jpg", plot = prodplot,
+#        device = "jpeg", dpi = 400, bg = "white",
+#        width = 7, height = 4, units = "in", limitsize = FALSE)
 
 
 ```
@@ -381,9 +381,9 @@ authorprod <- sumauthor %>%
 
 authorprod
 
-ggsave("figures/AuthorProd.jpg", 
-       device = "jpeg", dpi = 400, bg = "white",
-       width = 7, height = 4.5, units = "in", limitsize = FALSE)
+# ggsave("figures/AuthorProd.jpg", 
+#        device = "jpeg", dpi = 400, bg = "white",
+#        width = 7, height = 4.5, units = "in", limitsize = FALSE)
 ```
 
 ```{r combing journal and author figure}
@@ -638,7 +638,7 @@ AllAffiliationWorldMapWest <- AllAffiliationWorldMap +
 AllAffiliationWorldMapCenter<- AllAffiliationWorldMap+
   coord_map("ortho", orientation = c(10, 20, 0)) +
   labs(#caption = "NE: 2. Source: Web of Science",
-    title = "B.",
+    title = "",
     x = NULL,
     y = NULL
     ) 
@@ -646,7 +646,7 @@ AllAffiliationWorldMapCenter<- AllAffiliationWorldMap+
 AllAffiliationWorldMapEast <- AllAffiliationWorldMap+
   coord_map("ortho", orientation = c(-10, 110, 0)) +
   labs(#caption = "NE: 2. Source: Web of Science",
-    title = "C.",
+    title = "",
     x = NULL,
     y = NULL
     ) 
@@ -715,13 +715,14 @@ affiliationMap <- ggplot() +
   theme(plot.margin = unit(c(1,1,1,1), "cm"),
         panel.background = element_blank())
 
-ggsave("figures/AffiliationUSMap.jpg", device = "jpeg", dpi = 400,  #width = 7,
-  #height = 5,
-  units = "in", limitsize = FALSE)
+# ggsave("figures/AffiliationUSMap.jpg", device = "jpeg", dpi = 400,  #width = 7,
+#   #height = 5,
+#   units = "in", limitsize = FALSE)
 
 
 centroids <- spatial_data %>%
   group_by(state_name, articles) %>%
+    filter(!(states == "RI")) %>% 
   summarise(latitude = exp(mean(log(lat))), longitude = -exp(mean(log(abs(long))))) %>%
   inner_join(msistates)
 
@@ -735,9 +736,9 @@ ArticlesUSMap <- ggplot() +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
-       title = "D.",
+       title = "B.",
        #caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
-       caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1",
+       caption = "RI: 12, DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1",
     x = NULL,
     y = NULL
     ) +
@@ -767,10 +768,10 @@ ArticlesUSMap <- ggplot() +
                      )
 
 ArticlesUSMap
-ggsave("figures/ArticlesUSMap.jpg",
-       device = "jpeg", dpi = 400,
-       width = 7, height = 4,
-       units = "in", limitsize = FALSE)
+# ggsave("figures/ArticlesUSMap.jpg",
+#        device = "jpeg", dpi = 400,
+#        width = 7, height = 4,
+#        units = "in", limitsize = FALSE)
 ```
 
 ```{r combining maps}
@@ -781,7 +782,8 @@ AllAffiliationWorldMapEast, legend = "none", ncol = 3, nrow =1)
 ggarrange(world,ArticlesUSMap,common.legend = TRUE, 
           legend = "none", 
           #legend = "bottom",
-          ncol = 1, nrow =2#, heights =  c(1,1.1), align = c("hv")
+          ncol = 1, nrow =2, heights =  c(1,1.1),#widths = c(3,1), 
+          align = c("v")
 )
 ggsave("figures/MapCombo.jpg",
        device = "jpeg", dpi = 400,
@@ -913,9 +915,9 @@ SchoolTypePlot <- ggplot(SchoolTypeTable,aes(x = SchoolType, value * Sign ,fill 
         strip.placement = "outside",
         legend.position = "none")
 SchoolTypePlot
-ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
-  height = 5,
-  units = "in", limitsize = FALSE)
+# ggsave("figures/SchoolTypes.jpg", device = "jpeg", dpi = 400,  width = 7,
+#   height = 5,
+#   units = "in", limitsize = FALSE)
 ```
 
 
@@ -958,9 +960,11 @@ MSIAffiliationPlot <- temp %>%
     #eligibility != "Ineligible", 
     !is.na(name)) %>%
   ggplot(aes(x = name, y = perc)) +
-  geom_col(position = position_stack(reverse = TRUE),  fill = "#266b6e") +
+  geom_col(position = position_stack(reverse = TRUE),  fill = "#4da284") +
   geom_text(
-    aes(label =perc * 100,),
+    aes(label = n
+          #perc * 100,
+          ),
     hjust = 0 , nudge_y = .0005,
     size = 3.5, fontface = "bold"
   ) +
@@ -986,10 +990,10 @@ MSIAffiliationPlot <- temp %>%
        )
 
 MSIAffiliationPlot
-ggsave("figures/MsiAffiliations.jpg",
-       device = "jpeg", dpi = 400,
-       width = 7, height = 4,
-       units = "in", limitsize = FALSE)
+# ggsave("figures/MsiAffiliations.jpg",
+#        device = "jpeg", dpi = 400,
+#        width = 7, height = 4,
+#        units = "in", limitsize = FALSE)
 ```
 
 
@@ -1153,7 +1157,7 @@ write.csv(file = "Citations.csv",CRtable)
 
 # Sources Table
 sourcestable <-cbind(summary(factor(CR$Source))[1:10])
-sourcestable
+#sourcestable
 
 write.csv(file = "Sources.csv",sourcestable)
 ```
