@@ -329,13 +329,19 @@ authorprod <- sumauthor %>%
   #geom_text(aes(label = h_index, size = 2),color = "#444444",alpha = 1, check_overlap = TRUE, group = 1, y = 2007)+
   geom_point(fill =  "#994E95", color ="#994E95")+ 
      scale_size(range = c(2, 6), 
-                breaks = c(1,3,5,7)) + 
+                breaks = c(1,3,5,7),
+                guide = guide_legend(#nrows = 2 ,
+                                     bycol = TRUE,
+                                     title = element_text(size = 5))) + 
      scale_alpha(range = c(0.3, 1), 
-                 breaks =  c(0,20,40,60)) + 
+                 breaks =  c(0,20,40,60),
+                 guide = guide_legend(#nrows = 2 ,
+                                     bycol = TRUE,
+                                     title = element_text(size = 5))) + 
     scale_y_continuous(breaks = c(2010,2015,2020), limits = c(2008, 2022)) +
-    guides(size = guide_legend(order = 1, "Number of\n Documents"),
-           alpha = guide_legend(order = 2, "Times Cited\n per Year")
-           ) + 
+    guides(size = guide_legend(order = 1, "Number of\n documents"),
+           alpha = guide_legend(order = 2, "Times cited")
+           ) +
   #geom_text(df, mapping = aes(x = .data$Author, y = .data$year, group =  .data$Author)) +
   theme_default+
     theme(legend.position = "bottom",
