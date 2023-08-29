@@ -1169,21 +1169,21 @@ write.csv(file = "Sources.csv",sourcestable)
 ```{r conceptual structure with keywords}
 # Show how key words appear together using Multiple Correspondence Analysis
 #Consider selecting only articles that have the keywords  associated 
-CS30 <- bibliometrix::conceptualStructure(data, 
-                          field ="TI", 
-                          ngrams = 1, 
-                          method = "MCA", 
-                          minDegree= 30,
-                          clust= "3", 
-                          k.max=5, 
-                          stemming= TRUE, 
-                          labelsize=10, 
-                          documents=10
-                          )
+# CS30 <- bibliometrix::conceptualStructure(data, 
+#                           field ="TI", 
+#                           ngrams = 1, 
+#                           method = "MCA", 
+#                           minDegree= 30,
+#                           clust= "3", 
+#                           k.max=5, 
+#                           stemming= TRUE, 
+#                           labelsize=10, 
+#                           documents=10
+#                           )
 
 CS19 <- bibliometrix::conceptualStructure(data, 
                           field ="ID", 
-                          ngrams = 1, 
+                          ngrams = c(1,2), 
                           method = "MCA", 
                           minDegree= 19,
                           clust= "3", 
@@ -1194,13 +1194,36 @@ CS19 <- bibliometrix::conceptualStructure(data,
                           )
 
 
-ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
-
-ggsave("figures/CS30ConceptualCluster.png", plot = CS30$graph_dendogram + coord_flip(), device = "png")
+# ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
+# 
+# ggsave("figures/CS30ConceptualCluster.png", plot = CS30$graph_dendogram + coord_flip(), device = "png")
 
 ggsave("figures/19ConceptualStructure.png", plot = CS19$graph_terms, device = "png")
 
 ggsave("figures/19ConceptualCluster.png", plot = CS19$graph_dendogram + coord_flip(), device = "png")
+
+# ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
+# 
+# ggsave("figures/CS30ConceptualCluster.png", plot = CS30$graph_dendogram + coord_flip(), device = "png")
+```
+
+
+```{r conceptual structure with keywords at 15}
+
+CS15 <- bibliometrix::conceptualStructure(data, 
+                          field ="ID", 
+                          ngrams = c(1,2), 
+                          method = "MCA", 
+                          minDegree= 15,
+                          clust= "3", 
+                          k.max=5, 
+                          stemming= TRUE, 
+                          labelsize=10, 
+                          documents=10
+                          )
+ggsave("figures/15ConceptualStructure.png", plot = CS19$graph_terms, device = "png")
+
+ggsave("figures/15ConceptualCluster.png", plot = CS19$graph_dendogram + coord_flip(), device = "png")
 ```
 
 
@@ -1298,21 +1321,21 @@ ggsave("figures/TitleTrends.png", width = 4, height = 7, device = "png")
 
 
 ```{r conceptual structure with titles, skip = TRUE, eval = FALSE, echo = FALSE}
-CS2 <- termExtraction(data, "TI",stemming = FALSE, keep.terms = compound) %>%
-  conceptualStructure(field ="TI_TM", 
-                          ngrams = 1, 
-                          method = "MCA",
-                          quali.supp = NULL,
-                          quanti.supp = NULL,
-                          minDegree= 50,
-                          clust= "auto", 
-                          k.max=5, 
-                          stemming= FALSE, 
-                          labelsize=10, 
-                          documents=2)
-
-ggsave("figures/ConceptualStructure2.png", plot = CS2$graph_terms, device = "png")
-
-
-ggsave("figures/ConceptualCluster2.png", plot = CS2$graph_dendogram + coord_flip(), device = "png")
+# CS2 <- termExtraction(data, "TI",stemming = FALSE, keep.terms = compound) %>%
+#   conceptualStructure(field ="TI_TM", 
+#                           ngrams = 1, 
+#                           method = "MCA",
+#                           quali.supp = NULL,
+#                           quanti.supp = NULL,
+#                           minDegree= 50,
+#                           clust= "auto", 
+#                           k.max=5, 
+#                           stemming= FALSE, 
+#                           labelsize=10, 
+#                           documents=2)
+# 
+# ggsave("figures/ConceptualStructure2.png", plot = CS2$graph_terms, device = "png")
+# 
+# 
+# ggsave("figures/ConceptualCluster2.png", plot = CS2$graph_dendogram + coord_flip(), device = "png")
 ```
