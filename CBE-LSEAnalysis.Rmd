@@ -402,6 +402,13 @@ ggsave("figures/Prodcommon.jpg",
        height = 8, 
        units = "in", 
        limitsize = FALSE)
+
+ggsave("figures/Prodcommon.eps", 
+       device = "eps", dpi = 300, bg = "white",
+       width = 17.57,
+       height = 13.1775, 
+       units = "cm", 
+       limitsize = FALSE)
 ```
 
 
@@ -934,7 +941,7 @@ SchoolTypePlot
 msiuniv2 <- msiuniv %>%
   mutate_if(is.numeric,as.factor)%>%
   mutate_if(is.character,as.factor)%>%
-  select(`Institution Name`,`AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU) %>%
+  select(`Institution Name`,`AANAPISI`, `AANAPISI F`,`ANNH`,`ANNH F`,`HBCU`,`HBCU Masters`, HBGI,HSI,`HSI STEM`,NASNTI, `NASNTI F` ,`PBI F`,`PBI A`,PPOHA,SIP,TCCU, MSEIP) %>%
   pivot_longer(cols = !`Institution Name`) %>%
   mutate(eligibility = if_else(value == 1 | value == 2| value == 3, "Ineligible", "NA")) %>%
   mutate(eligibility = if_else(value == 4 | value == '4R' |value == 5 | value == '5R', "Eligible or potentially eligible", eligibility))%>%
@@ -945,8 +952,8 @@ temp <- msiuniv2 %>%
   group_by(name,eligibility)%>%
   summarize(n=n())%>%
   mutate(perc = round(n/sum(n),3)) %>%
-  mutate(titleIII = case_when(
-    name == "SIP" ~ TRUE,
+  mutate(titled = case_when(
+    name %in% c("AANAPISI F","ANNH F","HBCU Masters","PPOHA","HSI STEM", "NASNTI F","PBI F","PBI A","SIP","MSEIP") ~ TRUE,
     TRUE ~ FALSE))
 
 msisummary_n <- temp%>%
@@ -954,18 +961,19 @@ msisummary_n <- temp%>%
   pivot_wider(names_from = name, values_from = c(n))
 
 msisummary_perc <- temp%>%
-  #select(!n)%>%
-  mutate(perc = label_percent()(perc)) %>% 
+  select(!n)%>%
+  drop_na()%>%
+  #mutate(perc = label_percent()(perc)) %>% 
   pivot_wider(names_from = name, values_from = c(perc))
 #view(msisummary_perc)
 
-temp$name<- factor(temp$name, levels = c("SIP","HBCU Masters", "TCCU","AANAPISI", "PBI A", "ANNH","PBI F","PPOHA","AANAPISI F", "HBGI","HBCU" ,"HSI STEM","HSI"))
+temp$name<- factor(temp$name, levels = c("SIP","HBCU Masters", "TCCU","AANAPISI", "PBI A", "ANNH","ANNH F","PBI F","PPOHA","AANAPISI F", "HBGI","HBCU" ,"MSEIP","HSI STEM","HSI"))
 
 MSIAffiliationPlot <- temp %>% 
   filter(eligibility == "Current grantee",
     # eligibility != "Undetermined", 
     # eligibility == "Ineligible",
-    name %in% c("TCCU", "ANNH","PBI F","PPOHA","AANAPISI F", "HBGI","HBCU","HSI", "AANAPISI"),
+    name %in% c("TCCU", "ANNH", "HBGI","HBCU","HSI", "AANAPISI", "PBI A"),
     #eligibility != "Ineligible", 
     !is.na(name)) %>%
   ggplot(aes(x = name, y = perc)) +
@@ -1022,7 +1030,7 @@ MSIAffiliationPlotSupp <- temp %>%
                                )) +
   theme_default + 
   labs(
-    title = "US author affiliations by Minority Serving Institution status",
+    title = "LSE author affiliations in the US by Minority Serving Institution status",
     y = NULL, 
     x = NULL
   )  +
@@ -1053,6 +1061,11 @@ msiuniv %>%
   #summarise(n = n(),sum = sum(n))%>%
   unique()
     #summarise(total = sum(sum))
+
+msisummary_n %>% filter(eligibility == "Current grantee", titleIII) %>% 
+  #select(!titleIII) %>%
+  t()
+
 
 msiuniv2 %>% 
   group_by(`Institution Name`,eligibility)
@@ -1191,30 +1204,42 @@ write.csv(file = "Sources.csv",sourcestable)
 #                           documents=10
 #                           )
 
-CS16AB <- bibliometrix::conceptualStructure(data,
-                          field = "AB",
-                          ngrams = c(1),
-                          method = "MCA",
-                          minDegree= 16,
-                          #clust= "3",
-                          #k.max=5,
-                          stemming= TRUE,
-                          labelsize=10,
-                          documents=10
-                          )
+# CS16AB <- bibliometrix::conceptualStructure(data,
+#                           field = "AB",
+#                           ngrams = c(1),
+#                           method = "MCA",
+#                           minDegree= 16,
+#                           #clust= "3",
+#                           #k.max=5,
+#                           stemming= TRUE,
+#                           labelsize=10,
+#                           documents=10
+#                           )
 
 
 CS20 <- bibliometrix::conceptualStructure(data, 
                           field ="ID", 
-                          ngrams = c(1,2,3), 
+                          ngrams = c(1,2,3,4), 
                           method = "MCA", 
                           minDegree= 20,
-                          #clust= "3", 
+                          clust= "3", 
                           k.max=5, 
                           #quali.supp = "PY",
-                          #stemming= TRUE, 
+                          stemming= TRUE, 
                           labelsize=10, 
                           documents=3
+                          )
+
+CS30 <- bibliometrix::conceptualStructure(data,
+                          field ="ID",
+                          ngrams = c(1,2,3,4),
+                          method = "MCA",
+                          minDegree= 30,
+                          clust= "4",
+                          k.max=5,
+                          stemming= TRUE,
+                          labelsize=10,
+                          documents=10
                           )
 
 CS20$graph_terms+
@@ -1228,6 +1253,18 @@ CS20$graph_dendogram +
     labs(title = "") +
   theme(legend.position = "none", axis.text = element_text(size = 14))
 ggsave("figures/20ConceptualCluster.png", device = "png")
+
+CS30$graph_terms+
+  theme_default + 
+  labs(title = "") +
+  theme(legend.position = "none", axis.text = element_text(size = 14))
+ggsave("figures/30ConceptualStructure.png", device = "png")
+
+CS30$graph_dendogram +
+  theme_default+ 
+    labs(title = "") +
+  theme(legend.position = "none", axis.text = element_text(size = 14))
+ggsave("figures/30ConceptualCluster.png", device = "png")
 
 # ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
 # 
@@ -1296,7 +1333,7 @@ TitleText <- TitleTerms %>%
   top_n(1, Year) %>%
   filter(name %in% SharedTerms$name)
 
-clustername <- as.data.frame(CS15[["km.res"]]$cluster)
+clustername <- as.data.frame(CS20[["km.res"]]$cluster)
 colnames(clustername) <-c("cluster")
 clustername$name <- row.names(clustername)
 clustername$name <- str_to_upper(clustername$name)
@@ -1307,8 +1344,9 @@ TitleTerms %>%
   group_by(cluster) %>%
   arrange(value, .by_group = TRUE) %>%
   top_n(5) %>%
-  ggplot(aes(Year, perc, group = name, color=cluster, group = cluster, fill=name, label = name))+
-  geom_line() + 
+  ggplot(aes(Year, perc, color=as.factor(cluster), #group = cluster, 
+             fill=name, label = name))+
+  geom_smooth() + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
                   size = 2, 
                   color = "black",
@@ -1325,9 +1363,9 @@ TitleTerms %>%
   left_join(clustername)%>%
   group_by(cluster) %>%
   arrange(value, .by_group = TRUE) %>%
-  top_n(5) %>%
-  ggplot(aes(Year, perc, group = name, color=name, fill=cluster, label = name))+
-  geom_area() + 
+  #top_n(5) %>%
+  ggplot(aes(Year, perc, color=as.factor(cluster), fill=name, label = name))+
+  geom_line() + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
                   size = 2, 
                   color = "black",
