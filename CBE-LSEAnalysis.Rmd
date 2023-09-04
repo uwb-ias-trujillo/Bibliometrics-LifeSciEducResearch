@@ -199,7 +199,7 @@ prodplot <- ggplot(data = AnnualProduction,
          legend.position = "none")+
   labs(
     #title = "A. Journal productivity",
-    title = "A.",
+    #title = "A.",
     # subtitle = "Editors-in-Chief and the documents published per year",
     x = NULL,
     y = NULL,
@@ -368,7 +368,7 @@ authorprod <- sumauthor %>%
 )+
             #guides(fill=guide_legend(nrow = 2 ,byrow = TRUE)) + 
     labs(#title = "B. Author productivity", 
-         title = "B.", 
+         #title = "B.", 
          #subtitle =paste("Documents authored per year and ordered by Hirch (h) index"),
          x = NULL, y = NULL) +
   facet_grid(rows = vars(h_index), 
@@ -392,7 +392,8 @@ ggarrange(prodplot,
           ncol	=1,
           heights = c(1.3,1.8),
           widths = c(1.3,1.8),
-          align = "v"#,
+          align = "v",
+          labels = "AUTO"
           #common.legend = TRUE
           )
 
@@ -555,8 +556,8 @@ ggsave("figures/Prodcommon.eps",
 
 
 ```{r world all author affiliations, echo=FALSE}
-world_map = map_data("world") %>%
-  filter(long < 180)
+world_map = map_data("world") #%>%
+  #filter(long < 180)
 
 countries <- world_map %>%
   distinct(region) %>%
@@ -568,6 +569,21 @@ allcountries <- data.frame(countries = countries$region, count = NA)
 for (country in countries$region) {
   allcountries[countries == country] <- sum(str_count(data$C1,str_to_upper(country)),na.rm = TRUE)
 }
+
+# 
+# df <- data.frame(i = 0, C1 = "", region = "", count = "")
+# i = 1
+# colnames(df) <- c("i","C1","region","count")
+# 
+# for(region in countries$region) {
+#   for (x in data$C1){
+#     #str_count(x,str_to_upper(region),na.rm = TRUE)
+#     info <- c(i,x,region)
+#     df<- rbind(df,info)
+#   }
+#   i<-i+1
+# }
+
 
 countryfreq <- results$Countries %>%
   as.data.frame() %>%
@@ -582,29 +598,44 @@ allcountries <- allcountries %>%
   mutate(region = countries) %>%
   filter(region != "Georgia")
 
+metacountries <- metaTagExtraction(data, Field = "AU_CO", sep = ";", aff.disamb = TRUE)
+metaco <- unlist(strsplit(metacountries$AU_CO, ";")) %>%
+  table() %>%
+  as.data.frame() %>%
+  rename(region = ".",coauthors = "Freq") %>%
+  mutate(region = str_to_title(region)) %>%
+    mutate(region = case_when(
+    region == "Usa" ~ "USA",
+    region == "United Kingdom" ~"UK",
+    TRUE ~ region
+  ))
+  
+view(metaco)
+  
 All_world_map_short <- world_map %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>%
-  full_join(allcountries, by = c("region" = "region")) %>%
+  full_join(metaco, by = c("region" = "region")) %>%
   filter(Freq >= 1 & (subregion != "Alaska" | region != "New Zealand"))#%>%
   #mutate(case_when(region == "USA", ))
 
 
 All_worldcentroids <- All_world_map_short %>%
-  group_by(region, count, Freq) %>%
+  group_by(region, coauthors, Freq) %>%
   filter(subregion != "Alaska" & subregion != "Pitt Island" ) %>%
 #& subregion != "Chatham Island" & subregion != "12"& subregion != "13") %>%
   summarise(latitude = sign(lat) * exp(mean(log(abs(lat)))), longitude = sign(long) * exp(mean(log(abs(long))))) %>%
-  group_by(region, count,Freq, latitude, longitude)%>%
+  group_by(region, coauthors,Freq, latitude, longitude)%>%
   summarise() %>%
-  group_by(region, count, Freq) %>% 
+  group_by(region, coauthors, Freq) %>% 
   slice_head(n = 1) %>%
-  filter(count >0 )
+  filter(coauthors >0 )
 
 AllAffiliationWorldMap <- allcountries %>%
   full_join(countryfreq, by = c("region" = "Tab")) %>%
-  ggplot(aes(fill = count, map_id = region), color = 1) +
+  full_join(metaco) %>%
+  ggplot(aes(fill = coauthors, map_id = region), color = 1) +
   #geom_hline(yintercept=0, color = "light grey") +
-  geom_map(map = All_world_map_short, colour = "white", lwd = 0.2) +
+  geom_map(map = world_map, colour = "white", lwd = 0.2) +
   geom_map(map = world_map, colour = "light grey", lwd = 0.2)+
   geom_autopoint(data = All_worldcentroids %>% group_by(region, Freq), aes(x = longitude, y = latitude, size = Freq*150, group = region,),color = "#333333") +
     geom_text(data = All_worldcentroids, aes(x = longitude, y = latitude, label = Freq, size = Freq, group = region), color = "white") +
@@ -645,8 +676,8 @@ AllAffiliationWorldMap <- allcountries %>%
 
 AllAffiliationWorldMapWest <- AllAffiliationWorldMap +
   coord_map("ortho", orientation = c(10, -90, 0)) +
-  labs(fill = "Count of co-authors",
-       title = "A.",
+  labs(#fill = "",
+       #title = "",
     x = NULL,
     y = NULL
     ) 
@@ -654,15 +685,15 @@ AllAffiliationWorldMapWest <- AllAffiliationWorldMap +
 AllAffiliationWorldMapCenter<- AllAffiliationWorldMap+
   coord_map("ortho", orientation = c(10, 20, 0)) +
   labs(#caption = "NE: 2. Source: Web of Science",
-    title = "",
+    #title = "",
     x = NULL,
     y = NULL
     ) 
 
 AllAffiliationWorldMapEast <- AllAffiliationWorldMap+
-  coord_map("ortho", orientation = c(-10, 110, 0)) +
+  coord_map("ortho", orientation = c(0, 100, 0)) +
   labs(#caption = "NE: 2. Source: Web of Science",
-    title = "",
+    #title = "",
     x = NULL,
     y = NULL
     ) 
@@ -752,7 +783,7 @@ ArticlesUSMap <- ggplot() +
   coord_map("moll") +
   theme_map() +
   labs(fill = "Publications",
-       title = "B.",
+       #title = "B.",
        #caption = "DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1.\nCounts are summarized by state/territory of each article by each author's affiliation.",
        caption = "RI: 12, DC: 23, PR: 11, HI: 6, AK: 3, VI: 2, GU: 1, MH: 1",
     x = NULL,
@@ -795,7 +826,7 @@ world<- ggarrange(AllAffiliationWorldMapWest,
 AllAffiliationWorldMapCenter,
 AllAffiliationWorldMapEast, legend = "none", ncol = 3, nrow =1)
 
-ggarrange(world,ArticlesUSMap,common.legend = TRUE, 
+ggarrange(world,ArticlesUSMap,common.legend = TRUE,labels = "AUTO", 
           legend = "none", 
           #legend = "bottom",
           ncol = 1, nrow =2, heights =  c(1,1.1),#widths = c(3,1), 
@@ -806,6 +837,12 @@ ggsave("figures/MapCombo.jpg",
        width = 7, height = 8,
        units = "in", bg = "white", limitsize = FALSE)
 
+ggsave("figures/MapCombo.eps",
+       device = "eps", dpi = 300,
+       width = 17.57,
+       height = 15.37375, 
+       units = "cm",
+       bg = "white", limitsize = FALSE)
 ```
 
 ```{r MSI, echo=FALSE}
@@ -1162,12 +1199,19 @@ AuAffiliationPlot<- ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq),
 #        units = "in", limitsize = FALSE)
 
 
-ggarrange(AuAffiliationPlot, SchoolTypePlot, MSIAffiliationPlot, ncol = 1, nrow = 3, common.legend = FALSE, align = c("v"))
+ggarrange(AuAffiliationPlot, SchoolTypePlot, MSIAffiliationPlot, ncol = 1, nrow = 3,labels = "AUTO", common.legend = FALSE, align = c("v"))
 
 ggsave("figures/AffiliationsCombo.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
        units = "in", bg = "white", limitsize = FALSE)
+
+ggsave("figures/AffiliationsCombo.eps",
+       device = "eps", dpi = 300,
+       width = 17.57,
+       height = 15.37375, 
+       units = "cm",
+       bg = "white", limitsize = FALSE)
 ```
 
 ### Most cited papers and journals
