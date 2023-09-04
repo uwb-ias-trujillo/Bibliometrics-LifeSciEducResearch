@@ -37,8 +37,11 @@ RColorBrewer,
 bibliometrix,
 ggtext,
 ggforce,
-PupillometryR
+PupillometryR,
+extrafont
 )
+
+loadfonts()
 
 source('functions.r')
 ```
@@ -403,7 +406,10 @@ ggsave("figures/Prodcommon.jpg",
        height = 8, 
        units = "in", 
        limitsize = FALSE)
+```
 
+
+```{r combing journal and author figure esp, skip = TRUE}
 ggsave("figures/Prodcommon.eps", 
        device = "eps", dpi = 300, bg = "white",
        width = 17.57,
@@ -836,7 +842,10 @@ ggsave("figures/MapCombo.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
        units = "in", bg = "white", limitsize = FALSE)
+```
 
+
+```{r combining maps eps, skip = TRUE}
 ggsave("figures/MapCombo.eps",
        device = "eps", dpi = 300,
        width = 17.57,
@@ -1205,7 +1214,10 @@ ggsave("figures/AffiliationsCombo.jpg",
        device = "jpeg", dpi = 400,
        width = 7, height = 8,
        units = "in", bg = "white", limitsize = FALSE)
+```
 
+
+```{r top affiliations combined eps, skip = TRUE}
 ggsave("figures/AffiliationsCombo.eps",
        device = "eps", dpi = 300,
        width = 17.57,
