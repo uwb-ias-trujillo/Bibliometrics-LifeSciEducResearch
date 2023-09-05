@@ -161,11 +161,11 @@ prodplot <- ggplot(data = AnnualProduction,
             aes(x = Year, y= edrline, label = "Dolan"), 
             color = "#444444", 
             hjust = "left", vjust = "middle",
-            nudge_x = 0.2) +
+            ) +
   geom_label(data = AnnualProduction %>% filter(Year %in% c(2020)), 
             aes(x = Year, y= edrline , label = "Schinske,\nTanner", color = "#444444"), 
             color = "#444444", hjust = "left", 
-            vjust = "middle", nudge_x = 0.2, nudge_y = -3) +
+            vjust = "middle", nudge_y = -3) +
   geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2016)), 
                   aes(x = Year, y= Articles, label = c(Articles)), 
                   min.segment.length = 1, vjust = "middle", 
@@ -371,7 +371,7 @@ authorprod <- sumauthor %>%
 )+
             #guides(fill=guide_legend(nrow = 2 ,byrow = TRUE)) + 
     labs(#title = "B. Author productivity", 
-         #title = "B.", 
+         title = "", 
          #subtitle =paste("Documents authored per year and ordered by Hirch (h) index"),
          x = NULL, y = NULL) +
   facet_grid(rows = vars(h_index), 
