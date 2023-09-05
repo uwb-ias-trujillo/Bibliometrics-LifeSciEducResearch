@@ -142,9 +142,9 @@ prodplot <- ggplot(data = AnnualProduction,
   geom_line(data = AnnualProduction %>% filter(Year %in% c(2010:2020)), 
             aes(x = Year, y= edrline),
             color = "#444444") +
-  geom_text(data = AnnualProduction %>% filter(Year %in% c(2010,2020)), 
-             aes(x = Year, y= edrline),
-             color = "#444444", label = "▶", family = "HiraKakuPro-W3", size = 3) +
+  # geom_text(data = AnnualProduction %>% filter(Year %in% c(2010,2020)), 
+  #            aes(x = Year, y= edrline),
+  #            color = "#444444", label = "▶", family = "HiraKakuPro-W3", size = 3) +
    # geom_text(data = AnnualProduction %>% filter(Year %in% c(2008)),
    #          aes(x = Year, y= edrline, label = "Eds:"),
    #          color = "#444444",
