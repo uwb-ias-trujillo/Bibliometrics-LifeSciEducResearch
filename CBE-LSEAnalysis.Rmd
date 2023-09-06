@@ -1029,7 +1029,9 @@ MSIAffiliationPlot <- temp %>%
     label = if_else(perc > 0.01, paste0(round(perc*100,1),"%"),"")),
     size = 3, fontface = "bold", 
     direction = "x",
-    point.padding	=0.2
+    nudge_y	= -0.001,
+    #point.padding	=0.5,
+    #force_pull = 0.5
     ) +
   # geom_text(
   #   aes(label = perc * 100,
