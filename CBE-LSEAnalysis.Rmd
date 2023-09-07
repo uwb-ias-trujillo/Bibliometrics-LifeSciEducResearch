@@ -390,7 +390,7 @@ authorprod
 ```
 
 ```{r combing journal and author figure}
-ggarrange(prodplot,
+Prodcommon <- ggarrange(prodplot,
           authorprod,
           ncol	=1,
           heights = c(1.3,1.8),
@@ -400,7 +400,7 @@ ggarrange(prodplot,
           #common.legend = TRUE
           )
 
-ggsave("figures/Prodcommon.jpg", 
+ggsave("figures/Prodcommon.jpg", Prodcommon,
        device = "jpeg", dpi = 400, bg = "white",
        width = 6,
        height = 8, 
@@ -409,13 +409,28 @@ ggsave("figures/Prodcommon.jpg",
 ```
 
 
-```{r combing journal and author figure esp, skip = TRUE}
-ggsave("figures/Prodcommon.eps", 
+```{r combing journal and author figure eps tiff pdf, skip = TRUE}
+ggsave("figures/Prodcommon.eps", Prodcommon,
        device = "eps", dpi = 400, bg = "white",
        width = 17.57,
        height = 13.1775, 
        units = "cm", 
        limitsize = FALSE)
+
+ggsave("figures/Prodcommon.tiff", Prodcommon,
+       device = "tiff", dpi = 500, bg = "white",
+       width = 17.57,
+       height = 13.1775, 
+       units = "cm", 
+       limitsize = FALSE)
+
+ggsave("figures/Prodcommon.pdf", Prodcommon,
+       device = "pdf", dpi = 500, bg = "white",
+       width = 16.57,
+       height = 13.1775, 
+       units = "cm", 
+       limitsize = FALSE)
+
 ```
 
 
@@ -703,9 +718,23 @@ ggsave("figures/MapCombo.jpg",
 ```
 
 
-```{r combining maps eps, skip = TRUE}
+```{r combining maps eps tiff pdf, skip = TRUE}
 ggsave("figures/MapCombo.eps",
        device = "eps", dpi = 400,
+       width = 17.57,
+       height = 15.37375, 
+       units = "cm",
+       bg = "white", limitsize = FALSE)
+
+ggsave("figures/MapCombo.tiff",
+       device = "tiff", dpi = 500,
+       width = 17.57,
+       height = 15.37375, 
+       units = "cm",
+       bg = "white", limitsize = FALSE)
+
+ggsave("figures/MapCombo.pdf",
+       device = "pdf", dpi = 500,
        width = 17.57,
        height = 15.37375, 
        units = "cm",
@@ -795,7 +824,8 @@ SchoolTypePlot <- ggplot(SchoolTypeTable,aes(x = SchoolType, value * Sign ,fill 
     #           #nudge_y = -.015,
     #           size = 3, fontface = "bold") +
   geom_text_repel(aes(y = value, #* Sign ,
-  label = paste0(round(value*100,0),"%")),
+    label = paste0(round(value*100,0),"%")),
+    nudge_y = 0.005,
               #position = position_fill(vjust = Sign),
               #nudge_y = -.015,
               #hjust = 0.5,
@@ -1048,7 +1078,7 @@ AuAffiliationPlot<- ggplot(Affiliation,aes(x = reorder(str_to_title(AFF), Freq),
   ) +
   geom_text(
     aes(label = Freq),
-    hjust = 0, nudge_y = .5,
+    hjust = 0, nudge_y = 0.5,
     size = 3.5, fontface = "bold"
   ) +
   coord_flip() +
@@ -1084,9 +1114,23 @@ ggsave("figures/AffiliationsCombo.jpg",
 ```
 
 
-```{r top affiliations combined eps, skip = TRUE}
+```{r top affiliations combined eps tiff pdf, skip = TRUE}
 ggsave("figures/AffiliationsCombo.eps",
        device = "eps", dpi = 400,
+       width = 17.57,
+       height = 15.37375, 
+       units = "cm",
+       bg = "white", limitsize = FALSE)
+
+ggsave("figures/AffiliationsCombo.tiff",
+       device = "tiff", dpi = 400,
+       width = 17.57,
+       height = 15.37375, 
+       units = "cm",
+       bg = "white", limitsize = FALSE)
+
+ggsave("figures/AffiliationsCombo.pdf",
+       device = "pdf", dpi = 500,
        width = 17.57,
        height = 15.37375, 
        units = "cm",
