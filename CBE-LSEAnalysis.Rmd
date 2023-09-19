@@ -1143,13 +1143,13 @@ CR <- citations(data, field = "article", sep = ";")
 CRtable <-cbind(CR$Cited[1:20])
 #CRtable
 
-write.csv(file = "Citations.csv",CRtable)
+write.csv(file = "tables/Citations.csv",CRtable)
 
 # Sources Table
 sourcestable <-cbind(summary(factor(CR$Source))[1:10])
 #sourcestable
 
-write.csv(file = "Sources.csv",sourcestable)
+write.csv(file = "tables/Sources.csv",sourcestable)
 ```
 
 
