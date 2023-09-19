@@ -2,7 +2,12 @@
 Authored by: Darcie Nelson, Caleb Trujillo
 Acknowledged contributors:  Germaine Ng, Rachel Kudlacz
 
-The purpose of this project is to perform a bibliographic analysis heavily based on bibliometrix
+The purpose of this project is to perform a bibliographic analysis heavily based on *bibliometrix*.
+
+ Aria, M., & Cuccurullo, C. (2017), bibliometrix: An
+  R-tool for comprehensive science mapping analysis,
+  *Journal of informetrics, 11*(4), 959-975, Elsevier.
+  
 Additional support from the following packages:
 
 * readxl,
