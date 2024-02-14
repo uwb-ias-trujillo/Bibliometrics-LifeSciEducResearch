@@ -1345,6 +1345,62 @@ TitleTerms %>%
   labs(title = "Conceptual trends based on article titles")+
   theme(legend.position="none")
 
+TitleTerms %>% 
+  filter(name %in% TopTerms$name) %>%
+  left_join(clustername)%>%
+  group_by(cluster) %>%
+  arrange(value, .by_group = TRUE) %>%
+  #top_n(5) %>%
+  ggplot(aes(Year, perc, color=as.factor(cluster), fill=name, label = name))+
+  geom_line() + 
+  geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  size = 2, 
+                  color = "black",
+                  arrow = arrow(length = unit(0.02, "npc")),
+                  box.padding = 0.5
+                  ) +
+  scale_y_log10(labels = label_percent()) + 
+  theme_default +
+  labs(title = "Conceptual trends based on article titles")+
+  theme(legend.position="none")
+```
+
+
+```{r title topics scaled}
+TitleTermsScaled <- TitleTerms %>% 
+  #filter(name %in% TopTerms$name) %>%
+  group_by(name) %>%
+    # mutate(
+    #     value = as.numeric(as.character(value)),
+    #     value.scaled = (value - mean(value)) / sd(value),
+    #     idx = Year)%>%
+  left_join(clustername)%>%
+  group_by(cluster) %>%
+  arrange(value, .by_group = TRUE)  %>%
+  group_by(cluster,name)
+
+TitleTermsScaled%>%
+  #top_n(5) %>%
+  ggplot(aes(value, value.scaled, color=as.factor(cluster), fill=name, label = name))+
+  geom_line() + 
+  geom_text_repel(aes(label = name), #data = . %>% group_by(name) %>% top_n(1, Year), 
+                  size = 2, 
+                  color = "black",
+                  arrow = arrow(length = unit(0.02, "npc")),
+                  box.padding = 0.5
+                  ) +
+  scale_y_log10(labels = label_percent()) + 
+  theme_default +
+  labs(title = "Conceptual trends based on article titles")+
+  theme(legend.position="none")
+
+# group_by(type) %>%
+#     mutate(
+#         value = as.numeric(as.character(value)),
+#         value.scaled = (value - mean(value)) / sd(value),
+#         idx = 1:n()) %>%
+#     ggplot(aes(idx, value.scaled, colour = type)) + geom_line()
+
 # ggsave("figures/TitleLineTrends.png", device = "png", dpi = 400,
 #        width = 7, height = 7,
 #        units = "in")
