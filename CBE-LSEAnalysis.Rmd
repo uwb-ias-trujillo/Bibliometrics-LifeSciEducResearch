@@ -1215,11 +1215,11 @@ CS20$graph_terms+
   theme(legend.position = "none", axis.text = element_text(size = 14))
 ggsave("figures/20ConceptualStructure.png", device = "png")
 
-CS20$graph_dendogram +
-  theme_default+ 
-    labs(title = "") +
-  theme(legend.position = "none", axis.text = element_text(size = 14))
-ggsave("figures/20ConceptualCluster.png", device = "png")
+# CS20$graph_dendogram +
+#   theme_default+ 
+#     labs(title = "") +
+#   theme(legend.position = "none", axis.text = element_text(size = 14))
+# ggsave("figures/20ConceptualCluster.png", device = "png")
 
 CS30$graph_terms+
   theme_default + 
@@ -1227,11 +1227,11 @@ CS30$graph_terms+
   theme(legend.position = "none", axis.text = element_text(size = 14))
 ggsave("figures/30ConceptualStructure.png", device = "png")
 
-CS30$graph_dendogram +
-  theme_default+ 
-    labs(title = "") +
-  theme(legend.position = "none", axis.text = element_text(size = 14))
-ggsave("figures/30ConceptualCluster.png", device = "png")
+# CS30$graph_dendogram +
+#   theme_default+ 
+#     labs(title = "") +
+#   theme(legend.position = "none", axis.text = element_text(size = 14))
+# ggsave("figures/30ConceptualCluster.png", device = "png")
 
 # ggsave("figures/CS30ConceptualStructure.png", plot = CS30$graph_terms, device = "png")
 # 
@@ -1266,7 +1266,8 @@ ggsave("figures/30ConceptualCluster.png", device = "png")
 ```{r title topics}
 hypened<-results$ID[results$ID>10] %>%
   row.names()%>%
-  str_detect("-") 
+  str_detect("-")
+
 spaced<- results$ID[results$ID>10] %>%
   row.names()%>%
   str_detect(" ")
