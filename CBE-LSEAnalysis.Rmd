@@ -1183,6 +1183,18 @@ write.csv(file = "tables/Sources.csv",sourcestable)
 #                           documents=10
 #                           )
 
+CS2<- bibliometrix::conceptualStructure(data, 
+                          field ="ID_TM", 
+                          ngrams = c(1,2,3,4),  
+                          method = "MCA", 
+                          minDegree= 5,
+                          clust= "auto", 
+                          # k.max=5, 
+                          #quali.supp = "PY",
+                          stemming= TRUE, 
+                          labelsize=10, 
+                          # documents=3
+                          )
 
 CS20 <- bibliometrix::conceptualStructure(data, 
                           field ="ID", 
@@ -1214,6 +1226,12 @@ CS20$graph_terms+
   labs(title = "") +
   theme(legend.position = "none", axis.text = element_text(size = 14))
 ggsave("figures/20ConceptualStructure.png", device = "png")
+
+CS2$graph_terms+
+  theme_default + 
+  labs(title = "") +
+  theme(legend.position = "none", axis.text = element_text(size = 14))
+ggsave("figures/2ConceptualStructure.png", device = "png")
 
 # CS20$graph_dendogram +
 #   theme_default+ 
@@ -1281,7 +1299,7 @@ TitleTerms <- termExtraction(data, "TI",stemming = TRUE, keep.terms = compound) 
   pivot_longer(cols = !c('Year')) %>%
   group_by(Year) %>%
   mutate(sum = sum(value), perc = value / sum) %>%
-  filter(value > 1) %>%
+  #filter(value > 1) %>%
   filter(perc > 0.005)
 
 SharedTerms <- TitleTerms %>%
@@ -1301,7 +1319,7 @@ TitleText <- TitleTerms %>%
   top_n(1, Year) %>%
   filter(name %in% SharedTerms$name)
 
-clustername <- as.data.frame(CS20[["km.res"]]$cluster)
+clustername <- as.data.frame(CS2[["km.res"]]$cluster)
 colnames(clustername) <-c("cluster")
 clustername$name <- row.names(clustername)
 clustername$name <- str_to_upper(clustername$name)
@@ -1350,7 +1368,7 @@ TitleTerms %>%
   left_join(clustername)%>%
   group_by(cluster) %>%
   arrange(value, .by_group = TRUE) %>%
-  #top_n(5) %>%
+  top_n(5) %>%
   ggplot(aes(Year, perc, color=as.factor(cluster), fill=name, label = name))+
   geom_line() + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
@@ -1359,8 +1377,10 @@ TitleTerms %>%
                   arrow = arrow(length = unit(0.02, "npc")),
                   box.padding = 0.5
                   ) +
-  scale_y_log10(labels = label_percent()) + 
+  scale_y_log10(labels = label_percent()) +
+  scale_y_continuous(labels = label_percent()) +
   theme_default +
+  facet_wrap(~cluster)+
   labs(title = "Conceptual trends based on article titles")+
   theme(legend.position="none")
 ```
@@ -1368,12 +1388,14 @@ TitleTerms %>%
 
 ```{r title topics scaled}
 TitleTermsScaled <- TitleTerms %>% 
-  #filter(name %in% TopTerms$name) %>%
+  filter(name %in% TopTerms$name) %>%
   group_by(name) %>%
-    # mutate(
-    #     value = as.numeric(as.character(value)),
-    #     value.scaled = (value - mean(value)) / sd(value),
-    #     idx = Year)%>%
+    mutate(
+        value = as.numeric(as.character(value)),
+        #value = rawvalue +1,
+        perc.scaled = ((perc - mean(perc)) / (sd(perc))),
+        value.scaled = ((value - mean(value)) / (sd(value))),
+        idx = 1:n())%>%
   left_join(clustername)%>%
   group_by(cluster) %>%
   arrange(value, .by_group = TRUE)  %>%
@@ -1381,17 +1403,19 @@ TitleTermsScaled <- TitleTerms %>%
 
 TitleTermsScaled%>%
   #top_n(5) %>%
-  ggplot(aes(value, value.scaled, color=as.factor(cluster), fill=name, label = name))+
+  ggplot(aes(Year, perc.scaled, color=as.factor(cluster), fill=name, label = name))+
   geom_line() + 
-  geom_text_repel(aes(label = name), #data = . %>% group_by(name) %>% top_n(1, Year), 
+  geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
                   size = 2, 
                   color = "black",
                   arrow = arrow(length = unit(0.02, "npc")),
                   box.padding = 0.5
                   ) +
-  scale_y_log10(labels = label_percent()) + 
+  facet_grid(rows = vars(cluster)) +
+  #scale_y_log10(labels = label_percent()) +
+  scale_y_continuous(labels = label_percent()) +
   theme_default +
-  labs(title = "Conceptual trends based on article titles")+
+  labs(title = "Conceptual trends based on article titles") +
   theme(legend.position="none")
 
 # group_by(type) %>%
@@ -1433,22 +1457,172 @@ TitleTerms %>%
 ```
 
 
-```{r conceptual structure with titles, skip = TRUE, eval = FALSE, echo = FALSE}
-# CS2 <- termExtraction(data, "TI",stemming = FALSE, keep.terms = compound) %>%
-#   conceptualStructure(field ="TI_TM", 
-#                           ngrams = 1, 
-#                           method = "MCA",
-#                           quali.supp = NULL,
-#                           quanti.supp = NULL,
-#                           minDegree= 50,
-#                           clust= "auto", 
-#                           k.max=5, 
-#                           stemming= FALSE, 
-#                           labelsize=10, 
-#                           documents=2)
-# 
-# ggsave("figures/ConceptualStructure2.png", plot = CS2$graph_terms, device = "png")
-# 
-# 
-# ggsave("figures/ConceptualCluster2.png", plot = CS2$graph_dendogram + coord_flip(), device = "png")
+```{r conceptual structure with ID, skip = TRUE, eval = FALSE, echo = FALSE}
+IDTerms <- termExtraction(data, "ID",stemming = TRUE, keep.terms = compound) %>%
+  KeywordGrowth(Tag= "ID", top = 1000) %>%
+  pivot_longer(cols = !c('Year')) %>%
+  group_by(Year) %>%
+  mutate(sum = sum(value), perc = value / sum) %>%
+  #filter(value > 1) %>%
+  filter(perc > 0.005)
+
+SharedIDTerms <- IDTerms %>%
+  #select(Year,name) %>%
+  group_by(name) %>%
+  summarize(total = n()) %>%
+  filter(total > 2)
+
+TopIDTerms<- IDTerms %>% 
+  filter(name %in% SharedIDTerms$name) %>%
+  group_by(Year) %>%
+  arrange(value, .by_group = TRUE) #%>%
+  #top_n(15)
+
+IDText <- IDTerms %>%
+  group_by(name) %>%
+  top_n(1, Year) %>%
+  filter(name %in% SharedTerms$name)
+
+clustername <- as.data.frame(CS2[["km.res"]]$cluster)
+colnames(clustername) <-c("cluster")
+clustername$name <- row.names(clustername)
+clustername$name <- str_to_upper(clustername$name)
+
+IDTerms %>% 
+  filter(name %in% TopIDTerms$name) %>%
+  left_join(clustername)%>%
+  group_by(cluster) %>%
+  arrange(value, .by_group = TRUE) %>%
+  top_n(5) %>%
+  ggplot(aes(Year, perc, color=as.factor(cluster), #group = cluster, 
+             fill=name, label = name))+
+  geom_smooth() + 
+  geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  size = 2, 
+                  color = "black",
+                  arrow = arrow(length = unit(0.02, "npc")),
+                  box.padding = 0.5
+                  ) +
+  scale_y_log10(labels = label_percent()) + 
+  theme_default +
+  labs(title = "Conceptual trends based on article titles")+
+  theme(legend.position="none")
+
+IDTerms %>% 
+  filter(name %in% TopIDTerms$name) %>%
+  left_join(clustername)%>%
+  group_by(cluster) %>%
+  arrange(value, .by_group = TRUE) %>%
+  #top_n(5) %>%
+  ggplot(aes(Year, perc, color=as.factor(cluster), fill=name, label = name))+
+  geom_line() + 
+  geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  size = 2, 
+                  color = "black",
+                  arrow = arrow(length = unit(0.02, "npc")),
+                  box.padding = 0.5
+                  ) +
+  scale_y_log10(labels = label_percent()) + 
+  theme_default +
+  labs(title = "Conceptual trends based on article titles")+
+  theme(legend.position="none")
+
+IDTerms %>% 
+  filter(name %in% TopIDTerms$name) %>%
+  left_join(clustername)%>%
+  group_by(cluster) %>%
+  arrange(value, .by_group = TRUE) %>%
+  top_n(5) %>%
+  ggplot(aes(Year, perc, color=as.factor(cluster), fill=name, label = name))+
+  geom_line() + 
+  geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  size = 2, 
+                  color = "black",
+                  arrow = arrow(length = unit(0.02, "npc")),
+                  box.padding = 0.5
+                  ) +
+  scale_y_log10(labels = label_percent()) +
+  scale_y_continuous(labels = label_percent()) +
+  theme_default +
+  facet_wrap(~cluster)+
+  labs(title = "Conceptual trends based on article titles")+
+  theme(legend.position="none")
 ```
+```{r ID topics scaled}
+IDTermsScaled <- IDTerms %>% 
+  filter(name %in% TopIDTerms$name) %>%
+  group_by(name) %>%
+    mutate(
+        value = as.numeric(as.character(value)),
+        #value = rawvalue +1,
+        perc.scaled = ((perc - mean(perc)) / (sd(perc))),
+        value.scaled = ((value - mean(value)) / (sd(value))),
+        idx = 1:n())%>%
+  left_join(clustername)%>%
+  group_by(cluster) %>%
+  arrange(value, .by_group = TRUE)  %>%
+  group_by(cluster,name)
+
+IDTermsScaled%>%
+  #top_n(5) %>%
+  ggplot(aes(Year, perc.scaled, color=as.factor(cluster), fill=name, label = name))+
+  geom_line() + 
+  geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  size = 2, 
+                  color = "black",
+                  arrow = arrow(length = unit(0.02, "npc")),
+                  box.padding = 0.5
+                  ) +
+  facet_grid(rows = vars(cluster)) +
+  #scale_y_log10(labels = label_percent()) +
+  scale_y_continuous(labels = label_percent()) +
+  theme_default +
+  labs(title = "Conceptual trends based on article titles") +
+  theme(legend.position="none")
+```
+
+```{r co-citation analysis}
+CoCiteNet<-biblioNetwork(
+  data,
+  analysis = "co-citation",
+  network = "references",
+  sep = ";"
+)
+  
+networkPlot(CoCiteNet,n = 1000, type = "kamada", Title = "Co-Citation",labelsize=0.5, edges.min = 4)
+```
+
+
+```{r bibliographic coupling analysis}
+bibcoupNet<-biblioNetwork(
+  data,
+  analysis = "coupling",
+  network = "references",
+  n = NULL,
+  sep = ";",
+  short = FALSE,
+  shortlabel = TRUE,
+  remove.terms = NULL,
+  synonyms = NULL
+) %>%
+networkPlot(n = 1000, type = "kamada", Title = "Co-Citation",labelsize=0.5)
+```
+
+
+```{r bibliographic coupling analysis}
+CoInstNet<-biblioNetwork(
+  data,
+  analysis = "coupling",
+  network = "universities",
+  n = NULL,
+  sep = ";",
+  short = FALSE,
+  shortlabel = TRUE,
+  remove.terms = NULL,
+  synonyms = NULL
+) %>%
+networkPlot(n = 30, type = "kamada", Title = "Co-Citation",labelsize=0.5) 
+
+
+```
+
