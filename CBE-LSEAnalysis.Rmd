@@ -1532,7 +1532,7 @@ IDTerms %>%
   left_join(clustername)%>%
   group_by(cluster) %>%
   arrange(value, .by_group = TRUE) %>%
-  top_n(5) %>%
+  top_n(10) %>%
   ggplot(aes(Year, perc, color=as.factor(cluster), fill=name, label = name))+
   geom_line() + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
@@ -1545,7 +1545,7 @@ IDTerms %>%
   scale_y_continuous(labels = label_percent()) +
   theme_default +
   facet_wrap(~cluster)+
-  labs(title = "Conceptual trends based on article titles")+
+  labs(title = "Conceptual trends based on article keywords")+
   theme(legend.position="none")
 ```
 ```{r ID topics scaled}
@@ -1622,7 +1622,5 @@ CoInstNet<-biblioNetwork(
   synonyms = NULL
 ) %>%
 networkPlot(n = 30, type = "kamada", Title = "Co-Citation",labelsize=0.5) 
-
-
 ```
 
