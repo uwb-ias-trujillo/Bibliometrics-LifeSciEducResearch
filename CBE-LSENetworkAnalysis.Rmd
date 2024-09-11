@@ -42,6 +42,8 @@ library(readxl)
 library(ggthemes)
 library(ggpubr)
 library(RColorBrewer)
+library(tidygraph)
+
 
 # source('functions.r')
 ```
@@ -53,8 +55,15 @@ There has been tremendous growth in the area of undergraduate biology research o
 ### Summary of initial data set
 
 ```{r dataset}
-txt <- c("rawdata/CBE-LSE-2008-June2022/CBE-LSE-2008-June2022.txt")
-data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext")
+files <- list.files("rawdata/Life Sci Ref - text")
+data <- c()[,]
+tempdata <- c()[,]
+
+for (x in files){
+  tempdata <- convert2df(file = paste0("rawdata/Life Sci Ref - text/",x),dbsource = 'wos', format = "plaintext")
+  data <- bind_rows(data,tempdata)
+  }
+
 results <- biblioAnalysis(data, sep = ";")
 
 theme_default <- theme(
@@ -672,7 +681,6 @@ write.csv(file = "Sources.csv",sourcestable)
 
 
 ```{r DCA, echo=FALSE, fig.width = 50, fig.asp = .618}
-
 #DOCUMENT COCITATION NETWORK using 'data' file
 # Create a co-citation network
 DCAMatrix <- biblioNetwork(data, analysis = "co-citation", network = "references", sep = ";")
@@ -684,9 +692,13 @@ DCA <- networkPlot(DCAMatrix, n = dim(DCAMatrix)[1], Title = "Co-Citation Networ
 
 names(DCA$nodeDegree["american association 2011-1"])<- "AAAS 2011"
 
+
+
 DCAplot<- ggraph(DCA$graph, layout = "stress") +
   geom_edge_link(aes(edge_width = num / 200, color = color, alpha = 0.1, edge_linetype = factor(lty)), edge_alpha = 0.1) + 
-    geom_node_point(aes(color = color, size = deg))+
+    geom_node_point(aes(color = color, #size = deg
+                        )
+                        )+
   geom_node_label(aes(label = label,color = color), repel = TRUE, label.padding = 0.1 )+
   theme_void() + 
   theme(legend.position = 'none') +
@@ -695,7 +707,48 @@ DCAplot<- ggraph(DCA$graph, layout = "stress") +
     title = "Which publications are cited together most frequently?" ,
     subtitle = "Cited documents who were cited together 4 or more times"
   )
-DCAplot
+```
+
+
+```{r DCAplot, echo=FALSE, fig.width = 50, fig.asp = .618}
+dcagraph <- DCA$graph %>%
+  as.undirected () %>%
+  as_tbl_graph() %>%
+  activate(nodes) %>%
+  filter(deg >= 4)%>%
+  activate(edges) %>%
+  filter(weight >= 5)%>%
+  largest_component()
+  
+
+
+
+DCAplot2<- ggraph(dcagraph,
+       layout = "centrality", cent = graph.strength(dcagraph)) +
+  ggforce::geom_circle(aes(x0 = 0, y0 = 0, r = r), data.frame(r = 1:5 * 20), colour = 'grey')+
+  #layout = "kk") +
+  geom_edge_fan(show.legend = FALSE, width=0.2, colour="grey") +
+  geom_node_point(alpha = 0.8, 
+                  #size = graph.strength(dcagraph)/6,
+                  show.legend = FALSE)+
+  geom_node_label(aes(size = 1,
+                      label = if_else(strength(dcagraph) > 20,
+                                      name,NA)),
+                  show.legend = FALSE, repel = TRUE)+
+  theme_graph()+
+  theme(panel.background = element_rect(fill = NA),
+        strip.background = element_blank(),
+        strip.text.x = element_blank(),
+        plot.title = element_text(size=10, family = "Helvetica", hjust = -0),
+        plot.margin = margin(0, 0, 0, 0, "cm")
+        )+
+  labs(
+    title = NULL,
+    x = NULL,
+    y = NULL
+  )
+ 
+DCAplot2
 
 ggsave("figures/DocumentCocitationNetwork.jpg", device = "jpeg", dpi = 400, width = 7,
   height = 5,

@@ -38,7 +38,8 @@ bibliometrix,
 ggtext,
 ggforce,
 PupillometryR,
-extrafont
+extrafont,
+ggraph
 )
 
 loadfonts()
@@ -53,10 +54,14 @@ There has been tremendous growth in the area of undergraduate biology research o
 ### Summary of initial data set
 
 ```{r dataset, skip = TRUE}
-txt <- c("rawdata/CBE-LSE-2008-June2022/CBE-LSE-2008-June2022.txt")
-data <- convert2df(file = txt, dbsource = 'wos', format = "plaintext") 
+files <- list.files("rawdata/Life Sci Ref - text")
+data <- c()[,]
+tempdata <- c()[,]
 
-results <- biblioAnalysis(data, sep = ";")
+for (x in files){
+  tempdata <- convert2df(file = paste0("rawdata/Life Sci Ref - text/",x),dbsource = 'wos', format = "plaintext")
+  data <- bind_rows(data,tempdata)
+  }
 
 authorformat <- function(x){
   str_replace(
@@ -1536,6 +1541,7 @@ IDTerms %>%
   ggplot(aes(Year, perc, color=as.factor(cluster), fill=name, label = name))+
   geom_line() + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  max.overlap = 3,
                   size = 2, 
                   color = "black",
                   arrow = arrow(length = unit(0.02, "npc")),
@@ -1548,6 +1554,8 @@ IDTerms %>%
   labs(title = "Conceptual trends based on article keywords")+
   theme(legend.position="none")
 ```
+
+
 ```{r ID topics scaled}
 IDTermsScaled <- IDTerms %>% 
   filter(name %in% TopIDTerms$name) %>%
@@ -1568,6 +1576,7 @@ IDTermsScaled%>%
   ggplot(aes(Year, perc.scaled, color=as.factor(cluster), fill=name, label = name))+
   geom_line() + 
   geom_text_repel(aes(label = name), data = . %>% group_by(name) %>% top_n(1, Year), 
+                  max.overlaps = 3,
                   size = 2, 
                   color = "black",
                   arrow = arrow(length = unit(0.02, "npc")),
@@ -1586,10 +1595,19 @@ CoCiteNet<-biblioNetwork(
   data,
   analysis = "co-citation",
   network = "references",
-  sep = ";"
+  sep = ";",
+  short = TRUE,
+  shortlabel = TRUE
 )
   
-networkPlot(CoCiteNet,n = 1000, type = "kamada", Title = "Co-Citation",labelsize=0.5, edges.min = 4)
+CoCiteGraph<- networkPlot(CoCiteNet,n = 100, 
+                          type = "auto", Title = "Co-Citation",labelsize=0.5, edges.min = 2, cluster = "louvain")
+
+CoCiteGraph<-CoCiteGraph$graph
+ggraph(CoCiteGraph, layout = 'auto') + 
+  geom_edge_link() + 
+  geom_node_point(aes()) + 
+  theme(legend.position = 'bottom')
 ```
 
 
@@ -1605,11 +1623,12 @@ bibcoupNet<-biblioNetwork(
   remove.terms = NULL,
   synonyms = NULL
 ) %>%
-networkPlot(n = 1000, type = "kamada", Title = "Co-Citation",labelsize=0.5)
+networkPlot(n = 1000, type = "kamada", Title = "Document Co-Citation",labelsize=0.5)
+bibcoupNet
 ```
 
 
-```{r bibliographic coupling analysis}
+```{r institutional coupling analysis}
 CoInstNet<-biblioNetwork(
   data,
   analysis = "coupling",
@@ -1621,6 +1640,6 @@ CoInstNet<-biblioNetwork(
   remove.terms = NULL,
   synonyms = NULL
 ) %>%
-networkPlot(n = 30, type = "kamada", Title = "Co-Citation",labelsize=0.5) 
+networkPlot(n = 30, type = "kamada", Title = "Collaborative institutions",labelsize=0.5) 
 ```
 
