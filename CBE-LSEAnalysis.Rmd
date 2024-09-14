@@ -61,7 +61,9 @@ tempdata <- c()[,]
 for (x in files){
   tempdata <- convert2df(file = paste0("rawdata/Life Sci Ref - text/",x),dbsource = 'wos', format = "plaintext")
   data <- bind_rows(data,tempdata)
-  }
+}
+
+rm(tempdata)
 
 authorformat <- function(x){
   str_replace(
@@ -91,6 +93,12 @@ After the results are processed, they are stored as data tables for information 
 
 ```{r biblio, include = FALSE, skip = TRUE}
 options(width=100)
+journals<-c( "ADV PHYSIOL EDUC","AM BIOL TEACH", "BIOCHEM MOL BIOL EDU", "CBE-LIFE SCI EDUC", "J BIOL EDUC","J MICROBIOL BIOL EDU", "REV ENSINO BIOQUIM")
+
+data <- data %>% 
+  filter(J9 %in% journals, PY < 2024)
+
+results <- biblioAnalysis(data, sep = ";")
 
 S <- summary(object = results, pause = FALSE)
 dir.create("tables")
@@ -122,84 +130,30 @@ A timeline of the publication productivity is included for the journal.
 colnames(S$AnnualProduction) <- c("Year","Articles")
 edrline<-112
 AnnualProduction <- S$AnnualProduction %>%
-  mutate(Indexed = "Indexed") %>%
-  filter(Year != 2022) %>%
-  rbind( data.frame(Year = c(2021,2022), 
-                    Indexed = "Projected", 
-                    Articles = c(74,40 + 25 + 20))
-         ) %>%
-  mutate(col = case_when(Indexed == "Indexed" ~ "#266b6e",
-                         Indexed == "Projected" ~ "#1d4f60",))
+  mutate(col = "#266b6e")
 
 prodplot <- ggplot(data = AnnualProduction, 
                  mapping = aes(x = Year, 
-                               y = Articles, 
-                               group = Indexed, 
-                               color = Indexed, linetype = Indexed)) +
-  geom_line(data = AnnualProduction,
-            aes(x = Year, y= edrline+2),
-            color = "white", size = 13) +  
+                               y = Articles,
+                               group = 1),) +
   geom_line(stat = "identity", 
+            color = "#266b6e",
             size = 1.5) +
-  geom_line(data = AnnualProduction,
-            aes(x = Year, y= edrline),
-            color = "#444444", alpha = 0.4) +
-  geom_line(data = AnnualProduction %>% filter(Year %in% c(2010:2020)), 
-            aes(x = Year, y= edrline),
-            color = "#444444") +
-  # geom_text(data = AnnualProduction %>% filter(Year %in% c(2010,2020)), 
-  #            aes(x = Year, y= edrline),
-  #            color = "#444444", label = "▶", family = "HiraKakuPro-W3", size = 3) +
-   # geom_text(data = AnnualProduction %>% filter(Year %in% c(2008)),
-   #          aes(x = Year, y= edrline, label = "Eds:"),
-   #          color = "#444444",
-   #          hjust = "left",
-   #          vjust = "middle",
-   #          nudge_x = -0.2) +
-  geom_label(data = AnnualProduction %>% filter(Year %in% c(2008)), 
-            aes(x = Year, y= edrline, label = "Wood"), 
-            color = "#444444", 
-            hjust = "left", 
-            vjust = "middle",
-            nudge_x = -0.2) +
-  geom_label(data = AnnualProduction %>% filter(Year %in% c(2010)), 
-            aes(x = Year, y= edrline, label = "Dolan"), 
-            color = "#444444", 
-            hjust = "left", vjust = "middle",
-            ) +
-  geom_label(data = AnnualProduction %>% filter(Year %in% c(2020)), 
-            aes(x = Year, y= edrline , label = "Schinske,\nTanner", color = "#444444"), 
-            color = "#444444", hjust = "left", 
-            vjust = "middle", nudge_y = -3) +
-  geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2010, 2016)), 
-                  aes(x = Year, y= Articles, label = c(Articles)), 
-                  min.segment.length = 1, vjust = "middle", 
-                  hjust =1, box.padding = 0.1) +
-  geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2011, 2015)), 
+  geom_text_repel(data = AnnualProduction %>% 
+                    filter(Year %in% c(2010, 2013,2016, 2021)), 
                   aes(x = Year, y= Articles, label = c(Articles)), 
                   min.segment.length = 1, vjust = "top", 
-                  hjust = "right", box.padding = 0, 
-                  nudge_x = 0, nudge_y = 0) +
-    geom_text_repel(data = AnnualProduction %>% filter(Year %in% c(2013)), 
+                  hjust = "center", box.padding = 0.4) +
+  geom_text_repel(data = AnnualProduction %>% 
+                    filter(Year %in% c(2017, 2015, 2022)), 
                   aes(x = Year, y= Articles, label = c(Articles)), 
-                  min.segment.length = 1, vjust = "top", 
+                  min.segment.length = 1, vjust = "bottom", 
                   hjust = "right", box.padding = 0.4, 
-                  #nudge_x = 0, 
-                  nudge_y = 4
-                  #vjust = "middle", 
-                  #hjust =1
-                  ) +
-  geom_text(data = AnnualProduction %>% filter(Year %in% c(2022), 
-                                               Indexed == "Projected"), 
-            aes(x = Year, y= Articles, 
-                label = "85"), 
-            vjust = 0, hjust = 1, nudge_y = 2) +
-  #geom_line(data = data.frame(x = as.factor(c(2021,2022)), y = c(74,40 + 25 + 20)), aes(x,y), linetype = 6, stat = "identity", color = "266b6e", # "#1d4f60", size = 1, alpha = 0.8) + # added projected Documents.
+                  nudge_x = 0, nudge_y = 0) +
+ 
   scale_x_discrete(breaks = function(x){x[if_else(x == 2010 |x == 2015 | x == 2020, TRUE,FALSE,)]})+
-  scale_y_continuous(limits = c(40,116)) +
+  scale_y_continuous(limits = c(300,700)) +
   theme_default +
-  scale_color_manual(values= c("#5881b7","#29456B")) +
-   guides(Indexed = guide_legend("Published documents"))+
   theme(#panel.grid.major.x = element_blank(),
         panel.grid.minor.y =  element_blank(),
         panel.grid.major.y = element_line(size = 0.2, color = "#BBBBBB"),
@@ -225,9 +179,10 @@ prodplot
 ## Authoring
 
 We focused on the most productive authors within the data set by H-index. 
+Sections are modified from the functions in the bibliometrix package.
 ```{r author productivity}
 S$MostProdAuthors 
-k_authors <- 13
+k_authors <- 15
 authors <- gsub(","," ",names(results$Authors))
 indices <- Hindex(data, field = "author", elements = authors, sep = ";", years = Inf)
 
@@ -336,11 +291,11 @@ authorprod <- sumauthor %>%
   geom_point(fill =  "#FFFFFF", color ="#FFFFFF", alpha = 1)+ 
   #geom_text(aes(label = h_index, size = 2),color = "#444444",alpha = 1, check_overlap = TRUE, group = 1, y = 2007)+
   geom_point(fill =  "#994E95", color ="#994E95")+ 
-     scale_size(range = c(2, 5), 
-                breaks = c(1,3,5,7)) + 
-     scale_alpha(range = c(0.3, 1), 
-                 breaks =  c(0,20,40,60)) + 
-    scale_y_continuous(breaks = c(2010,2015,2020), limits = c(2008, 2022)) +
+     #scale_size(range = c(2, 5), 
+               # breaks = c(1,3,5,7)) + 
+     #scale_alpha(range = c(0.3, 1), 
+                # breaks =  c(0,20,40,60)) + 
+    scale_y_continuous(breaks = c(2010,2015,2020), limits = c(2010, 2023)) +
     guides(size = guide_legend(order = 1, "Documents"),
            alpha = guide_legend(order = 2, "Times cited"),
            nrow = 1
@@ -454,20 +409,6 @@ for (country in countries$region) {
   allcountries[countries == country] <- sum(str_count(data$C1,str_to_upper(country)),na.rm = TRUE)
 }
 
-# 
-# df <- data.frame(i = 0, C1 = "", region = "", count = "")
-# i = 1
-# colnames(df) <- c("i","C1","region","count")
-# 
-# for(region in countries$region) {
-#   for (x in data$C1){
-#     #str_count(x,str_to_upper(region),na.rm = TRUE)
-#     info <- c(i,x,region)
-#     df<- rbind(df,info)
-#   }
-#   i<-i+1
-# }
-
 
 countryfreq <- results$Countries %>%
   as.data.frame() %>%
@@ -552,9 +493,9 @@ AllAffiliationWorldMap <- allcountries %>%
         ) +
   scale_fill_carto_c(palette = "BluGrn", direction = 1,
                      trans = scales::pseudo_log_trans(sigma = 0.01),
-                        breaks = c(1,10, 100, 1000, 5000),
-                        labels = c(1,10, 100, 1000, 5000),
-                        limits = c(1, 5000)
+                        breaks = c(1,10, 100, 1000, 5000, 10000),
+                        labels = c(1,10, 100, "1k", "5k", "10k"),
+                        limits = c(1, 10000)
   ) +
   scale_size(range = c(3,14))
 
@@ -699,27 +640,38 @@ ArticlesUSMap <- ggplot() +
                      )
 
 ArticlesUSMap
-# ggsave("figures/ArticlesUSMap.jpg",
-#        device = "jpeg", dpi = 400,
-#        width = 7, height = 4,
-#        units = "in", limitsize = FALSE)
+ ggsave("figures/ArticlesUSMap.jpg",
+        device = "jpeg", dpi = 400,
+        width = 7, height = 4,
+        units = "in", limitsize = FALSE)
 ```
 
 ```{r combining maps}
 world<- ggarrange(AllAffiliationWorldMapWest,
 AllAffiliationWorldMapCenter,
-AllAffiliationWorldMapEast, legend = "none", ncol = 3, nrow =1)
+AllAffiliationWorldMapEast,
+common.legend = TRUE,
+legend = "right", 
+#legend = "none", 
+ncol = 1, nrow =3) 
+
+world 
+ggsave("figures/MapWorld.jpg",
+       device = "jpeg", dpi = 400,
+       width = 4, height = 8,
+       units = "in", bg = "white", limitsize = FALSE)
 
 ggarrange(world,ArticlesUSMap,common.legend = TRUE,labels = "AUTO", 
           legend = "none", 
           #legend = "bottom",
-          ncol = 1, nrow =2, heights =  c(1,1.1),#widths = c(3,1), 
+          ncol = 1, nrow =2, heights =  c(3,1.3),#widths = c(3,1), 
           align = c("v")
 )
 ggsave("figures/MapCombo.jpg",
        device = "jpeg", dpi = 400,
-       width = 7, height = 8,
+       width = 6, height = 8,
        units = "in", bg = "white", limitsize = FALSE)
+
 ```
 
 
